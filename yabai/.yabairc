@@ -60,7 +60,7 @@ yabai -m rule --add app="^(Safari浏览器|Google Chrome)" space=web manage=on
 yabai -m rule --add app="^(Typora|备忘录)" space=notes manage=on
 yabai -m rule --add app="^(IINA)" grid=${gridSpeaicl} space=other manage=off
 yabai -m rule --add app="^(网易云音乐)" grid=${gridFull} space=other manage=off
-yabai -m rule --add app="^(Kodi|微信$|QQ)" grid=${gridCenter} space=other manage=off
+yabai -m rule --add app="^(Kodi|微信$|QQ|邮件)" grid=${gridCenter} space=other manage=off
 yabai -m rule --add app="^(系统偏好设置)" grid=${gridSpeaicl} manage=off
 
 yabai -m rule --add app="${floatApp}" grid=${gridCenter} manage=off
