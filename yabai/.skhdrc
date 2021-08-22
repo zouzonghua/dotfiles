@@ -91,16 +91,16 @@ alt - t : yabai -m window --toggle float;\
 ##############################################
 
 # Fill
-shift + alt - up     : yabai -m window --grid 1:1:0:0:1:1
+ctrl - k     : yabai -m window --grid 1:1:0:0:1:1
 
 # Left
-shift + alt - left   : yabai -m window --grid 1:2:0:0:1:1
+ctrl - h   : yabai -m window --grid 1:2:0:0:1:1
 
 # Right
-shift + alt - right  : yabai -m window --grid 1:2:1:0:1:1
+ctrl - l  : yabai -m window --grid 1:2:1:0:1:1
 
 # Center
-shift + alt - down   : yabai -m window --grid 10:10:2:1:6:8
+ctrl - j   : yabai -m window --grid 10:10:2:1:6:8
 
 ##############################################
 # terminal
