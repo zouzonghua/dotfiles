@@ -13,7 +13,7 @@
 [alias]
   a = "!git status --short | peco | awk '{print $2}' | xargs git add"
   ra = "!git status --short | peco | awk '{print $2}' | xargs git reset"
-  dd = "!git status --short | peco | awk '{print $2}' | xargs git checkout --"
+  rm = "!git status --short | peco | awk '{print $2}' | xargs git checkout --"
   d = diff
   co = checkout
   ci = commit
