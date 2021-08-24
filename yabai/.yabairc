@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
+# sudo yabai --uninstall-sa
+# sudo yabai --install-sa
+# sudo yabai --load-sa
 # necessary to load scripting-addition during startup on macOS Big Sur
 # *yabai --load-sa* is configured to run through sudo without a password
 sudo yabai --load-sa
