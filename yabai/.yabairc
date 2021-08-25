@@ -14,7 +14,7 @@ yabai -m config mouse_follows_focus          off
 yabai -m config focus_follows_mouse          off
 yabai -m config window_placement             second_child
 yabai -m config window_topmost               on
-yabai -m config window_shadow                off
+yabai -m config window_shadow                on
 yabai -m config window_opacity               on
 yabai -m config window_opacity_duration      0.0
 yabai -m config active_window_opacity        0.99
@@ -55,18 +55,19 @@ gridCenter=10:10:2:1:6:8
 gridFull=1:1:0:0:1:1
 gridSpeaicl=10:10:3:2:4:6
 
-floatApp='^(访达|日历)$'
+floatApp='^()$'
+spaceCode="^(kitty|Visual Studio Code|微信开发者工具|Safari浏览器)"
+spaceWeb="^(Google Chrome)"
+spaceOther="^(Kodi|微信$|QQ|邮件|网易云音乐|日历|访达|Tencent Lemon|系统偏好设置)" 
+spaceNote="^(Typora|备忘录)"
 
-# window rules 
-yabai -m rule --add app="^(kitty|Visual Studio Code|微信开发者工具)" space=code manage=on
-yabai -m rule --add app="^(Safari浏览器|Google Chrome)" space=web manage=on
-yabai -m rule --add app="^(Typora|备忘录)" space=notes manage=on
-yabai -m rule --add app="^(IINA)" grid=${gridSpeaicl} space=other manage=off
-# yabai -m rule --add app="^(网易云音乐)" grid=${gridFull} space=other manage=off
-yabai -m rule --add app="^(Kodi|微信$|QQ|邮件|网易云音乐|日历|Tencent Lemon)" grid=${gridCenter} space=other manage=off
-yabai -m rule --add app="^(系统偏好设置)" grid=${gridSpeaicl} space=other manage=off
-
+# window rules
+yabai -m rule --add app="${spaceCode}" space=code manage=on
+yabai -m rule --add app="${spaceWeb}" space=web manage=on
+yabai -m rule --add app="${spaceNote}" space=^notes  manage=on
+yabai -m rule --add app="${spaceOther}" grid=${gridCenter} space=other manage=off
 yabai -m rule --add app="${floatApp}" grid=${gridCenter} manage=off
+yabai -m rule --add app="^(IINA)" grid=${gridSpeaicl} space=other manage=off
 
 
 echo "yabai configuration loaded.."
