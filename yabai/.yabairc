@@ -62,12 +62,12 @@ spaceOther="(Kodi|微信$|QQ|邮件|网易云音乐|日历|访达|Tencent Lemon|
 spaceNote="(Typora|备忘录)"
 
 # window rules
-yabai -m rule --add app="${spaceCode}" space=code manage=on
-yabai -m rule --add app="${spaceWeb}" space=web manage=on
+yabai -m rule --add app="${spaceCode}" space=^code manage=on
+yabai -m rule --add app="${spaceWeb}" space=^web manage=on
 yabai -m rule --add app="${spaceNote}" space=^notes  manage=on
-yabai -m rule --add app="${spaceOther}" grid=${gridCenter} space=other manage=off
+yabai -m rule --add app="${spaceOther}" grid=${gridCenter} space=^other manage=off
 yabai -m rule --add app="${floatApp}" grid=${gridCenter} manage=off
-yabai -m rule --add app="^(IINA)" grid=${gridSpeaicl} space=other manage=off
+yabai -m rule --add app="^(IINA)" grid=${gridSpeaicl} space=^other manage=off
 
 
 echo "yabai configuration loaded.."
