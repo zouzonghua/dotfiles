@@ -11,9 +11,16 @@
   grep = auto
   ui = auto
 [alias]
+  # 新增暂存区文件
   a = "!git status --short | peco | awk '{print $2}' | xargs git add"
+  # 撤销暂存区文件
   ra = "!git status --short | peco | awk '{print $2}' | xargs git reset"
-  dd = "!git status --short | peco | awk '{print $2}' | xargs git checkout --"
+  # 撤销已删除的暂存区文件
+  rad = "!git status --short | peco | awk '{print $2}' | xargs git reset -q HEAD --"
+  # 撤销本地更改
+  re = "!git status --short | peco | awk '{print $2}' | xargs git checkout --"
+  # 撤销已提交的文件
+  rc = "!git log --pretty=oneline | peco | awk '{print $1}' | xargs git reset --soft"
   d = diff
   co = checkout
   ci = commit
