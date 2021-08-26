@@ -48,7 +48,7 @@ yabai -m space 4 --label notes
 
 # specific space settings
 # yabai -m config --space media layout       stack
-# yabai -m config --space code layout        float
+yabai -m config --space other layout        float
 
 # layoutVariable
 gridCenter=10:10:2:1:6:8
@@ -56,7 +56,7 @@ gridFull=1:1:0:0:1:1
 gridSpeaicl=10:10:3:2:4:6
 
 floatApp='^()$'
-spaceCode="(kitty|Visual Studio Code|微信开发者工具|Safari浏览器)"
+spaceCode="(kitty|Code|微信开发者工具|Safari浏览器)"
 spaceWeb="(Google Chrome)"
 spaceOther="(Kodi|微信$|QQ|邮件|网易云音乐|日历|访达|Tencent Lemon|系统偏好设置)" 
 spaceNote="(Typora|备忘录)"
