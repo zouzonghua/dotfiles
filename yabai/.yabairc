@@ -41,8 +41,8 @@ yabai -m config right_padding                04
 yabai -m config window_gap                   04
 
 # mission-control desktop labels
-yabai -m space 1 --label code
-yabai -m space 2 --label web
+yabai -m space 2 --label code
+yabai -m space 1 --label web
 yabai -m space 3 --label other
 yabai -m space 4 --label notes
 
@@ -56,9 +56,9 @@ gridFull=1:1:0:0:1:1
 gridSpeaicl=10:10:3:2:4:6
 
 floatApp='^()$'
-spaceCode="(kitty|Code|微信开发者工具|Safari浏览器)"
+spaceCode="(kitty|Code)"
 spaceWeb="(Google Chrome)"
-spaceOther="(Kodi|微信$|QQ|邮件|网易云音乐|日历|访达|Tencent Lemon|系统偏好设置)" 
+spaceOther="(Kodi|微信$|QQ|邮件|网易云音乐|日历|访达|Tencent Lemon|系统偏好设置)"
 spaceNote="(Typora|备忘录)"
 
 # window rules
@@ -68,6 +68,6 @@ yabai -m rule --add app="${spaceNote}" space=^notes  manage=on
 yabai -m rule --add app="${spaceOther}" grid=${gridCenter} space=^other manage=off
 yabai -m rule --add app="${floatApp}" grid=${gridCenter} manage=off
 yabai -m rule --add app="^(IINA)" grid=${gridSpeaicl} space=^other manage=off
-
+yabai -m rule --add app="^(微信开发者工具)" grid=${gridFull} space=^other manage=off
 
 echo "yabai configuration loaded.."
