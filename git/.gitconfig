@@ -21,7 +21,12 @@
   re = "!git status --short | peco | awk '{print $2}' | xargs git checkout --"
   # 撤销已提交的文件
   rc = "!git log --pretty=oneline | peco | awk '{print $1}' | xargs git reset --soft"
-  d = diff
+  # 对比文件差异
+  d = "!git status --short | peco | awk '{print $2}' | xargs git diff HEAD"
+  # 对比全部文件差异
+  da = diff
+  # 对比线上文件差异
+  df = "!git hist | peco | awk '{print $2}' | xargs -I {} git diff {}^ {}"
   co = checkout
   ci = commit
   ca = commit -a
@@ -32,7 +37,6 @@
   ba = branch -a
   bm = branch --merged
   bn = branch --no-merged
-  df = "!git hist | peco | awk '{print $2}' | xargs -I {} git diff {}^ {}"
   hist = log --pretty=format:\"%Cgreen%h %Creset%cd %Cblue[%cn] %Creset%s%C(yellow)%d%C(reset)\" --graph --date=relative --decorate --all
   llog = log --graph --name-status --pretty=format:\"%C(red)%h %C(reset)(%cd) %C(green)%an %Creset%s %C(yellow)%d%Creset\" --date=relative
   open = "!hub browse"
