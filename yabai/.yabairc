@@ -55,10 +55,9 @@ gridCenter=10:10:2:1:6:8
 gridFull=1:1:0:0:1:1
 gridSpeaicl=10:10:3:2:4:6
 
-floatApp='^()$'
 spaceCode="(kitty|Code)"
 spaceWeb="(Google Chrome)"
-spaceOther="(Kodi|Tencent Lemon|微信$|QQ|邮件|网易云音乐|日历|访达|系统偏好设置)"
+spaceOther="(Kodi|Tencent Lemon|微信$|QQ|邮件|网易云音乐|日历|访达|)"
 spaceNote="(Typora|备忘录)"
 
 # window rules
@@ -66,8 +65,7 @@ yabai -m rule --add app="${spaceCode}" space=^code
 yabai -m rule --add app="${spaceWeb}" space=^web
 yabai -m rule --add app="${spaceNote}" space=^notes
 yabai -m rule --add app="${spaceOther}" grid=${gridCenter} space=^other manage=off
-yabai -m rule --add app="${floatApp}" grid=${gridCenter} manage=off
-yabai -m rule --add app="^(IINA)" grid=${gridSpeaicl} space=^other manage=off
+yabai -m rule --add app="^(IINA|系统偏好设置)" grid=${gridSpeaicl} space=^other manage=off
 yabai -m rule --add app="^(微信开发者工具$)" grid=${gridFull} space=^other manage=off
 
 echo "yabai configuration loaded.."
