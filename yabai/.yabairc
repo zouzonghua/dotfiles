@@ -5,6 +5,7 @@
 # sudo yabai --load-sa
 # necessary to load scripting-addition during startup on macOS Big Sur
 # *yabai --load-sa* is configured to run through sudo without a password
+# https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#macos-big-sur---automatically-load-scripting-addition-on-startup
 sudo yabai --load-sa
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 
@@ -41,8 +42,8 @@ yabai -m config right_padding                04
 yabai -m config window_gap                   04
 
 # mission-control desktop labels
-yabai -m space 2 --label code
-yabai -m space 1 --label web
+yabai -m space 2 --label web
+yabai -m space 1 --label code
 yabai -m space 3 --label other
 yabai -m space 4 --label notes
 
