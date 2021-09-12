@@ -1,0 +1,123 @@
+# `env` 下的所有键值对将会被添加为环境变量
+env:
+  # TERM variable
+  #
+  # This value is used to set the `$TERM` environment variable for
+  # each instance of Alacritty. If it is not present, alacritty will
+  # check the local terminfo database and use `alacritty` if it is
+  # available, otherwise `xterm-256color` is used.
+  TERM: xterm-256color
+
+window:
+  # 窗口的外边框
+  #
+  # 可以为如下的值:
+  #     - full: 边框和标题栏
+  #     - none: 边框和标题栏都没有
+  #
+  # macos 可以独占的配置:
+  #     - transparent: 标题栏，透明背景和标题栏按钮
+  #     - buttonless: 标题栏，透明背景，但没有标题栏按钮
+  decorations: buttonless
+
+  # 窗口内边距（配置变更需要重启生效）
+  #
+  # 调整窗口的内边距（单位为像素）。此填充由DPI缩放，并且始终在相对的两边添加指定的值。
+  # 注解：内边距是窗口边框相对于终端显示内容的空白部分，可以参考 CSS
+  padding:
+    x: 8
+    y: 8
+
+  # 在终端内容周围平均分配额外的 padding
+  dynamic_padding: false
+
+  # 窗口标题
+  title: Alacritty
+
+  # 是否允许终端的应用更改窗口标题
+  dynamic_title: true
+
+# 背景不透明度
+# 窗口不透明度，区间为从0.0到1.0的浮点数。0.0 完全头名，1.0 则完全不透明
+background_opacity: 0.99
+
+# 字体配置
+font:
+  # 常规字体
+  normal:
+    family: Hack Nerd Font
+    # 字体风格
+    style: Regular
+
+  # 粗体
+  bold:
+    family: Hack Nerd Font
+    style: Bold
+
+  # 斜体
+  italic:
+    family: Hack Nerd Font
+    style: Italic
+
+  # 斜粗体
+  bold_italic:
+    family: Hack Nerd Font
+    style: Bold Italic
+
+  # 字体大小
+  size: 15
+
+  # 每个字符的间的字间距。"offset.y" 可以控制行距，"offset.x" 可以改变字符间距。
+  offset:
+    x: 0
+    y: 0
+
+  # Glyph offset determines the locations of the glyphs within their cells with
+  # the default being at the bottom. Increasing `x` moves the glyph to the
+  # right, increasing `y` moves the glyph upward.
+  # glyph_offset:
+  #  x: 0
+  #  y: 0
+
+  # 细线字体渲染（仅适用于macOS）
+  #
+  # retina 可以设置为 true，非 retina 屏幕建议设置为 false
+  use_thin_strokes: true
+
+# If `true, bold text is drawn using the bright color variants.
+draw_bold_text_with_bright_colors: false
+
+
+# 颜色配置 https://github.com/eendroroy/alacritty-theme
+# Colors (Taerminal)
+colors:
+  # Default colors
+  primary:
+    #background: '0x26282a'
+    background: '0x1e1e1e'
+    foreground: '0xf0f0f0'
+  cursor:
+    background: '0xf0f0f0'
+    foreground: '0x26282a'
+
+  # Normal colors
+  normal:
+    black:   '0x26282a'
+    red:     '0xff8878'
+    green:   '0xb4fb73'
+    yellow:  '0xfffcb7'
+    blue:    '0x8bbce5'
+    magenta: '0xffb2fe'
+    cyan:    '0xa2e1f8'
+    white:   '0xf1f1f1'
+
+  # Bright colors
+  bright:
+    black:   '0x6f6f6f'
+    red:     '0xfe978b'
+    green:   '0xd6fcba'
+    yellow:  '0xfffed5'
+    blue:    '0xc2e3ff'
+    magenta: '0xffc6ff'
+    cyan:    '0xc0e9f8'
+    white:   '0xffffff'
