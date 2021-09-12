@@ -58,7 +58,7 @@ gridSpeaicl=10:10:3:2:4:6
 
 spaceCode="(kitty|Code)"
 spaceWeb="(Google Chrome)"
-spaceOther="(Kodi|Tencent Lemon|微信$|QQ|网易云音乐|邮件|日历|访达)"
+spaceOther="(Kodi|Tencent Lemon|微信$|QQ|网易云音乐|zoom.us|邮件|日历|访达)"
 
 # window rules
 yabai -m rule --add app="${spaceCode}" space=^code
