@@ -11,4 +11,4 @@ ln -s $HOME/.dotfiles/tmux/.tmux.conf $HOME/.tmux.conf
 ln -s $HOME/.dotfiles/git/.gitconfig $HOME/.gitconfig
 ln -s $HOME/.dotfiles/config/kitty  $HOME/.config/kitty
 ln -s $HOME/.dotfiles/zsh/.zshrc $HOME/.zshrc
-
+ln -s $HOME/.dotfiles/config/alacritty.yml  $HOME/.config/alacritty.yml
