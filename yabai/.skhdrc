@@ -107,7 +107,7 @@ ctrl + shift - j : yabai -m window --grid 10:10:2:1:6:8
 # terminal
 ##############################################
 
-cmd - return : /Applications/Kitty.app/Contents/MacOS/kitty --single-instance 
+cmd - return : /Applications/Alacritty.app/Contents/MacOS/alacritty
 
 # Restart Yabai
 shift + alt - r :
