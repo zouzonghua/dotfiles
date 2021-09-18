@@ -45,27 +45,13 @@ window:
 font:
   # 常规字体
   normal:
-    family: Hack Nerd Font
+    family: MesloLGM Nerd Font
     # 字体风格
     style: Regular
 
-  # 粗体
-  bold:
-    family: Hack Nerd Font
-    style: Bold
-
-  # 斜体
-  italic:
-    family: Hack Nerd Font
-    style: Italic
-
-  # 斜粗体
-  bold_italic:
-    family: Hack Nerd Font
-    style: Bold Italic
 
   # 字体大小
-  size: 15
+  size: 14
 
   # 每个字符的间的字间距。"offset.y" 可以控制行距，"offset.x" 可以改变字符间距。
   offset:
@@ -82,10 +68,10 @@ font:
   # 细线字体渲染（仅适用于macOS）
   #
   # retina 可以设置为 true，非 retina 屏幕建议设置为 false
-  # use_thin_strokes: true
+  use_thin_strokes: true
 
 # If `true, bold text is drawn using the bright color variants.
-# draw_bold_text_with_bright_colors: false
+draw_bold_text_with_bright_colors: false
 
 
 # 颜色配置 https://github.com/eendroroy/alacritty-theme

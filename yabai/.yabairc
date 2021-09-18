@@ -64,7 +64,7 @@ spaceOther="(Kodi|Tencent Lemon|微信$|QQ|网易云音乐|zoom.us|邮件|日历
 yabai -m rule --add app="${spaceCode}" space=^code
 yabai -m rule --add app="${spaceWeb}" space=^web
 yabai -m rule --add app="${spaceOther}" grid=${gridCenter} space=^other manage=off
-yabai -m rule --add app="^(IINA|系统偏好设置)" grid=${gridSpeaicl} space=^other manage=off
+# yabai -m rule --add app="^(IINA|系统偏好设置)" grid=${gridSpeaicl} space=^other manage=off
 yabai -m rule --add app="^(微信开发者工具$)" grid=${gridFull} space=^other manage=off
 
 echo "yabai configuration loaded.."
