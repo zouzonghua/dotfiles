@@ -1,3 +1,16 @@
+# Any items in the `env` entry below will be added as
+# environment variables. Some entries may override variables
+# set by alacritty itself.
+#env:
+  # TERM variable
+  #
+  # This value is used to set the `$TERM` environment variable for
+  # each instance of Alacritty. If it is not present, alacritty will
+  # check the local terminfo database and use `alacritty` if it is
+  # available, otherwise `xterm-256color` is used.
+  #TERM: alacritty
+  #LANG: zh_CN.UTF-8
+
 # 解决中文输入法退格问题 https://github.com/alacritty/alacritty/issues/1606
 key_bindings:
   - { key: Back, action:  ReceiveChar}
