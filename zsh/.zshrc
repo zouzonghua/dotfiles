@@ -13,7 +13,7 @@ autoload -U colors && colors
 
 # prompt
 setopt prompt_subst
-PROMPT='❰%{$fg[green]%}%n%{$reset_color%}|%{$fg[yellow]%}%1~%{$reset_color%}%{$fg[blue]%}$(git branch --show-current 2&> /dev/null | xargs -I branch echo "(branch)")%{$reset_color%}❱ %{$fg[green]%}➜$reset_color%} '
+PROMPT='%{$fg[green]%}%n%{$reset_color%} %{$fg[green]%}➜$reset_color%} %{$fg[yellow]%}%1~%{$reset_color%}%{$fg[blue]%}$(git branch --show-current 2&> /dev/null | xargs -I branch echo "(branch)")%{$reset_color%} '
 
 # nvm
 # export NVM_DIR="$HOME/.nvm"
@@ -28,8 +28,12 @@ export PATH=$HOME/.nvm/versions/node/v14.17.3/bin/:$PATH
 alias proxy="export http_proxy=http://127.0.0.1:1087;export https_proxy=http://127.0.0.1:1087;export ALL_PROXY=socks5://127.0.0.1:1080 && curl ip.sb"
 alias unproxy="unset http_proxy https_proxy ALL_PROXY && curl ip.sb"
 alias brewUpdate='brew update && brew upgrade && brew cu -a -y && brew cleanup && brew cleanup --prune 0'
+
 alias vi="nvim"
 alias vim="nvim"
 alias g="git"
 alias ssh='TERM=xterm ssh'
 
+alias l='ls -alhF'
+alias la='ls -AFh'
+alias ll='ls -lhAF'
