@@ -13,7 +13,7 @@ autoload -U colors && colors
 
 # prompt
 setopt prompt_subst
-PROMPT='❰%{$fg[green]%}%n%{$reset_color%}|%{$fg[yellow]%}%1~%{$reset_color%}%{$fg[blue]%}$(git branch --show-current 2&> /dev/null | xargs -I branch echo "(branch)")%{$reset_color%}❱ '
+PROMPT='❰%{$fg[green]%}%n%{$reset_color%}|%{$fg[yellow]%}%1~%{$reset_color%}%{$fg[blue]%}$(git branch --show-current 2&> /dev/null | xargs -I branch echo "(branch)")%{$reset_color%}❱ %{$fg[green]%}➜$reset_color%} '
 
 # nvm
 # export NVM_DIR="$HOME/.nvm"
