@@ -1,12 +1,6 @@
-# `env` 下的所有键值对将会被添加为环境变量
-# env:
-  # TERM variable
-  #
-  # This value is used to set the `$TERM` environment variable for
-  # each instance of Alacritty. If it is not present, alacritty will
-  # check the local terminfo database and use `alacritty` if it is
-  # available, otherwise `xterm-256color` is used.
-  # TERM: xterm-256color
+# 解决中文输入法退格问题 https://github.com/alacritty/alacritty/issues/1606
+key_bindings:
+  - { key: Back, action:  ReceiveChar}
 
 window:
   # 窗口的外边框
@@ -58,15 +52,7 @@ font:
     x: 0
     y: 0
 
-  # Glyph offset determines the locations of the glyphs within their cells with
-  # the default being at the bottom. Increasing `x` moves the glyph to the
-  # right, increasing `y` moves the glyph upward.
-  # glyph_offset:
-  #  x: 0
-  #  y: 0
-
   # 细线字体渲染（仅适用于macOS）
-  #
   # retina 可以设置为 true，非 retina 屏幕建议设置为 false
   use_thin_strokes: true
 
