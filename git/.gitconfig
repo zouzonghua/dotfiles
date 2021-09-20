@@ -22,11 +22,11 @@
   # 撤销已提交的文件
   rc = "!git log --pretty=oneline | peco | awk '{print $1}' | xargs git reset --soft"
   # 对比文件差异
-  d = "!git status --short | peco | awk '{print $2}' | xargs git diff HEAD"
+  d = "!git status --short | peco | awk '{print $2}' | xargs git difftool -y HEAD"
   # 对比全部文件差异
-  da = diff
+  da = difftool -y
   # 对比线上文件差异
-  df = "!git hist | peco | awk '{print $2}' | xargs -I {} git diff {}^ {}"
+  df = "!git hist | peco | awk '{print $2}' | xargs -I {} git difftool {}^ {}"
   co = checkout
   ci = commit
   ca = commit -a
@@ -51,18 +51,18 @@
 [hub]
   protocol = https
 [github]
-	user = zouzonghua
+  ser = zouzonghua
 [diff]
   tool = nvimdiff
 [difftool "nvimdiff"]
-	cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
-	path = 
+  cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
+  path =
 [mergetool "nvimdiff"]
-	cmd = nvim -d \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  cmd = nvim -d \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	required = true
-	process = git-lfs filter-process
-	
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  required = true
+  process = git-lfs filter-process
+
