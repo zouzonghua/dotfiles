@@ -11,9 +11,9 @@
   #TERM: alacritty
   #LANG: zh_CN.UTF-8
 
-# 解决中文输入法退格问题 https://github.com/alacritty/alacritty/issues/1606
 key_bindings:
-  - { key: Back, action:  ReceiveChar}
+  - { key: Back, action:  ReceiveChar} # 解决中文输入法退格问题 https://github.com/alacritty/alacritty/issues/1606
+  - { key: Space, mods: Control, chars: "\x00" } # Ctrl-Space 失效问题 https://github.com/alacritty/alacritty/issues/1652
 
 window:
   # 窗口的外边框
