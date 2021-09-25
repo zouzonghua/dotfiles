@@ -3,25 +3,25 @@
 
 export ZSH="~/.zsh"
 ################################################################################
-# Plugins
+# Plugins                                                                      #
 ################################################################################
 source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 . ~/.zsh/plugins/z/z.sh
 
 ################################################################################
-# Enable color
+# Enable color                                                                 #
 ################################################################################
 autoload -U colors && colors
 
 ################################################################################
-# Prompt config
+# Prompt config                                                               #
 ################################################################################
 setopt prompt_subst
 PROMPT='%{$fg[green]%}%n%{$reset_color%} %{$fg[green]%}➜$reset_color%} %{$fg[yellow]%}%1~%{$reset_color%}%{$fg[blue]%}$(git branch --show-current 2&> /dev/null | xargs -I branch echo "(branch)")%{$reset_color%} '
 
 ################################################################################
-# Nvm config
+# Nvm config                                                                   #
 ################################################################################
 # export NVM_DIR="$HOME/.nvm"
 # [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
@@ -32,7 +32,7 @@ nvm() { . "$NVM_DIR/nvm.sh" ; nvm $@ ; }
 export PATH=$HOME/.nvm/versions/node/v14.17.3/bin/:$PATH
 
 ################################################################################
-# Alias
+# Alias                                                                        #
 ################################################################################
 alias proxy="export http_proxy=http://127.0.0.1:1087;export https_proxy=http://127.0.0.1:1087;export ALL_PROXY=socks5://127.0.0.1:1080 && curl ip.sb"
 alias unproxy="unset http_proxy https_proxy ALL_PROXY && curl ip.sb"
