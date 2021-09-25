@@ -13,7 +13,13 @@
 
 key_bindings:
   - { key: Back, action:  ReceiveChar} # 解决中文输入法退格问题 https://github.com/alacritty/alacritty/issues/1606
-  - { key: Space, mods: Control, chars: "\x00" } # Ctrl-Space 失效问题 https://github.com/alacritty/alacritty/issues/1652
+  - { key: Space, mods: Control,    chars: "\x00" } # Ctrl-Space 失效问题 https://github.com/alacritty/alacritty/issues/1652
+  - { key: F,  mods: Alt,           chars: "\x1bf" } # 解决光标右移一个单词 https://github.com/alacritty/alacritty/issues/93#issuecomment-334790547
+  - { key: B,  mods: Alt,           chars: "\x1bb" } # 解决光标左移一个单词 https://github.com/alacritty/alacritty/issues/93#issuecomment-334790547
+  - { key: Up,                      chars: "" } # disabled arrow
+  - { key: Down,                    chars: "" } # disabled arrow
+  - { key: Left,                    chars: "" } # disabled arrow
+  - { key: Right,                   chars: "" } # disabled arrow
 
 window:
   # 窗口的外边框
