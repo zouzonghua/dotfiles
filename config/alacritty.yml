@@ -65,7 +65,7 @@ font:
 
 
   # 字体大小
-  size: 14
+  size: 15
 
   # 每个字符的间的字间距。"offset.y" 可以控制行距，"offset.x" 可以改变字符间距。
   offset:
