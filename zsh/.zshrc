@@ -2,6 +2,7 @@
 # \time zsh -i -c exit
 
 export ZSH="~/.zsh"
+
 ################################################################################
 # Plugins                                                                      #
 ################################################################################
@@ -15,7 +16,7 @@ source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 autoload -U colors && colors
 
 ################################################################################
-# Prompt config                                                               #
+# Prompt config                                                                #
 ################################################################################
 setopt prompt_subst
 PROMPT='%{$fg[green]%}%n%{$reset_color%} %{$fg[green]%}➜$reset_color%} %{$fg[yellow]%}%1~%{$reset_color%}%{$fg[blue]%}$(git branch --show-current 2&> /dev/null | xargs -I branch echo "(branch)")%{$reset_color%} '
@@ -48,7 +49,7 @@ alias la='ls -AFh'
 alias ll='ls -lhAF'
 
 ################################################################################
-# Locale                                                                        #
+# Locale                                                                       #
 ################################################################################
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
