@@ -65,13 +65,12 @@ font:
 
 
   # 字体大小
-  size: 15
+  size: 14
 
   # 每个字符的间的字间距。"offset.y" 可以控制行距，"offset.x" 可以改变字符间距。
   offset:
     x: 0
     y: 0
-
   # 细线字体渲染（仅适用于macOS）
   # retina 可以设置为 true，非 retina 屏幕建议设置为 false
   use_thin_strokes: true
