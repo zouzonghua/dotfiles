@@ -54,14 +54,15 @@ yabai -m config window_gap                   04
 ################################################################################
 # mission-control desktop labels                                               #
 ################################################################################
-yabai -m space 1 --label code
-yabai -m space 2 --label web
-yabai -m space 3 --label other
+yabai -m space 1 --label web
+yabai -m space 2 --label term
+yabai -m space 3 --label dev
+yabai -m space 4 --label other
 
 ################################################################################
 # specific space settings                                                      #
 ################################################################################
-yabai -m config --space other layout       stack
+#yabai -m config --space other layout       stack
 #yabai -m config --space other layout        float
 
 ################################################################################
@@ -72,17 +73,19 @@ gridCenter=10:10:2:1:6:8
 gridFull=1:1:0:0:1:1
 gridSpeaicl=10:10:3:2:4:6
 
-spaceCode="(Alacritty|Code)"
+spaceTerm="(Alacritty)"
 spaceWeb="(Google Chrome)"
+spaceDev="(微信开发者工具$|Wechat Devtools$|Code)"
 spaceOther="(Kodi|Tencent Lemon|微信$|WeChat$|QQ|网易云音乐|NeteaseMusic|zoom.us|邮件|Mail|日历|Calendar|访达|Finder)"
+spaceSpeaiclOther="(IINA|系统偏好设置|System Preferences)"
 
 ################################################################################
 # window rules                                                                 #
 ################################################################################
-yabai -m rule --add app="${spaceCode}" space=^code
+yabai -m rule --add app="${spaceTerm}" space=^term
 yabai -m rule --add app="${spaceWeb}" space=^web
+yabai -m rule --add app="${spaceDev}" grid=${gridFull} space=^dev manage=off
 yabai -m rule --add app="${spaceOther}" grid=${gridCenter} space=^other manage=off
-yabai -m rule --add app="^(IINA|系统偏好设置|System Preferences)" grid=${gridSpeaicl} space=^other manage=off
-yabai -m rule --add app="^(微信开发者工具$|Wechat Devtools)" grid=${gridFull} space=^other manage=off
+yabai -m rule --add app="${spaceSpeaiclOther}" grid=${gridSpeaicl} space=^other manage=off
 
 echo "yabai configuration loaded.."
