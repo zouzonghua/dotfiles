@@ -63,7 +63,7 @@ yabai -m space 4 --label other
 # specific space settings                                                      #
 ################################################################################
 #yabai -m config --space other layout       stack
-#yabai -m config --space other layout        float
+#yabai -m config --space other layout       float
 
 ################################################################################
 # layoutVariable                                                               #
@@ -74,16 +74,16 @@ gridFull=1:1:0:0:1:1
 gridSpeaicl=10:10:3:2:4:6
 
 spaceTerm="(Alacritty)"
-spaceWeb="(Google Chrome)"
+spaceWeb="(Google Chrome|Safari)"
 spaceDev="(微信开发者工具$|Wechat Devtools$|Code)"
-spaceOther="(Kodi|Tencent Lemon|微信$|WeChat$|QQ|网易云音乐|NeteaseMusic|zoom.us|邮件|Mail|日历|Calendar|访达|Finder)"
+spaceOther="(Kodi|Tencent Lemon|微信$|WeChat$|QQ|网易云音乐|NeteaseMusic|zoom.us|邮件|Mail|日历|Calendar|访达|Finder|App Store)"
 spaceSpeaiclOther="(IINA|系统偏好设置|System Preferences)"
 
 ################################################################################
 # window rules                                                                 #
 ################################################################################
-yabai -m rule --add app="${spaceTerm}" space=^term
 yabai -m rule --add app="${spaceWeb}" space=^web
+yabai -m rule --add app="${spaceTerm}" space=^term
 yabai -m rule --add app="${spaceDev}" grid=${gridFull} space=^dev manage=off
 yabai -m rule --add app="${spaceOther}" grid=${gridCenter} space=^other manage=off
 yabai -m rule --add app="${spaceSpeaiclOther}" grid=${gridSpeaicl} space=^other manage=off
