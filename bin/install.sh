@@ -12,6 +12,9 @@ ln -s $HOME/.dotfiles/git/.gitconfig $HOME/.gitconfig
 ln -s $HOME/.dotfiles/zsh/.zshrc $HOME/.zshrc
 ln -s $HOME/.dotfiles/config/alacritty.yml  $HOME/.config/alacritty.yml
 
+ln $HOME/.dotfiles/rime/squirrel.custom.yaml  $HOME/Library/Rime/squirrel.custom.yaml
+ln $HOME/.dotfiles/rime/luna_pinyin_simp.custom.yaml  $HOME/Library/Rime/luna_pinyin_simp.custom.yaml
+ln $HOME/.dotfiles/rime/default.custom.yaml  $HOME/Library/Rime/default.custom.yaml
 
 cd ~/Library/Fonts && curl -fLo "Meslo LG M Regular Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Meslo/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete.ttf
 cd ~/Library/Fonts && curl -fLo "Meslo LG M Regular Nerd Font Complete Mono.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Meslo/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete%20Mono.ttf
