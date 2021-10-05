@@ -49,6 +49,8 @@ alias la='ls -AFh'
 alias ll='ls -lhAF'
 
 alias t='trans'
+alias tz='trans :zh-CN'
+alias te='trans :en'
 
 ################################################################################
 # Locale                                                                       #
