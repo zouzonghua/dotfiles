@@ -1,9 +1,9 @@
-action "Install yabai and skhd"
 brew install koekeishiya/formulae/yabai
 brew install koekeishiya/formulae/skhd
-sudo yabai --install-sa
 ln "${HOME}/.dotfiles/yabai/.yabairc" "${HOME}/.yabairc"
 ln "${HOME}/.dotfiles/yabai/.skhdrc" "${HOME}/.skhdrc"
+sudo yabai --install-sa
+sudo yabai --load-sa
 brew services start skhd
 brew services start yabai
 
@@ -14,7 +14,6 @@ ln -s $HOME/.dotfiles/config/alacritty.yml  $HOME/.config/alacritty.yml
 
 ln $HOME/.dotfiles/rime/default.custom.yaml  $HOME/Library/Rime/default.custom.yaml
 ln $HOME/.dotfiles/rime/squirrel.custom.yaml  $HOME/Library/Rime/squirrel.custom.yaml
-
 ln $HOME/.dotfiles/rime/luna_pinyin_simp.custom.yaml  $HOME/Library/Rime/luna_pinyin_simp.custom.yaml
 ln $HOME/.dotfiles/rime/luna_pinyin.extended.dict.yaml  $HOME/Library/Rime/luna_pinyin.extended.dict.yaml
 ln $HOME/.dotfiles/rime/luna_pinyin.sougou.dict.yaml  $HOME/Library/Rime/luna_pinyin.sougou.dict.yaml
