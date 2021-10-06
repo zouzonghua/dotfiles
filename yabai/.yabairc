@@ -35,7 +35,7 @@ yabai -m config mouse_action2                resize
 ################################################################################
 # border                                                                       #
 ################################################################################
-yabai -m config window_border                   on
+yabai -m config window_border                   off
 yabai -m config window_border_width             05
 yabai -m config active_window_border_color      0xff005577
 yabai -m config normal_window_border_color      0xff555555
@@ -54,8 +54,8 @@ yabai -m config window_gap                   05
 ################################################################################
 # mission-control desktop labels                                               #
 ################################################################################
-yabai -m space 1 --label web
-yabai -m space 2 --label term
+yabai -m space 1 --label term
+yabai -m space 2 --label web
 yabai -m space 3 --label dev
 yabai -m space 4 --label other
 
@@ -82,8 +82,8 @@ spaceSpeaiclOther="(IINA|系统偏好设置|System Preferences)"
 ################################################################################
 # window rules                                                                 #
 ################################################################################
-yabai -m rule --add app="${spaceWeb}" space=^web
 yabai -m rule --add app="${spaceTerm}" space=^term
+yabai -m rule --add app="${spaceWeb}" space=^web
 yabai -m rule --add app="${spaceDev}" grid=${gridFull} space=^dev manage=off
 yabai -m rule --add app="${spaceOther}" grid=${gridCenter} space=^other manage=off
 yabai -m rule --add app="${spaceSpeaiclOther}" grid=${gridSpeaicl} space=^other manage=off
