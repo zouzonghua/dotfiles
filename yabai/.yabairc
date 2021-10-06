@@ -56,8 +56,7 @@ yabai -m config window_gap                   05
 ################################################################################
 yabai -m space 1 --label term
 yabai -m space 2 --label web
-yabai -m space 3 --label dev
-yabai -m space 4 --label other
+yabai -m space 3 --label other
 
 ################################################################################
 # specific space settings                                                      #
@@ -84,7 +83,7 @@ spaceSpeaiclOther="(IINA|系统偏好设置|System Preferences)"
 ################################################################################
 yabai -m rule --add app="${spaceTerm}" space=^term
 yabai -m rule --add app="${spaceWeb}" space=^web
-yabai -m rule --add app="${spaceDev}" grid=${gridFull} space=^dev manage=off
+yabai -m rule --add app="${spaceDev}" grid=${gridFull} space=^other manage=off
 yabai -m rule --add app="${spaceOther}" grid=${gridCenter} space=^other manage=off
 yabai -m rule --add app="${spaceSpeaiclOther}" grid=${gridSpeaicl} space=^other manage=off
 
