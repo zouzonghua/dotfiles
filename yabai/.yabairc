@@ -35,7 +35,7 @@ yabai -m config mouse_action2                resize
 ################################################################################
 # border                                                                       #
 ################################################################################
-yabai -m config window_border                   off
+yabai -m config window_border                   on
 yabai -m config window_border_width             05
 yabai -m config active_window_border_color      0xff005577
 yabai -m config normal_window_border_color      0xff555555
@@ -63,7 +63,7 @@ yabai -m space 4 --label other
 # specific space settings                                                      #
 ################################################################################
 #yabai -m config --space other layout       stack
-#yabai -m config --space other layout       float
+yabai -m config --space other layout       float
 
 ################################################################################
 # layoutVariable                                                               #
