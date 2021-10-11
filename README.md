@@ -4,4 +4,4 @@
 
 my personal dotfiles mac
 
-![shreenshot](./screenshot/202110051245.png)
+![shreenshot](./screenshot/202110111946.png)
