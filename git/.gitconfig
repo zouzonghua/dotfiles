@@ -38,7 +38,12 @@
   # 提交日志
   llog = log --graph --name-status --pretty=format:\"%C(red)%h %C(reset)(%cd) %C(green)%an %Creset%s %C(yellow)%d%Creset\" --date=relative
 
+  pick = cherry-pick
+  pickc = cherry-pick --continue
+
   co = checkout
+  cob = checkout -b
+
   ci = commit
   ca = commit -a
 
