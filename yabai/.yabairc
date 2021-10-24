@@ -73,9 +73,9 @@ gridCenter=10:10:2:1:6:8
 gridFull=1:1:0:0:1:1
 gridSpeaicl=10:10:3:2:4:6
 
-spaceTerm="(Alacritty)"
+spaceTerm="(Alacritty|Code)"
 spaceWeb="(Google Chrome|Safari)"
-spaceDev="(VMware Fusion|微信开发者工具$|Wechat Devtools$|Code)"
+spaceDev="(VMware Fusion|微信开发者工具$|Wechat Devtools$|)"
 spaceOther="(Kodi|Tencent Lemon|微信$|WeChat$|QQ|网易云音乐|NeteaseMusic|邮件|Mail|日历|Calendar|访达|Finder|App Store)"
 spaceSpeaiclOther="(IINA|系统偏好设置|System Preferences)"
 spaceMeeting="(zoom.us|TencentMeeting)"
