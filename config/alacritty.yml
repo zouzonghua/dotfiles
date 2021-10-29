@@ -69,7 +69,8 @@ font:
 
 #===============================================================================
 # key_bindings
-# 解决 中文输入法 退格问题 https://github.com/alacritty/alacritty/issues/1606
+# 解决 中文输入法 退格问题
+# @see https://github.com/alacritty/alacritty/issues/1606
 # 解决 Ctrl-Space 失效问题
 # @see https://github.com/alacritty/alacritty/issues/1652
 # 解决 Emacs 键位 失效问题
