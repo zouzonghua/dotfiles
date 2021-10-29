@@ -1,21 +1,21 @@
 #!/usr/bin/env sh
 
-################################################################################
-# sudo yabai --uninstall-sa                                                    #
-# sudo yabai --install-sa                                                      #
-# sudo yabai --load-sa                                                         #
-# necessary to load scripting-addition during startup on macOS Big Sur         #
-# *yabai --load-sa* is configured to run through sudo without a password       #
-# https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)  #
-# macos-big-sur---automatically-load-scripting-addition-on-startup             #
-################################################################################
+#===============================================================================
+# sudo yabai --uninstall-sa
+# sudo yabai --install-sa
+# sudo yabai --load-sa
+# necessary to load scripting-addition during startup on macOS Big Sur
+# *yabai --load-sa* is configured to run through sudo without a password
+# https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)
+# macos-big-sur---automatically-load-scripting-addition-on-startup
+#===============================================================================
 
 sudo yabai --load-sa
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 
-################################################################################
-# global settings                                                              #
-################################################################################
+#===============================================================================
+# global settings
+#===============================================================================
 yabai -m config external_bar                 off:45:0
 yabai -m config mouse_follows_focus          off
 yabai -m config focus_follows_mouse          off
@@ -32,18 +32,18 @@ yabai -m config mouse_modifier               fn
 yabai -m config mouse_action1                move
 yabai -m config mouse_action2                resize
 
-################################################################################
-# border                                                                       #
-################################################################################
+#===============================================================================
+# border
+#===============================================================================
 yabai -m config window_border                   on
 yabai -m config window_border_width             05
 yabai -m config active_window_border_color      0xff005577
 yabai -m config normal_window_border_color      0xff555555
 yabai -m config insert_feedback_color           0xffd75f5f
 
-################################################################################
-# general space settings                                                       #
-################################################################################
+#===============================================================================
+# general space settings
+#===============================================================================
 yabai -m config layout                       bsp
 yabai -m config top_padding                  00
 yabai -m config bottom_padding               00
@@ -51,23 +51,23 @@ yabai -m config left_padding                 00
 yabai -m config right_padding                00
 yabai -m config window_gap                   05
 
-################################################################################
-# mission-control desktop labels                                               #
-################################################################################
+#===============================================================================
+# mission-control desktop labels
+#===============================================================================
 yabai -m space 1 --label term
 yabai -m space 2 --label web
 yabai -m space 3 --label other
 yabai -m space 4 --label meeting
 
-################################################################################
-# specific space settings                                                      #
-################################################################################
+#===============================================================================
+# specific space settings
+#===============================================================================
 #yabai -m config --space other layout       stack
 yabai -m config --space other layout       float
 
-################################################################################
-# layoutVariable                                                               #
-################################################################################
+#===============================================================================
+# layoutVariable
+#===============================================================================
 
 gridCenter=10:10:2:1:6:8
 gridFull=1:1:0:0:1:1
@@ -80,9 +80,9 @@ spaceOther="(Kodi|Tencent Lemon|微信$|WeChat$|QQ|网易云音乐|NeteaseMusic|
 spaceSpeaiclOther="(IINA|系统偏好设置|System Preferences)"
 spaceMeeting="(zoom.us|TencentMeeting)"
 
-################################################################################
-# window rules                                                                 #
-################################################################################
+#===============================================================================
+# window rules
+#===============================================================================
 yabai -m rule --add app="${spaceTerm}" space=^term
 yabai -m rule --add app="${spaceWeb}" space=^web
 yabai -m rule --add app="${spaceDev}" grid=${gridFull} space=^other manage=off
