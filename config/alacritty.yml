@@ -1,36 +1,6 @@
-# Any items in the `env` entry below will be added as
-# environment variables. Some entries may override variables
-# set by alacritty itself.
-#env:
-# TERM variable
-#
-# This value is used to set the `$TERM` environment variable for
-# each instance of Alacritty. If it is not present, alacritty will
-# check the local terminfo database and use `alacritty` if it is
-# available, otherwise `xterm-256color` is used.
-#TERM: alacritty
-#LANG: zh_CN.UTF-8
-
-key_bindings:
-  - { key: Back, action: ReceiveChar }
-  # 解决中文输入法退格问题 https://github.com/alacritty/alacritty/issues/1606
-  - { key: Space, mods: Control, chars: "\0" }
-  # Ctrl-Space 失效问题 https://github.com/alacritty/alacritty/issues/1652
-  - { key: F, mods: Alt, chars: "\ef" }
-  # 解决光标右移一个单词 https://github.com/alacritty/alacritty/issues/93#issuecomment-334790547
-  - { key: B, mods: Alt, chars: "\eb" }
-  # 解决光标左移一个单词 https://github.com/alacritty/alacritty/issues/93#issuecomment-334790547
-  - { key: D, mods: Alt, chars: "\ed" }
-  # 解决光标左移一个单词 https://github.com/alacritty/alacritty/issues/93#issuecomment-334790547
-  - { key: Up, chars: "" }
-  # disabled arrow
-  - { key: Down, chars: "" }
-  # disabled arrow
-  - { key: Left, chars: "" }
-  # disabled arrow
-  - { key: Right, chars: "" }
-  # disabled arrow
-
+#===============================================================================
+# window
+#===============================================================================
 window:
   # 窗口的外边框
   #
@@ -56,16 +26,33 @@ window:
   # title: Alacritty
   # 是否允许终端的应用更改窗口标题
   # dynamic_title: true
-# 背景不透明度
-# 窗口不透明度，区间为从0.0到1.0的浮点数。0.0 完全头名，1.0 则完全不透明
-# background_opacity: 0.99
-# 字体配置
+# 背景透明度
+background_opacity: 0.99
+
+#===============================================================================
+# font
+#===============================================================================
 font:
   # 常规字体
   normal:
     family: MesloLGM Nerd Font
     # 字体风格
     style: Regular
+
+  # 粗体
+  bold:
+    family: Menlo
+    style: Bold
+
+  # 斜体
+  italic:
+    family: Menlo
+    style: Italic
+
+  # 斜粗体
+  bold_italic:
+     family: Menlo
+     style: Bold Italic
 
   # 字体大小
   size: 14
@@ -77,6 +64,27 @@ font:
   # 细线字体渲染（仅适用于macOS）
   # retina 可以设置为 true，非 retina 屏幕建议设置为 false
   use_thin_strokes: true
+# If `true`, bold text is drawn using the bright color variants.
+# draw_bold_text_with_bright_colors: true
 
-# If `true, bold text is drawn using the bright color variants.
-draw_bold_text_with_bright_colors: false
+#===============================================================================
+# key_bindings
+# 解决 中文输入法 退格问题 https://github.com/alacritty/alacritty/issues/1606
+# 解决 Ctrl-Space 失效问题
+# @see https://github.com/alacritty/alacritty/issues/1652
+# 解决 Emacs 键位 失效问题
+# @see https://github.com/alacritty/alacritty/issues/93#issuecomment-334790547
+# 禁用方向键
+#===============================================================================
+key_bindings:
+  - { key: Back, action: ReceiveChar }
+  - { key: Space, mods: Control, chars: "\0" }
+  - { key: F, mods: Alt, chars: "\ef" }
+  - { key: B, mods: Alt, chars: "\eb" }
+  - { key: D, mods: Alt, chars: "\ed" }
+
+  - { key: Up, chars: "" }
+  - { key: Down, chars: "" }
+  - { key: Left, chars: "" }
+  - { key: Right, chars: "" }
+
