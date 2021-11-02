@@ -3,6 +3,8 @@
   email = zouzonghua.cn@gmail.com
 [push]
   default = simple
+[pull]
+  rebase = false
 [color]
   status = auto
   diff = auto
@@ -19,6 +21,8 @@
   rad = "!git status --short | peco | awk '{print $2}' | xargs git reset -q HEAD --"
   # 撤销本地更改
   re = "!git status --short | peco | awk '{print $2}' | xargs git checkout --"
+  # 撤销合并代码  检查保存在stage的文件
+  rmt = "!git status --short | peco | awk '{print $2}' | xargs git ls-files --stage --"
   # 撤销已提交的文件
   rc = "!git log --pretty=oneline | peco | awk '{print $1}' | xargs git reset --soft"
   # 对比文件差异
@@ -33,6 +37,17 @@
   pl = "!git pull origin $(git rev-parse --abbrev-ref HEAD)"
   # 当前状态
   st = status
+  # 分支
+  br = branch
+  # 合并代码
+  me = merge
+  # 解决合并代码冲突
+  mt = mergetool
+  # checkout
+  co = checkout
+  # coomit
+  ci = commit
+
   # 提交历史
   hist = log --pretty=format:\"%Cgreen%h %Creset%cd %Cblue[%cn] %Creset%s%C(yellow)%d%C(reset)\" --graph --date=relative --decorate --all
   # 提交日志
@@ -41,30 +56,46 @@
   pick = cherry-pick
   pickc = cherry-pick --continue
 
-  co = checkout
-  cob = checkout -b
 
-  ci = commit
-  ca = commit -a
+  # clean 的演习, 告诉你哪些文件会被删除
+  cln = clean -n
+  # 删除当前目录下所有没有 track 过的文件
+  clf = clean -f
 
-  br = branch
-  ba = branch -a
-  bm = branch --merged
-  bn = branch --no-merged
-
-[github]
-  ser = zouzonghua
 [diff]
   tool = nvimdiff
 [difftool "nvimdiff"]
   cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
   path =
+
+#===============================================================================
+# merge code
+# +--------------------------------+
+# | LOCAL  |     BASE     | REMOTE |
+# +--------------------------------+
+# |             MERGED             |
+# +--------------------------------+
+#
+# Example
+#
+#  git mergetool || g mt
+#
+#  No files need merging
+#  git ls-files --stage <file> || g rmt
+#  git checkout -m <file> || g co -m <file>
+#
+#  [c
+#  ]c
+#
+#  :diffget BASE
+#
+#  :wqa
+#
+#  git clean -n || g cln
+#  git clean -f || g clf
+#
+#===============================================================================
+
 [mergetool "nvimdiff"]
-  cmd = nvim -d \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-  trustExitCode = true
-[filter "lfs"]
-  clean = git-lfs clean -- %f
-  smudge = git-lfs smudge -- %f
-  required = true
-  process = git-lfs filter-process
+  cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c '$wincmd J'
 
