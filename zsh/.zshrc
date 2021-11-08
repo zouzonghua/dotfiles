@@ -1,6 +1,6 @@
 
-# \time zsh -i -c exit
 
+# \time zsh -i -c exit
 export ZSH="~/.zsh"
 
 #===============================================================================
@@ -49,8 +49,9 @@ alias la='ls -AFh'
 alias ll='ls -lhAF'
 
 alias t='trans'
-alias tzh='trans :zh-CN'
 alias ten='trans :en'
+alias tcn='trans :zh-CN'
+alias ttw='trans :zh-TW'
 
 #===============================================================================
 # Locale
