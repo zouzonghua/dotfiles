@@ -35,13 +35,14 @@
     fi
   }
   setopt PROMPT_SUBST
-  #PROMPT='%{$fg[green]%}%n%{$reset_color%} %{$fg[green]%}➜ %{$fg[yellow]%}%1~%{$reset_color%}$(git_prompt_info)%F{none} '
-  PROMPT="%(?:%{$fg[green]%}%n% :%{$fg[red]%}%n% ) "
-  PROMPT+="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
-  PROMPT+='%{$fg[cyan]%}%c%{$reset_color%}$(git_prompt_info) '
+  # PROMPT='%{$fg[green]%}%n%{$reset_color%} %{$fg[green]%}➜ %{$fg[yellow]%}%1~%{$reset_color%}$(git_prompt_info) '
+   PROMPT="%(?:%{$fg[green]%}%n% :%{$fg[red]%}%n% ) "
+  # PROMPT+="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
+   PROMPT+="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
+   PROMPT+='%{$fg[yellow]%}%c%{$reset_color%}$(git_prompt_info) '
 
   # add 24h time the right side
-  RPROMPT="%(?:%{$fg[green]%}%D{%k:%M:%S} :%{$fg[red]%}%D{%k:%M:%S} )"
+  # RPROMPT="%(?:%{$fg[green]%}%D{%k:%M:%S} :%{$fg[red]%}%D{%k:%M:%S} )"
   # RPROMPT='%D{%k:%M:%S}'
 
 #===============================================================================
