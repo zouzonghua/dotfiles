@@ -17,7 +17,5 @@ patch:
   # 右键『应用.app』-> 显示包内容
   # Contents/Info.plist -> BundleIdentifier
   #           Bundle Identifier
-  app_options/com.apple.dt.Xcode:
-    ascii_mode: true
-  app_options/com.apple.dt.Spotlight:
-    ascii_mode: true
+  app_options/com.apple.Spotlight:
+    ascii_mode: false
