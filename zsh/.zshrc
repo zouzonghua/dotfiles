@@ -66,6 +66,7 @@
   alias vim="nvim"
   alias g="git"
   alias ssh='TERM=xterm ssh'
+  alias ll='ls -lhAF'
 
   alias t='trans'
   alias ten='trans :en'
