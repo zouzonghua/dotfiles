@@ -62,6 +62,9 @@
   # 删除当前目录下所有没有 track 过的文件
   clf = clean -f
 
+  # 统计项目代码的总行数
+  total = "!git ls-files | xargs cat | wc -l"
+
 [diff]
   tool = nvimdiff
 [difftool "nvimdiff"]
