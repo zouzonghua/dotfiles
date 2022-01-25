@@ -53,7 +53,7 @@
   # [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
   export NVM_DIR="$HOME/.nvm"
   nvm() { . "$NVM_DIR/nvm.sh" ; nvm $@ ; }
-  export PATH=$HOME/.nvm/versions/node/v14.17.3/bin/:$PATH
+  export PATH=$HOME/.nvm/versions/node/v14.18.3/bin/:$PATH
 
 #===============================================================================
 # Alias
@@ -80,3 +80,15 @@
   export LANG=en_US.UTF-8
 
   PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+
+#===============================================================================
+# Android sdk
+#===============================================================================
+  export ANDROID_HOME=$HOME/Library/Android/sdk 
+  export PATH=$PATH:$ANDROID_HOME/emulator 
+  export PATH=$PATH:$ANDROID_HOME/tools 
+  export PATH=$PATH:$ANDROID_HOME/tools/bin 
+  export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+export PATH="/usr/local/sbin:$PATH"
+
