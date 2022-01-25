@@ -8,6 +8,7 @@
 # *yabai --load-sa* is configured to run through sudo without a password
 # https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)
 # macos-big-sur---automatically-load-scripting-addition-on-startup
+# fix: macOS 12.1 Bug https://github.com/koekeishiya/yabai/issues/1131#issuecomment-1017144275
 #===============================================================================
 
 sudo yabai --load-sa
