@@ -19,3 +19,5 @@ patch:
   #           Bundle Identifier
   app_options/com.apple.Spotlight:
     ascii_mode: false
+  app_options/org.gnu.Emacs:
+    ascii_mode: false
