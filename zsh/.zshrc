@@ -5,19 +5,19 @@
   export ZSH="~/.zsh"
 
 #===============================================================================
-# Plugins
+# plugins
 #===============================================================================
   source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
   source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
   . ~/.zsh/plugins/z/z.sh
 
 #===============================================================================
-# Enable color
+# enable color
 #===============================================================================
   autoload -U colors && colors
 
 #===============================================================================
-# Prompt config
+# prompt config
 #===============================================================================
   git_prompt_info() {
     local ref=$(git symbolic-ref --short HEAD 2> /dev/null)
@@ -46,7 +46,7 @@
   # RPROMPT='%D{%k:%M:%S}'
 
 #===============================================================================
-# Nvm config
+# nvm config
 #===============================================================================
   # export NVM_DIR="$HOME/.nvm"
   # [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
@@ -56,7 +56,7 @@
   export PATH=$HOME/.nvm/versions/node/v14.18.3/bin/:$PATH
 
 #===============================================================================
-# Alias
+# alias
 #===============================================================================
   alias proxy="export http_proxy=http://127.0.0.1:1087;export https_proxy=http://127.0.0.1:1087;export ALL_PROXY=socks5://127.0.0.1:1080 && curl ip.sb"
   alias unproxy="unset http_proxy https_proxy ALL_PROXY && curl ip.sb"
@@ -74,7 +74,7 @@
   alias ttw='trans :zh-TW'
 
 #===============================================================================
-# Locale
+# locale
 #===============================================================================
   export LC_ALL=en_US.UTF-8
   export LANG=en_US.UTF-8
@@ -82,7 +82,7 @@
   PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 
 #===============================================================================
-# Android sdk
+# android sdk
 #===============================================================================
   export ANDROID_HOME=$HOME/Library/Android/sdk 
   export PATH=$PATH:$ANDROID_HOME/emulator 
