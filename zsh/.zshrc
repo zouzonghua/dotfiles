@@ -42,7 +42,7 @@
    PROMPT+='%{$fg[yellow]%}%c%{$reset_color%}$(git_prompt_info) '
 
   # add 24h time the right side
-  # RPROMPT="%(?:%{$fg[green]%}%D{%k:%M:%S} :%{$fg[red]%}%D{%k:%M:%S} )"
+  RPROMPT="%(?:%{$fg[green]%}%D{%k:%M:%S} :%{$fg[red]%}%D{%k:%M:%S} )"
   # RPROMPT='%D{%k:%M:%S}'
 
 #===============================================================================
