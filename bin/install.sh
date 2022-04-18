@@ -17,6 +17,9 @@ ln $HOME/.dotfiles/rime/squirrel.custom.yaml  $HOME/Library/Rime/squirrel.custom
 ln $HOME/.dotfiles/rime/luna_pinyin_simp.custom.yaml  $HOME/Library/Rime/luna_pinyin_simp.custom.yaml
 ln $HOME/.dotfiles/rime/luna_pinyin.extended.dict.yaml  $HOME/Library/Rime/luna_pinyin.extended.dict.yaml
 ln $HOME/.dotfiles/rime/luna_pinyin.sougou.dict.yaml  $HOME/Library/Rime/luna_pinyin.sougou.dict.yaml
+
+ln -s $HOME/.dotfiles/.hammerspoon  $HOME/.hammerspoon
+
 cp $HOME/.dotfiles/rime/fonts/HanaMinA.ttf $HOME/Library/Fonts
 cp $HOME/.dotfiles/rime/fonts/HanaMinB.ttf $HOME/Library/Fonts
 
