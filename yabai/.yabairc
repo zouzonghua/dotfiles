@@ -55,16 +55,16 @@ yabai -m config window_gap                   05
 #===============================================================================
 # mission-control desktop labels
 #===============================================================================
-yabai -m space 1 --label web
-yabai -m space 2 --label term
-yabai -m space 3 --label other
+yabai -m space 1 --label code
+yabai -m space 2 --label web
+yabai -m space 3 --label home
 yabai -m space 4 --label meeting
 
 #===============================================================================
 # specific space settings
 #===============================================================================
-#yabai -m config --space other layout       stack
-yabai -m config --space other layout       float
+yabai -m config --space home layout       stack
+#yabai -m config --space other layout       float
 
 #===============================================================================
 # layoutVariable
@@ -74,21 +74,21 @@ gridCenter=10:10:2:1:6:8
 gridFull=1:1:0:0:1:1
 gridSpeaicl=10:10:3:2:4:6
 
-spaceTerm="(Alacritty|Code|Emacs)"
+spaceCode="(Alacritty|Code|Emacs)"
 spaceWeb="(Google Chrome|Safari)"
 spaceDev="(VMware Fusion|微信开发者工具$|Wechat Devtools$|Proxyman)"
-spaceOther="(Kodi|Tencent Lemon|微信|WeChat|QQ|网易云音乐|NeteaseMusic|邮件|Mail|日历|Calendar|访达|Finder|App Store|终端|Terminal$|Telegram)"
-spaceSpeaiclOther="(IINA|系统偏好设置|System Preferences)"
+spaceHome="(Kodi|Tencent Lemon|微信|WeChat|QQ|网易云音乐|NeteaseMusic|邮件|Mail|日历|Calendar|访达|Finder|App Store|终端|Terminal$|Telegram)"
+spaceSpeaiclHome="(IINA|系统偏好设置|System Preferences)"
 spaceMeeting="(zoom.us|TencentMeeting)"
 
 #===============================================================================
 # window rules
 #===============================================================================
-yabai -m rule --add app="${spaceTerm}" space=^term
+yabai -m rule --add app="${spaceCode}" space=^code
 yabai -m rule --add app="${spaceWeb}" space=^web
-yabai -m rule --add app="${spaceDev}" grid=${gridFull} space=^other manage=off
-yabai -m rule --add app="${spaceOther}" grid=${gridCenter} space=^other manage=off
-yabai -m rule --add app="${spaceSpeaiclOther}" grid=${gridSpeaicl} space=^other manage=off
+yabai -m rule --add app="${spaceDev}" grid=${gridFull} space=^home manage=off
+yabai -m rule --add app="${spaceHome}" grid=${gridCenter} space=^home manage=off
+yabai -m rule --add app="${spaceSpeaiclHome}" grid=${gridSpeaicl} space=^home manage=off
 yabai -m rule --add app="${spaceMeeting}" space=^meeting
 
 echo "yabai configuration loaded.."
