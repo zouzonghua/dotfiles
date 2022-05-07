@@ -61,6 +61,7 @@ map gs toggleViewSource
 "" Search-Engines
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 w: https://www.wikipedia.org/w/index.php?title=Special:Search&search=%s Wikipedia
+b: https://www.baidu.com/s?wd=%s Baidu
 g: https://github.com/search?q=%s Github
 y: https://www.youtube.com/results?search_query=%s Youtube
 ten: https://translate.google.com/?source=osdd#auto|en|%s Google Translator
