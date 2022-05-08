@@ -17,9 +17,10 @@ applist = {
 	{ hotkey = "Q", appname = "QQ" },
 	{ hotkey = "N", appname = "NeteaseMusic" },
 	{ hotkey = "Z", appname = "zoom.us" },
-
+	{ hotkey = "S", appname = "Spotify" },
 	{ hotkey = "L", appname = "Launchpad" },
 	{ hotkey = "F", appname = "Finder" },
+	{ hotkey = "P", appname = "Preview" },
 }
 
 fnutils.each(applist, function(item)
