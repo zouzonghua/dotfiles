@@ -15,6 +15,11 @@ map G scrollToBottom
 map gg scrollToTop
 map f LinkHints.activateMode
 map F LinkHints.activateModeToOpenInNewTab
+map gi focusInput
+map yf LinkHints.activateModeToCopyLinkUrl
+map yy copyCurrentUrl
+map p openCopiedUrlInCurrentTab
+map P openCopiedUrlInNewTab
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Using the vomnibar
@@ -36,6 +41,7 @@ map N performBackwardsFind
 map u goBack
 map <c-r> goForward
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Manipulating tabs
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -46,6 +52,7 @@ map ,hh closeTabsOnLeft
 map ,ll closeTabsOnRight
 map << moveTabLeft
 map >> moveTabRight
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Miscellaneous

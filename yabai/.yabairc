@@ -74,7 +74,7 @@ gridCenter=10:10:2:1:6:8
 gridFull=1:1:0:0:1:1
 gridSpeaicl=10:10:3:2:4:6
 
-spaceCode="(Alacritty|Code|Emacs)"
+spaceCode="(Alacritty|Code|Emacs|Preview)"
 spaceWeb="(Google Chrome|Safari)"
 spaceDev="(VMware Fusion|微信开发者工具$|Wechat Devtools$|Proxyman)"
 spaceHome="(Telegram|Spotify|Kodi|Tencent Lemon|微信|WeChat|QQ|网易云音乐|NeteaseMusic)"
