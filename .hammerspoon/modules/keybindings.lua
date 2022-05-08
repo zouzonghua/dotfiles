@@ -1,4 +1,4 @@
-local wm = require("modules/window-management")
+local wm = require("modules/window_management")
 local hk = require("hs.hotkey")
 local increaseSizeModifiers = { "shift", "cmd" }
 local decreaseSizeModifiers = { "shift", "alt" }
