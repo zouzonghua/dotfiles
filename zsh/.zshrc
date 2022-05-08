@@ -92,3 +92,5 @@
 
 export PATH="/usr/local/sbin:$PATH"
 
+# set tmux-spotify to use Apple Music instead of Spotify
+export MUSIC_APP="Spotify"
