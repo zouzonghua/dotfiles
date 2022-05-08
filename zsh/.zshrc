@@ -42,7 +42,7 @@
    PROMPT+='%{$fg[yellow]%}%c%{$reset_color%}$(git_prompt_info) '
 
   # add 24h time the right side
-  RPROMPT="%(?:%{$fg[green]%}%D{%k:%M:%S} :%{$fg[red]%}%D{%k:%M:%S} )"
+  # RPROMPT="%(?:%{$fg[green]%}%D{%k:%M:%S} :%{$fg[red]%}%D{%k:%M:%S} )"
   # RPROMPT='%D{%k:%M:%S}'
 
 #===============================================================================
@@ -84,13 +84,19 @@
 #===============================================================================
 # android sdk
 #===============================================================================
-  export ANDROID_HOME=$HOME/Library/Android/sdk 
-  export PATH=$PATH:$ANDROID_HOME/emulator 
-  export PATH=$PATH:$ANDROID_HOME/tools 
-  export PATH=$PATH:$ANDROID_HOME/tools/bin 
+  export ANDROID_HOME=$HOME/Library/Android/sdk
+  export PATH=$PATH:$ANDROID_HOME/emulator
+  export PATH=$PATH:$ANDROID_HOME/tools
+  export PATH=$PATH:$ANDROID_HOME/tools/bin
   export PATH=$PATH:$ANDROID_HOME/platform-tools
 
+#===============================================================================
+# set tmux-spotify to use Apple Music instead of Spotify
+#===============================================================================
+export MUSIC_APP="Spotify"
+
+#===============================================================================
+# other
+#===============================================================================
 export PATH="/usr/local/sbin:$PATH"
 
-# set tmux-spotify to use Apple Music instead of Spotify
-export MUSIC_APP="Spotify"
