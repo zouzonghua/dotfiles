@@ -18,8 +18,10 @@ applist = {
 	{ hotkey = "N", appname = "NeteaseMusic" },
 	{ hotkey = "Z", appname = "zoom.us" },
 	{ hotkey = "S", appname = "Spotify" },
+
 	{ hotkey = "L", appname = "Launchpad" },
 	{ hotkey = "F", appname = "Finder" },
+	{ hotkey = "B", appname = "Books" },
 	{ hotkey = "P", appname = "Preview" },
 }
 
