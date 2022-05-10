@@ -47,7 +47,7 @@ map <c-r> goForward
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <c-h> previousTab
 map <c-l> nextTab
-map <c-x> removeTab
+map <c-c> removeTab
 map ,hh closeTabsOnLeft
 map ,ll closeTabsOnRight
 map << moveTabLeft
