@@ -190,9 +190,10 @@ function Vim:eventWatcher(evt)
 		print("in eventWatcher: pressed " .. evtChar)
 	end
 	local insertEvents = "iIsaAoO"
-  -- exit 
-  local exitEvents = "¡™£¢"
+	-- exit
+	local exitEvents = { "¡", "™", "£", "¢" }
 	local commandMods = "rcdy"
+  -- print(evt:getKeyCode() == hs.keycodes.map["["])
 	-- this function mostly handles the state-dependent events
 	if self.events > 0 then
 		if self.debug then
@@ -223,12 +224,31 @@ function Vim:eventWatcher(evt)
 		self.events = 1
 		keyPress({ "cmd" }, "f")
 		keyPress({}, "i")
+	elseif evt:getKeyCode() == hs.keycodes.map["["] then
+		self.events = 1
+		keyPress({}, "escape")
+	elseif evt:getKeyCode() == hs.keycodes.map["return"] then
+		self.events = 1
+		keyPress({}, "return")
+	elseif evtChar == exitEvents[1] then
+		self.events = 1
+		self:exitModal()
+		keyPress({ "alt" }, "1")
+	elseif evtChar == exitEvents[2] then
+		self.events = 1
+		self:exitModal()
+		keyPress({ "alt" }, "2")
+	elseif evtChar == exitEvents[3] then
+		self.events = 1
+		self:exitModal()
+		keyPress({ "alt" }, "3")
+	elseif evtChar == exitEvents[4] then
+		self.events = 1
+		self:exitModal()
+		keyPress({ "alt" }, "4")
 	elseif insertEvents:find(evtChar, 1, true) ~= nil and self.state == "normal" and self.commandMods == nil then
 		-- do the insert
 		self:insert(evtChar)
-  elseif exitEvents:find(evtChar, 1, true) ~= nil and self.state == "normal" and self.commandMods == nil then
-    -- do the exit
-    self:exitModal()
 	else
 		-- anything else, literally
 		if self.debug then
@@ -309,5 +329,3 @@ local v = Vim:new()
 v:start()
 
 return Vim
-
-
