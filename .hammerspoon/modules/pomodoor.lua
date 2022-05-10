@@ -115,11 +115,13 @@ end
 -- focus last deactivated app
 local function focusLastDeactivatedApp()
 	local appfinder = require("hs.appfinder")
-	local name = _G.var.deactivatedApps[#_G.var.deactivatedApps]
-	local app = appfinder.appFromName(name)
-	local mainwin = app:mainWindow()
-	mainwin:application():activate(true)
-	mainwin:focus()
+  if #_G.var.deactivatedApps ~= 0 then
+    local name = _G.var.deactivatedApps[#_G.var.deactivatedApps]
+    local app = appfinder.appFromName(name)
+    local mainwin = app:mainWindow()
+    mainwin:application():activate(true)
+    mainwin:focus()
+  end
 end
 
 -- update pomodoro timer
@@ -149,7 +151,7 @@ local function pom_update_time()
 						pom.var.max_time_sec = pom.config.work_period_sec
 						pom_enable()
 						focusLastDeactivatedApp()
-						hs.alert.show("请注意休息啊")
+						hs.alert.show("请注意休息啊", 5)
 					end
 				end
 				hs.dialog.alert(
