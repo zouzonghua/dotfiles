@@ -19,4 +19,3 @@ require("modules/windows")
 require("modules/pomodoor")
 require("modules/vim_bindings")
 require("modules/application_watcher")
-

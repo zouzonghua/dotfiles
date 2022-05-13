@@ -7,11 +7,11 @@ local modifiers = { "ctrl", "alt", "shift" }
 
 
 local function checkWin(callback)
-	if window.focusedWindow() then
-		callback()
-	else
-		alert.show("No active window")
-	end
+  if window.focusedWindow() then
+    callback()
+  else
+    alert.show("No active window")
+  end
 end
 
 -- left half
@@ -21,9 +21,9 @@ end
 -- |        |        |
 -- +-----------------+
 hotkey.bind(modifiers, "h", function()
-	checkWin(function()
-		window.focusedWindow():moveToUnit(layout.left50)
-	end)
+  checkWin(function()
+    window.focusedWindow():moveToUnit(layout.left50)
+  end)
 end)
 
 -- right half
@@ -33,9 +33,9 @@ end)
 -- |        |        |
 -- +-----------------+
 hotkey.bind(modifiers, "l", function()
-	checkWin(function()
-		window.focusedWindow():moveToUnit(layout.right50)
-	end)
+  checkWin(function()
+    window.focusedWindow():moveToUnit(layout.right50)
+  end)
 end)
 
 -- maximize window
@@ -45,9 +45,9 @@ end)
 -- |                 |
 -- +-----------------+
 hotkey.bind(modifiers, "k", function()
-	checkWin(function()
-		window.focusedWindow():maximize()
-	end)
+  checkWin(function()
+    window.focusedWindow():maximize()
+  end)
 end)
 
 -- center window
@@ -57,9 +57,9 @@ end)
 -- |   +--------+    |
 -- +-----------------+
 hotkey.bind(modifiers, "j", function()
-	checkWin(function()
-		window.focusedWindow():moveToUnit("[20,10,80,90]")
-	end)
+  checkWin(function()
+    window.focusedWindow():moveToUnit("[20,10,80,90]")
+  end)
 end)
 
 -- left top quarter
@@ -69,9 +69,9 @@ end)
 -- |                 |
 -- +-----------------+
 hotkey.bind(modifiers, "y", function()
-	checkWin(function()
-		window.focusedWindow():moveToUnit("[0,0,50,50]")
-	end)
+  checkWin(function()
+    window.focusedWindow():moveToUnit("[0,0,50,50]")
+  end)
 end)
 
 -- right bottom quarter
@@ -81,7 +81,7 @@ end)
 -- |        |  HERE  |
 -- +-----------------+
 hotkey.bind(modifiers, "o", function()
-	window.focusedWindow():moveToUnit("[50,50,100,100]")
+  window.focusedWindow():moveToUnit("[50,50,100,100]")
 end)
 
 -- right top quarter
@@ -91,9 +91,9 @@ end)
 -- |                 |
 -- +-----------------+
 hotkey.bind(modifiers, "i", function()
-	checkWin(function()
-		window.focusedWindow():moveToUnit("[50,0,100,50]")
-	end)
+  checkWin(function()
+    window.focusedWindow():moveToUnit("[50,0,100,50]")
+  end)
 end)
 
 -- left bottom quarter
@@ -103,7 +103,7 @@ end)
 -- |  HERE  |        |
 -- +-----------------+
 hotkey.bind(modifiers, "u", function()
-	checkWin(function()
-		window.focusedWindow():moveToUnit("[0,50,50,100]")
-	end)
+  checkWin(function()
+    window.focusedWindow():moveToUnit("[0,50,50,100]")
+  end)
 end)

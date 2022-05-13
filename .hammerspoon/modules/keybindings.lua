@@ -11,9 +11,9 @@ local decreaseSizeModifiers = { "shift", "alt" }
 --   @key {string} hotkey
 --   @value {function} callback function
 local function windowBind(hyper, keyFuncTable)
-	for key, fn in pairs(keyFuncTable) do
-		hk.bind(hyper, key, fn)
-	end
+  for key, fn in pairs(keyFuncTable) do
+    hk.bind(hyper, key, fn)
+  end
 end
 
 -- * Move window to screen
@@ -40,10 +40,10 @@ end
 
 -- * Set Window Resize
 windowBind(increaseSizeModifiers, {
-	h = wm.rightToLeft,
-	l = wm.rightToRight,
-	k = wm.bottomUp,
-	j = wm.bottomDown,
+  h = wm.rightToLeft,
+  l = wm.rightToRight,
+  k = wm.bottomUp,
+  j = wm.bottomDown,
 })
 -- * Set Window Resize
 windowBind(decreaseSizeModifiers, {
