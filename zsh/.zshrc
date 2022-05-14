@@ -29,7 +29,7 @@
         local gitstatuscolor='%F{blue}'
         local flag='✔'
       fi
-      echo "${gitstatuscolor}(${ref}) ${flag}%F{none}"
+      echo "${gitstatuscolor}  ${ref} ${flag}%F{none}"
     else
       echo ""
     fi
