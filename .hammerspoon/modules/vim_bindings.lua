@@ -42,7 +42,8 @@ end
 
 function keyPress(mod, char)
   -- press a key for 20ms
-  hs.eventtap.keyStroke(mod, char, 10000)
+  hs.eventtap.keyStroke(mod, char, 0)
+  -- hs.eventtap.keyStroke(mod, char, 10000)
 end
 
 function keyPressFactory(mod, char)
@@ -83,6 +84,12 @@ end
 
 function Vim:start()
   local selfPointer = self
+  self.onlyCmdPressed = false
+  self.controlTapWatcher = hs.eventtap.new({ hs.eventtap.event.types.flagsChanged }, function(evt)
+    return self:modifierWarchr(evt)
+  end
+  )
+
   self.tapWatcher = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, function(evt)
     return self:eventWatcher(evt)
   end)
@@ -90,10 +97,13 @@ function Vim:start()
   function self.modal:entered()
     -- reset to the normal mode
     selfPointer.tapWatcher:start()
+    selfPointer.controlTapWatcher:start()
+    self.onlyCmdPressed = false
     hs.alert.show("enabled vim mode")
   end
 
   function self.modal:exited()
+    selfPointer.controlTapWatcher:stop()
     selfPointer.tapWatcher:stop()
     selfPointer:setMode("normal")
     selfPointer:resetEvents()
@@ -183,6 +193,23 @@ function Vim:handleKeyEvent(char)
   return stop_event
 end
 
+function Vim:modifierWarchr(evt)
+  local flags = evt:getFlags()
+  local onlyCmdPressed = false
+  for k, v in pairs(flags) do
+    onlyCmdPressed = v and k == "cmd"
+    if not onlyCmdPressed then break end
+  end
+
+  if onlyCmdPressed then
+    print("keyhandler on")
+    self.onlyCmdPressed = true
+  elseif not next(flags) then
+    self.onlyCmdPressed = false
+    print("keyhandler off")
+  end
+end
+
 function Vim:eventWatcher(evt)
   -- stop an event from propagating through the event system
   local stop_event = true
@@ -191,10 +218,11 @@ function Vim:eventWatcher(evt)
     print("in eventWatcher: pressed " .. evtChar)
   end
   local insertEvents = "iIsaAoO"
+  local normalEvents = "hjklbewx0$"
   -- exit
   local exitEvents = { "¡", "™", "£", "¢" }
   local commandMods = "rcdy"
-  -- print(evt:getKeyCode() == hs.keycodes.map["["])
+  -- print(evt:getKeyCode() == hs.keycodes.map["ctrl"])
   -- this function mostly handles the state-dependent events
   if self.events > 0 then
     if self.debug then
@@ -231,6 +259,18 @@ function Vim:eventWatcher(evt)
   elseif evt:getKeyCode() == hs.keycodes.map["return"] then
     self.events = 1
     keyPress({}, "return")
+  elseif evtChar == "h" and self.onlyCmdPressed then
+    self.events = 1
+    keyPress({ "cmd" }, "left")
+  elseif evtChar == "l" and self.onlyCmdPressed then
+    self.events = 1
+    keyPress({ "cmd" }, "right")
+  elseif evtChar == "j" and self.onlyCmdPressed then
+    self.events = 1
+    keyPress({ "cmd" }, "down")
+  elseif evtChar == "k" and self.onlyCmdPressed then
+    self.events = 1
+    keyPress({ "cmd" }, "up")
   elseif evtChar == exitEvents[1] then
     self.events = 1
     self:exitModal()
@@ -255,7 +295,9 @@ function Vim:eventWatcher(evt)
     if self.debug then
       print("handling key press event for movement")
     end
-    stop_event = self:handleKeyEvent(evtChar)
+    if normalEvents:find(evtChar, 1, true) ~= nil then
+      stop_event = self:handleKeyEvent(evtChar)
+    end
   end
   return stop_event
 end
