@@ -1,5 +1,5 @@
 -- @sse https://wingillis.github.io/blog/hammerspoon-vim-bindings/
-function mergeArrays(ar1, ar2)
+local function mergeArrays(ar1, ar2)
   -- add each array value to a table, and send the iteration at the end
   local tmp = {}
   for _, v in ipairs(ar1) do
@@ -9,51 +9,52 @@ function mergeArrays(ar1, ar2)
     tmp[v2] = true
   end
   local output = {}
-  for k, v in pairs(tmp) do
+  for k, _ in pairs(tmp) do
     table.insert(output, k)
   end
   return output
 end
 
-function mergeTables(t1, t2)
-  local output = {}
-  for k, v in pairs(t1) do
-    if t2[k] == nil then
-      output[k] = v
-    else
-      output[k] = t2[k]
-    end
-  end
+-- local function mergeTables(t1, t2)
+--   local output = {}
+--   for k, v in pairs(t1) do
+--     if t2[k] == nil then
+--       output[k] = v
+--     else
+--       output[k] = t2[k]
+--     end
+--   end
+-- 
+--   for k, v in pairs(t2) do
+--     if output[k] == nil then
+--       output[k] = v
+--     end
+--   end
+--   return output
+-- end
 
-  for k, v in pairs(t2) do
-    if output[k] == nil then
-      output[k] = v
-    end
-  end
-  return output
-end
-
-function delayedKeyPress(mod, char, delay)
-  -- if needed you can do a delayed keypress by `delay` seconds
-  return hs.timer.delayed.new(delay, function()
-    keyPress(mod, char)
-  end)
-end
-
-function keyPress(mod, char)
+local function keyPress(mod, char)
   -- press a key for 20ms
   hs.eventtap.keyStroke(mod, char, 0)
   -- hs.eventtap.keyStroke(mod, char, 10000)
 end
 
-function keyPressFactory(mod, char)
+-- local function delayedKeyPress(mod, char, delay)
+--   -- if needed you can do a delayed keypress by `delay` seconds
+--   return hs.timer.delayed.new(delay, function()
+--     keyPress(mod, char)
+--   end)
+-- end
+
+
+local function keyPressFactory(mod, char)
   -- return a function to press a certain key for 20ms
   return function()
     keyPress(mod, char)
   end
 end
 
-function complexKeyPressFactory(mods, keys)
+local function complexKeyPressFactory(mods, keys)
   -- mods and keys are arrays and have to be the same length
   return function()
     for i, v in ipairs(keys) do
@@ -65,7 +66,7 @@ end
 local Vim = {}
 
 function Vim:new()
-  newObj = {
+  local newObj = {
     state = "normal",
     keyMods = {}, -- these are like cmd, alt, shift, etc...
     commandMods = nil, -- these are like d, y, c in normal mode
