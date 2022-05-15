@@ -57,7 +57,7 @@ end
 local function complexKeyPressFactory(mods, keys)
   -- mods and keys are arrays and have to be the same length
   return function()
-    for i, v in ipairs(keys) do
+    for i, _ in ipairs(keys) do
       keyPress(mods[i], keys[i])
     end
   end
@@ -222,7 +222,7 @@ function Vim:eventWatcher(evt)
   local normalEvents = "hjklbewx0$"
   -- exit
   local exitEvents = { "¡", "™", "£", "¢" }
-  local commandMods = "rcdy"
+  -- local commandMods = "rcdy"
   -- print(evt:getKeyCode() == hs.keycodes.map["ctrl"])
   -- this function mostly handles the state-dependent events
   if self.events > 0 then
