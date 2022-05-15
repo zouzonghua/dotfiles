@@ -104,3 +104,5 @@
 
 [init]
 	defaultBranch = main
+[core]
+	quotepath = false
