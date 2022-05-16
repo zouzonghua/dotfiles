@@ -1,8 +1,6 @@
 local grid = require("hs.grid")
 local hotkey = require("hs.hotkey")
--- local window = require("hs.window")
 local fnutils = require("hs.fnutils")
--- local appfinder = require("hs.appfinder")
 local application = require("hs.application")
 
 local modifiers = { "ctrl", "alt" }
@@ -15,7 +13,6 @@ local applist = {
   { hotkey = "T", appname = "Telegram Desktop" },
   { hotkey = "W", appname = "WeChat" },
   { hotkey = "Q", appname = "QQ" },
-  { hotkey = "N", appname = "NeteaseMusic" },
   { hotkey = "Z", appname = "zoom.us" },
   { hotkey = "S", appname = "Spotify" },
   { hotkey = "L", appname = "Launchpad" },
@@ -33,21 +30,21 @@ end)
 
 -- Toggle an application between being the frontmost app, and being hidden
 -- local function toggle_application(_app)
--- 	local app = appfinder.appFromName(_app)
--- 	if not app then
--- 		application.launchOrFocus(_app)
--- 		return
--- 	end
--- 	local mainwin = app:mainWindow()
--- 	if mainwin then
--- 		if mainwin == window.focusedWindow() then
--- 			mainwin:application():hide()
--- 		else
--- 			mainwin:application():activate(true)
--- 			mainwin:application():unhide()
--- 			mainwin:focus()
--- 		end
--- 	else
--- 		application.launchOrFocus(_app)
--- 	end
+--   local app = hs.appfinder.appFromName(_app)
+--   if not app then
+--     application.launchOrFocus(_app)
+--     return
+--   end
+--   local mainwin = app:mainWindow()
+--   if mainwin then
+--     if mainwin == hs.window.focusedWindow() then
+--       mainwin:application():hide()
+--     else
+--       mainwin:application():activate(true)
+--       mainwin:application():unhide()
+--       mainwin:focus()
+--     end
+--   else
+--     application.launchOrFocus(_app)
+--   end
 -- end

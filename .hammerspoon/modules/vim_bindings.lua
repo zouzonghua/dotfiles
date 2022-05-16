@@ -86,12 +86,14 @@ end
 function Vim:start()
   local selfPointer = self
   self.onlyCmdPressed = false
-  self.controlTapWatcher = hs.eventtap.new({ hs.eventtap.event.types.flagsChanged }, function(evt)
+  local flagsChanged = hs.eventtap.event.types.flagsChanged
+  local keyDown = hs.eventtap.event.types.keyDown
+  self.controlTapWatcher = hs.eventtap.new({ flagsChanged }, function(evt)
     return self:modifierWarchr(evt)
   end
   )
 
-  self.tapWatcher = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, function(evt)
+  self.tapWatcher = hs.eventtap.new({ keyDown }, function(evt)
     return self:eventWatcher(evt)
   end)
   self.modal = hs.hotkey.modal.new({ "ctrl", "alt" }, "[")
@@ -288,7 +290,8 @@ function Vim:eventWatcher(evt)
     self.events = 1
     self:exitModal()
     keyPress({ "alt" }, "4")
-  elseif insertEvents:find(evtChar, 1, true) ~= nil and self.state == "normal" and self.commandMods == nil then
+  elseif insertEvents:find(evtChar, 1, true) ~= nil
+      and self.state == "normal" and self.commandMods == nil then
     -- do the insert
     self:insert(evtChar)
   else
