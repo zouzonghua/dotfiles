@@ -62,8 +62,6 @@
   alias unproxy="unset http_proxy https_proxy ALL_PROXY && curl ip.sb"
   alias brewUpdate='brew update && brew upgrade && brew cu -a -y && brew cleanup && brew cleanup --prune 0'
 
-  alias vi="nvim"
-  alias vim="nvim"
   alias g="git"
   alias ssh='TERM=xterm ssh'
   alias ll='ls -lhAF'
