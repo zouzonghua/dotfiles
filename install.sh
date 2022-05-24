@@ -23,6 +23,12 @@ hash git >/dev/null && /usr/bin/env git clone -b 'main' git@github.com:zouzonghu
   exit
 }
 
+# check if stow is installed
+hash stow >/dev/null || {
+    echo "Sorry, Stow is not installed yet!"
+  exit
+}
+
 # run install all config
 items=(
     "alacritty"
