@@ -9,16 +9,7 @@ my personal dotfiles mac
 ## installation
 
 ```sh
-brew install stow
-
-stow alacritty
-stow zsh
-stow tmux
-stow git
-stow yabai
-stow sknd
-stow hammerspoon
-
+sh <(curl -L https://github.com/zouzonghua/dotfiles/raw/main/install.sh)
 ```
 
 ## vimium
