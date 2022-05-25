@@ -1,6 +1,8 @@
 #!/bin/bash
 dotfiles_folder=~/dotfiles
 backup_rand=$RANDOM
+font_file=~/Library/Fonts/Meslo\ LG\ M\ Regular\ Nerd\ Font\ Complete.ttf
+font_file_url=https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Meslo/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete.ttf
 
 # detect if there's a dotfiles folder
 if [ -d $dotfiles_folder  ]
@@ -29,15 +31,23 @@ hash stow >/dev/null || {
   exit
 }
 
+# check if Font is installed
+if [ ! -f "$font_file" ]; then
+    echo "install font..."
+    cd ~/Library/Fonts && curl -fLo "Meslo LG M Regular Nerd Font Complete.ttf" "$font_file_url"
+    echo "install Meslo LG M Regular Nerd Font Complete done."
+fi
+
 # run install all config
 items=(
     "alacritty"
-    "zsh"
-    "tmux"
     "git"
-    "yabai"
-    "skhd"
     "hammerspoon"
+    "rime"
+    "skhd"
+    "tmux"
+    "yabai"
+    "zsh"
 )
 
 for item in "${items[@]}" ; do
