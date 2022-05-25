@@ -3,6 +3,16 @@ dotfiles_folder=~/dotfiles
 backup_rand=$RANDOM
 font_file=~/Library/Fonts/Meslo\ LG\ M\ Regular\ Nerd\ Font\ Complete.ttf
 font_file_url=https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Meslo/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete.ttf
+items=(
+    "alacritty"
+    "git"
+    "hammerspoon"
+    "rime"
+    "skhd"
+    "tmux"
+    "yabai"
+    "zsh"
+)
 
 # detect if there's a dotfiles folder
 if [ -d $dotfiles_folder  ]
@@ -15,7 +25,17 @@ then
         mv $dotfiles_folder $dotfiles_folder-$(date +%Y%m%d)-$backup_rand
       else
         echo "You have a $dotfiles_folder now, please backup this first."
-        exit
+          read -p "whether to use the current folder for installation? [y/n] " ans
+          if [ "$ans" == "y"  ]
+            then
+              for item in "${items[@]}" ; do
+                  stow -t "$HOME" -R "${item}"
+                  echo "${item} done."
+              done
+              exit
+          else
+             exit
+          fi
   fi
 fi
 
@@ -39,17 +59,6 @@ if [ ! -f "$font_file" ]; then
 fi
 
 # run install all config
-items=(
-    "alacritty"
-    "git"
-    "hammerspoon"
-    "rime"
-    "skhd"
-    "tmux"
-    "yabai"
-    "zsh"
-)
-
 for item in "${items[@]}" ; do
     stow -t "$HOME" -R "${item}"
     echo "${item} done."
