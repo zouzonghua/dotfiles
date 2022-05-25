@@ -9,8 +9,9 @@ grid.setMargins({ 0, 0 })
 
 local applist = {
   { hotkey = "A", appname = "Alacritty" },
-  { hotkey = "C", appname = "Google Chrome" },
-  { hotkey = "T", appname = "Telegram Desktop" },
+  { hotkey = "G", appname = "Google Chrome" },
+  { hotkey = "C", appname = "calibre" },
+  { hotkey = "T", appname = "Telegram" },
   { hotkey = "W", appname = "WeChat" },
   { hotkey = "Q", appname = "QQ" },
   { hotkey = "Z", appname = "zoom.us" },
