@@ -3,7 +3,7 @@ dotfiles_folder=~/dotfiles
 backup_rand=$RANDOM
 font_file=~/Library/Fonts/Meslo\ LG\ M\ Regular\ Nerd\ Font\ Complete.ttf
 font_file_url=https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Meslo/M/Regular/complete/Meslo%20LG%20M%20Regular%20Nerd%20Font%20Complete.ttf
-items=(
+packages=(
     "alacritty"
     "git"
     "hammerspoon"
@@ -28,9 +28,17 @@ then
           read -p "whether to use the current folder for installation? [y/n] " ans
           if [ "$ans" == "y"  ]
             then
-              for item in "${items[@]}" ; do
-                  stow -t "$HOME" -R "${item}"
-                  echo "${item} done."
+              for item in "${packages[@]}" ; do
+                conflicts=$(stow --no --verbose $item 2>&1 | awk '/\* existing target is/ {print $NF}')
+                for filename in ${conflicts[@]}; do
+                  if [[ -f $HOME/$filename || -L $HOME/$filename ]]; then
+                    echo "DELETE: $filename"
+                    rm -f "$HOME/$filename"
+                  fi
+                done
+                # stow --no-folding -t "$HOME" -R "${item}"
+                stow --no-folding --verbose $item
+                echo "${item} done."
               done
               exit
           else
@@ -59,9 +67,17 @@ if [ ! -f "$font_file" ]; then
 fi
 
 # run install all config
-for item in "${items[@]}" ; do
-    stow -t "$HOME" -R "${item}"
-    echo "${item} done."
+for item in "${packages[@]}" ; do
+  conflicts=$(stow --no --verbose $item 2>&1 | awk '/\* existing target is/ {print $NF}')
+  for filename in ${conflicts[@]}; do
+    if [[ -f $HOME/$filename || -L $HOME/$filename ]]; then
+      echo "DELETE: $filename"
+      rm -f "$HOME/$filename"
+    fi
+  done
+  # stow --no-folding -t "$HOME" -R "${item}"
+  stow --no-folding --verbose $item
+  echo "${item} done."
 done
 
 echo ""
