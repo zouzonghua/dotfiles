@@ -190,8 +190,11 @@ key_bindings:
   - { key: Key6,      mods: Alt|Shift, chars: "\x1b^"                       } # Alt + ^
   - { key: Backslash, mods: Alt,       chars: "\x1b\\"                      } # Alt + \
   - { key: Backslash, mods: Alt|Shift, chars: "\x1b|"                       } # Alt + |
-  - { key: Back, action: ReceiveChar }
-  - { key: P,       mods: Shift|Control,     chars: "\x1b[1;2A" }
-  - { key: N,       mods: Shift|Control,     chars: "\x1b[1;2B" }
-  - { key: B,       mods: Shift|Control,     chars: "\x1b[1;2D" }
-  - { key: F,       mods: Shift|Control,     chars: "\x1b[1;2C" }
+  - { key: Back,      action: ReceiveChar }
+  - { key: Back,      mods: Control,           chars: "\x00\x1bb\x08"} # C-space + M-b + ^H
+  - { key: Back,      mods: Control|Shift,     chars: "\x05\x00\x01\x08"} # C-e + C-space + C-a + ^H
+  - { key: P,         mods: Shift|Control,     chars: "\x3b[1;2A" }
+  - { key: N,         mods: Shift|Control,     chars: "\x1b[1;2B" }
+  - { key: B,         mods: Shift|Control,     chars: "\x1b[1;2D" }
+  - { key: F,         mods: Shift|Control,     chars: "\x1b[1;2C" }
+  - { key: A,         mods: Command,           chars: "\x02" } # tmux C-b
