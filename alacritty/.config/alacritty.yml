@@ -111,6 +111,8 @@ colors:
 # @see https://github.com/alacritty/alacritty/issues/62#issuecomment-347552058
 # 解决 退格键问题
 # @see https://github.com/alacritty/alacritty/issues/1606
+# how get chars @see https://www.joshmedeski.com/posts/macos-keyboard-shortcuts-for-tmux
+# $ xxd -psd
 #===============================================================================
 key_bindings:
 
@@ -193,8 +195,8 @@ key_bindings:
   - { key: Back,      action: ReceiveChar }
   - { key: Back,      mods: Control,           chars: "\x1bb\x0b"} #  M-b + C-k
   - { key: Back,      mods: Control|Shift,     chars: "\x01\x0b"} # C-a + C-k
-  - { key: P,         mods: Shift|Control,     chars: "\x3b[1;2A" }
-  - { key: N,         mods: Shift|Control,     chars: "\x1b[1;2B" }
-  - { key: B,         mods: Shift|Control,     chars: "\x1b[1;2D" }
-  - { key: F,         mods: Shift|Control,     chars: "\x1b[1;2C" }
+  - { key: P,         mods: Shift|Control,     chars: "\x3b[1;2A" } # C-P
+  - { key: N,         mods: Shift|Control,     chars: "\x1b[1;2B" } # C-N
+  - { key: B,         mods: Shift|Control,     chars: "\x1b[1;2D" } # C-B
+  - { key: F,         mods: Shift|Control,     chars: "\x1b[1;2C" } # C-F
   - { key: A,         mods: Command,           chars: "\x02" } # tmux C-b
