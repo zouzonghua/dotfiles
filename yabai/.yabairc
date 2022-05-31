@@ -74,10 +74,10 @@ gridCenter=10:10:2:1:6:8
 gridFull=1:1:0:0:1:1
 gridSpeaicl=10:10:3:2:4:6
 
-spaceCode="(Alacritty|Code|Emacs|Preview)"
+spaceCode="(Alacritty|Code|Preview)"
 spaceWeb="(Google Chrome|Safari)"
 spaceDev="(VMware Fusion|微信开发者工具$|Wechat Devtools$|Proxyman)"
-spaceHome="(calibre|qBittorrent|Telegram|Spotify|Kodi|Tencent Lemon|微信|WeChat|QQ|网易云音乐|NeteaseMusic)"
+spaceHome="(Karabiner-Elements|Karabiner-EventViewer|calibre|qBittorrent|Telegram|Spotify|Kodi|Tencent Lemon|微信|WeChat|QQ|网易云音乐|NeteaseMusic)"
 spaceSystem="(邮件|Mail|日历|Calendar|访达|Finder|App Store|终端|Terminal$)"
 spaceSpeaiclHome="(IINA|系统偏好设置|System Preferences)"
 spaceMeeting="(zoom.us|TencentMeeting)"
@@ -85,7 +85,8 @@ spaceMeeting="(zoom.us|TencentMeeting)"
 #===============================================================================
 # window rules
 #===============================================================================
-yabai -m rule --add app="${spaceCode}" space=^code
+yabai -m rule --add app="Emacs" space=^code  manage=on title!='^$'
+yabai -m rule --add app="${spaceCode}" space=^code  manage=on
 yabai -m rule --add app="${spaceWeb}" space=^web
 yabai -m rule --add app="${spaceDev}" grid=${gridFull} space=^home manage=off
 yabai -m rule --add app="${spaceHome}" grid=${gridCenter} space=^home manage=off

@@ -106,3 +106,4 @@
 	defaultBranch = main
 [core]
 	quotepath = false
+  editor = emacsclient -t -a=\\\"\\\"

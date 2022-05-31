@@ -4,9 +4,9 @@ local increaseSizeModifiers = { "shift", "cmd" }
 local decreaseSizeModifiers = { "shift", "alt" }
 
 
-hk.bind('', 'delete', function()
-  print('disabled delete')
-end)
+-- hk.bind('', 'delete', function()
+--   print('disabled delete')
+-- end)
 
 -- * Key Binding Utility
 --- Bind hotkey for window management.

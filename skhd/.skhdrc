@@ -88,7 +88,7 @@ shift + alt - h : yabai -m window --resize right:-40:0
 #==============================================================================
 
 # Fullscreen (still includes gaps)
-shift + alt - f : yabai -m window --toggle zoom-fullscreen
+# shift + alt - f : yabai -m window --toggle zoom-fullscreen
 # shift + alt - f : yabai -m window --toggle native-fullscreen
 
 # Float and center

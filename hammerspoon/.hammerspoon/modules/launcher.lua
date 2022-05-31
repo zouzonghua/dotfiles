@@ -3,12 +3,13 @@ local hotkey = require("hs.hotkey")
 local fnutils = require("hs.fnutils")
 local application = require("hs.application")
 
-local modifiers = { "ctrl", "alt" }
+local modifiers = { "ctrl", "alt", 'shift', 'cmd' }
 
 grid.setMargins({ 0, 0 })
 
 local applist = {
   { hotkey = "A", appname = "Alacritty" },
+  { hotkey = "E", appname = "Emacs" },
   { hotkey = "G", appname = "Google Chrome" },
   { hotkey = "C", appname = "calibre" },
   { hotkey = "T", appname = "Telegram" },
