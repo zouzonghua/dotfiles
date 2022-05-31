@@ -191,8 +191,8 @@ key_bindings:
   - { key: Backslash, mods: Alt,       chars: "\x1b\\"                      } # Alt + \
   - { key: Backslash, mods: Alt|Shift, chars: "\x1b|"                       } # Alt + |
   - { key: Back,      action: ReceiveChar }
-  - { key: Back,      mods: Control,           chars: "\x00\x1bb\x08"} # C-space + M-b + ^H
-  - { key: Back,      mods: Control|Shift,     chars: "\x05\x00\x01\x08"} # C-e + C-space + C-a + ^H
+  - { key: Back,      mods: Control,           chars: "\x1bb\x0b"} #  M-b + C-k
+  - { key: Back,      mods: Control|Shift,     chars: "\x01\x0b"} # C-a + C-k
   - { key: P,         mods: Shift|Control,     chars: "\x3b[1;2A" }
   - { key: N,         mods: Shift|Control,     chars: "\x1b[1;2B" }
   - { key: B,         mods: Shift|Control,     chars: "\x1b[1;2D" }
