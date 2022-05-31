@@ -200,3 +200,5 @@ key_bindings:
   - { key: B,         mods: Shift|Control,     chars: "\x1b[1;2D" } # C-B
   - { key: F,         mods: Shift|Control,     chars: "\x1b[1;2C" } # C-F
   - { key: A,         mods: Command,           chars: "\x02" } # tmux C-b
+  - { key: Return,    mods: Shift|Control,           chars: "\x10\x0a"} # C-p return
+  - { key: Return,    mods: Control,           chars: "\x05\x0a"} # C-e return
