@@ -69,6 +69,10 @@
   alias tcn='trans :zh-CN'
   alias ttw='trans :zh-TW'
 
+  alias et='emacsclient -a "" -t'
+  alias ec='emacsclient -a "" -c -n'
+  alias eq='emacsclient -e "(kill-emacs)"'
+
 #===============================================================================
 # locale
 #===============================================================================
@@ -96,3 +100,6 @@ export MUSIC_APP="Spotify"
 #===============================================================================
 export PATH="/usr/local/sbin:$PATH"
 
+#export ALTERNATE_EDITOR=""                      # 系统会自动的尝试使用 emacs --daemon 命令来启动. 否则直接打开.
+export EDITOR='emacsclient -a "" -t "$@"'         # $EDITOR opens in terminal
+# export VISUAL="emacsclient -c -a emacs"         # $VISUAL opens in GUI mode

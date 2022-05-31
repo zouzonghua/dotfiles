@@ -191,5 +191,7 @@ key_bindings:
   - { key: Backslash, mods: Alt,       chars: "\x1b\\"                      } # Alt + \
   - { key: Backslash, mods: Alt|Shift, chars: "\x1b|"                       } # Alt + |
   - { key: Back, action: ReceiveChar }
-
-
+  - { key: P,       mods: Shift|Control,     chars: "\x1b[1;2A" }
+  - { key: N,       mods: Shift|Control,     chars: "\x1b[1;2B" }
+  - { key: B,       mods: Shift|Control,     chars: "\x1b[1;2D" }
+  - { key: F,       mods: Shift|Control,     chars: "\x1b[1;2C" }
