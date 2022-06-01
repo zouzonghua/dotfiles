@@ -3,9 +3,9 @@
 #==============================================================================
 
 # Create space on the active display
-shift + alt - n : yabai -m space --create
+# shift + alt - n : yabai -m space --create
 # Delete focused space and focus first space on display
-shift + alt - d : yabai -m space --destroy
+# shift + alt - d : yabai -m space --destroy
 
 
 #==============================================================================
