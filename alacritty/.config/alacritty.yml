@@ -195,10 +195,14 @@ key_bindings:
   - { key: Back,      action: ReceiveChar }
   - { key: Back,      mods: Control,           chars: "\x1bb\x0b"} #  M-b + C-k
   - { key: Back,      mods: Control|Shift,     chars: "\x01\x0b"} # C-a + C-k
-  - { key: P,         mods: Shift|Control,     chars: "\x3b[1;2A" } # C-P
+  - { key: P,         mods: Shift|Control,     chars: "\x1b[1;2A" } # C-P
   - { key: N,         mods: Shift|Control,     chars: "\x1b[1;2B" } # C-N
   - { key: B,         mods: Shift|Control,     chars: "\x1b[1;2D" } # C-B
   - { key: F,         mods: Shift|Control,     chars: "\x1b[1;2C" } # C-F
-  - { key: A,         mods: Command,           chars: "\x02" } # tmux C-b
-  - { key: Return,    mods: Shift|Control,           chars: "\x10\x0a"} # C-p return
-  - { key: Return,    mods: Control,           chars: "\x05\x0a"} # C-e return
+    #  - { key: E,         mods: Shift|Control,     chars: "\x00\x05" } # C-E
+    #  - { key: A,         mods: Shift|Control,     chars: "\x00\x01" } # C-A
+  - { key: Return,    mods: Control,           chars: "\x05\x1bj"} # C-e M-j
+  - { key: Return,    mods: Shift|Control,     chars: "\x10\x05\x1bj"} # C-p M-j
+  - { key: A,         mods: Command,           chars: "\x1bq" } # tmux M-q
+
+
