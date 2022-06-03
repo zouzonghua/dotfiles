@@ -197,18 +197,19 @@ key_bindings:
   # @see https://github.com/alacritty/alacritty/issues/5508
   - { key: LBracket,  mods: Alt|Shift,     chars: "\x1b[1;5A"               } # C-{
   - { key: RBracket,  mods: Alt|Shift,     chars: "\x1b[1;5B"               } # C-}
-  - { key: LBracket,  mods: Alt,           chars: "\x5b"                    }  # [
-  - { key: RBracket,  mods: Alt,           chars: "\x5d"                    }  # ]
-  - { key: Back,      action: ReceiveChar                                   }
-  - { key: Back,      mods: Control,           chars: "\x1bb\x0b"           } #  M-b + C-k
+  - { key: LBracket,  mods: Alt,           chars: "\x5b"                    } # [
+  - { key: RBracket,  mods: Alt,           chars: "\x5d"                    } # ]
+  - { key: Back,      action: ReceiveChar                                   } # back
+  - { key: Back,      mods: Control,           chars: "\x1bb\x0b"           } # M-b + C-k
   - { key: Back,      mods: Control|Shift,     chars: "\x01\x0b"            } # C-a + C-k
   - { key: P,         mods: Shift|Control,     chars: "\x1b[1;2A"           } # C-P
   - { key: N,         mods: Shift|Control,     chars: "\x1b[1;2B"           } # C-N
   - { key: B,         mods: Shift|Control,     chars: "\x1b[1;2D"           } # C-B
   - { key: F,         mods: Shift|Control,     chars: "\x1b[1;2C"           } # C-F
-  # - { key: E,         mods: Shift|Control,     chars: "\x00\x05"          } # C-E
-  # - { key: A,         mods: Shift|Control,     chars: "\x00\x01"          } # C-A
+  - { key: E,         mods: Shift|Control,     chars: "\x00\x05"            } # C-@ C-E
+  - { key: A,         mods: Shift|Control,     chars: "\x00\x01"            } # C-@ C-A
   - { key: Return,    mods: Control,           chars: "\x05\x1bj"           } # C-e M-j
   - { key: Return,    mods: Shift|Control,     chars: "\x10\x05\x1bj"       } # C-p M-j
   - { key: A,         mods: Command,           chars: "\x1bq"               } # tmux M-q
+  - { key: C,         mods: Command,           chars: "\x1bw"               } # emacs M-w
 
