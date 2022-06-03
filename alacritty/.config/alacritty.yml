@@ -199,6 +199,7 @@ key_bindings:
   - { key: RBracket,  mods: Alt|Shift,     chars: "\x1b[1;5B"               } # C-}
   - { key: LBracket,  mods: Alt,           chars: "\x5b"                    } # [
   - { key: RBracket,  mods: Alt,           chars: "\x5d"                    } # ]
+  - { key: RBracket,  mods: control,       chars: "\x1bq"                    } # ] => tmux M-q
   - { key: Back,      action: ReceiveChar                                   } # back
   - { key: Back,      mods: Control,           chars: "\x1bb\x0b"           } # M-b + C-k
   - { key: Back,      mods: Control|Shift,     chars: "\x01\x0b"            } # C-a + C-k
@@ -210,6 +211,6 @@ key_bindings:
   - { key: A,         mods: Shift|Control,     chars: "\x00\x01"            } # C-@ C-A
   - { key: Return,    mods: Control,           chars: "\x05\x1bj"           } # C-e M-j
   - { key: Return,    mods: Shift|Control,     chars: "\x10\x05\x1bj"       } # C-p M-j
-  - { key: A,         mods: Command,           chars: "\x1bq"               } # tmux M-q
+  #  - { key: A,         mods: Command,           chars: "\x1bq"               } # tmux M-q
   - { key: C,         mods: Command,           chars: "\x1bw"               } # emacs M-w
 
