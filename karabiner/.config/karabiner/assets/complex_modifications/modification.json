@@ -114,7 +114,7 @@
       ]
     },
     {
-      "description": "Link Emacs keybindings (⌃ + n p f b y w) (⇧ + f b w)",
+      "description": "Like Emacs keybindings (⌃ + n p f b y w) (⇧ + f b w)",
       "manipulators": [
         {
           "type": "basic",
