@@ -233,5 +233,5 @@ key_bindings:
   - { key: A,         mods: Shift|Control,     chars: "\x00\x01"            } # C-@ C-A
   - { key: Return,    mods: Control,           chars: "\x05\x1bj"           } # C-e M-j
   - { key: Return,    mods: Shift|Control,     chars: "\x10\x05\x1bj"       } # C-p C-e M-j
-  #  - { key: A,         mods: Command,           chars: "\x1bq"               } # tmux M-q
-  - { key: C,        mods: Command,           chars: "\x1bw"               } # emacs M-w
+  # - { key: A,         mods: Command,           chars: "\x1bq"               } # tmux M-q
+  # - { key: C,        mods: Command,           chars: "\x1bw"               } # emacs M-w
