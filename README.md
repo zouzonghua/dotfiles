@@ -30,16 +30,12 @@ map n scrollDown
 map p scrollUp
 map b scrollToLeft
 map f scrollToRight
-
 map <a-√> scrollPageUp " <a-v>
 map <c-v> scrollPageDown
-
 map <a-¯> scrollToTop " <a-<>
 map <a-˘> scrollToBottom " <a->>
-
 map <c-x><c-f> LinkHints.activateMode
 map <c-x><c-F> LinkHints.activateModeToOpenInNewForegroundTab
-
 map <c-g>i focusInput
 map r reload
 
@@ -72,13 +68,10 @@ map <c-g><c-_> goForward
 map <c-x><c-c> removeTab
 map <c-x>0 removeTab
 map <c-x>1 closeOtherTabs
-
 map <c-f> nextTab
 map <c-b> previousTab
-
 map <c-g>pp closeTabsOnLeft
 map <c-g>nn closeTabsOnRight
-
 map << moveTabLeft
 map >> moveTabRight
 
@@ -87,6 +80,7 @@ map >> moveTabRight
 "" Miscellaneous
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map ? showHelp
+
 
 ```
 
