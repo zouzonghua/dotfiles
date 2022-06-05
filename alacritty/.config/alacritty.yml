@@ -66,6 +66,28 @@ font:
   use_thin_strokes: true
 # If `true`, bold text is drawn using the bright color variants.
 # draw_bold_text_with_bright_colors: true
+cursor:
+  # Cursor style
+  style:
+    # Cursor shape
+    #
+    # Values for `shape`:
+    #   - ▇ Block
+    #   - _ Underline
+    #   - | Beam
+    shape: Block
+
+    # Cursor blinking state
+    #
+    # Values for `blinking`:
+    #   - Never: Prevent the cursor from ever blinking
+    #   - Off: Disable blinking by default
+    #   - On: Enable blinking by default
+    #   - Always: Force the cursor to always blink
+    blinking: Always
+
+  # Cursor blinking interval in milliseconds.
+  blink_interval: 450
 
 #===============================================================================
 # colorscheme
@@ -210,7 +232,6 @@ key_bindings:
   - { key: E,         mods: Shift|Control,     chars: "\x00\x05"            } # C-@ C-E
   - { key: A,         mods: Shift|Control,     chars: "\x00\x01"            } # C-@ C-A
   - { key: Return,    mods: Control,           chars: "\x05\x1bj"           } # C-e M-j
-  - { key: Return,    mods: Shift|Control,     chars: "\x10\x05\x1bj"       } # C-p M-j
+  - { key: Return,    mods: Shift|Control,     chars: "\x10\x05\x1bj"       } # C-p C-e M-j
   #  - { key: A,         mods: Command,           chars: "\x1bq"               } # tmux M-q
-  - { key: C,         mods: Command,           chars: "\x1bw"               } # emacs M-w
-
+  - { key: C,        mods: Command,           chars: "\x1bw"               } # emacs M-w

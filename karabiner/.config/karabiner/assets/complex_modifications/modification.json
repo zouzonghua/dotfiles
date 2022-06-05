@@ -186,7 +186,8 @@
               "type": "frontmost_application_unless",
               "bundle_identifiers": [
                 "io.alacritty",
-                "org.gnu.Emacs"
+                "org.gnu.Emacs",
+                "com.google.Chrome"
               ]
             }
           ]
@@ -211,7 +212,8 @@
               "type": "frontmost_application_unless",
               "bundle_identifiers": [
                 "io.alacritty",
-                "org.gnu.Emacs"
+                "org.gnu.Emacs",
+                "com.google.Chrome"
               ]
             }
           ]
