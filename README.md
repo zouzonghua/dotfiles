@@ -39,13 +39,11 @@ map <c-x><c-F> LinkHints.activateModeToOpenInNewForegroundTab
 map <c-g>i focusInput
 map r reload
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Using the vomnibar
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <c-g>o Vomnibar.activate
 map <c-g>O Vomnibar.activateInNewTab
-
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Using find
@@ -54,13 +52,11 @@ map <c-s> enterFindMode
 map <c-S> performFind
 map <c-R> performBackwardsFind
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Navigating history
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <c-_> goBack
 map <c-g><c-_> goForward
-
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Manipulating tabs
@@ -75,12 +71,10 @@ map <c-g>nn closeTabsOnRight
 map << moveTabLeft
 map >> moveTabRight
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Miscellaneous
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map ? showHelp
-
 
 ```
 
@@ -125,13 +119,11 @@ map / enterFindMode
 map n performFind
 map N performBackwardsFind
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Navigating history
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map u goBack
 map <c-r> goForward
-
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Manipulating tabs
@@ -144,12 +136,10 @@ map ,ll closeTabsOnRight
 map << moveTabLeft
 map >> moveTabRight
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Miscellaneous
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map ? showHelp
-map gs toggleViewSource
 
 ```
 
