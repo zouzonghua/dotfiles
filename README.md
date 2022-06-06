@@ -105,6 +105,7 @@ map yf LinkHints.activateModeToCopyLinkUrl
 map yy copyCurrentUrl
 map p openCopiedUrlInCurrentTab
 map P openCopiedUrlInNewTab
+map r reload
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Using the vomnibar
