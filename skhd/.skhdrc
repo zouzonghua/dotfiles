@@ -94,7 +94,7 @@ cmd + alt - f : yabai -m window --toggle zoom-fullscreen
 
 # Float and center
 alt - t : yabai -m window --toggle float;\
-          yabai -m window --grid 4:4:1:1:2:2
+          yabai -m window --grid 10:10:2:1:6:8
 
 #==============================================================================
 # Floating
