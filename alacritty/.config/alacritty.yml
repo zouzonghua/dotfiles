@@ -18,10 +18,10 @@ window:
   # 调整窗口的内边距（单位为像素）。此填充由DPI缩放，并且始终在相对的两边添加指定的值。
   # 注解：内边距是窗口边框相对于终端显示内容的空白部分，可以参考 CSS
   padding:
-    x: 8
-    y: 8
+    x: 5
+    y: 5
   # 在终端内容周围平均分配额外的 padding
-  # dynamic_padding: false
+  dynamic_padding: true
   # 窗口标题
   # title: Alacritty
   # 是否允许终端的应用更改窗口标题
@@ -97,7 +97,7 @@ cursor:
 colors:
   # Default colors
   primary:
-    background: '0x181818'
+    background: '0x1e1e1e'
     foreground: '0xd8d8d8'
 
   # Colors the cursor will use if `custom_cursor_colors` is true
