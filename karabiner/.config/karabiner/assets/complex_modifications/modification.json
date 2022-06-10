@@ -114,7 +114,7 @@
       ]
     },
     {
-      "description": "Like Emacs keybindings (⌃ + n p f b y w) (⇧ + f b w)",
+      "description": "Like Emacs keybindings (⌃ + n p f b) (⇧ + f b)",
       "manipulators": [
         {
           "type": "basic",
@@ -173,7 +173,8 @@
             "modifiers": {
               "mandatory": [
                 "left_control"
-              ]
+              ],
+             "optional": ["left_command"]
             }
           },
           "to": [
@@ -186,8 +187,7 @@
               "type": "frontmost_application_unless",
               "bundle_identifiers": [
                 "io.alacritty",
-                "org.gnu.Emacs",
-                "com.google.Chrome"
+                "org.gnu.Emacs"
               ]
             }
           ]
@@ -205,55 +205,6 @@
           "to": [
             {
               "key_code": "left_arrow"
-            }
-          ],
-          "conditions": [
-            {
-              "type": "frontmost_application_unless",
-              "bundle_identifiers": [
-                "io.alacritty",
-                "org.gnu.Emacs",
-                "com.google.Chrome"
-              ]
-            }
-          ]
-        },
-
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "y",
-            "modifiers": {
-              "mandatory": [
-                "left_control"
-              ]
-            }
-          },
-          "to": [
-            {
-              "key_code": "v",
-              "modifiers": [
-                  "left_command"
-              ]
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "w",
-            "modifiers": {
-              "mandatory": [
-                "left_control"
-              ]
-            }
-          },
-          "to": [
-            {
-              "key_code": "x",
-              "modifiers": [
-                  "left_command"
-              ]
             }
           ],
           "conditions": [
@@ -312,34 +263,6 @@
                 "left_option"
               ]
 
-            }
-          ],
-          "conditions": [
-            {
-              "type": "frontmost_application_unless",
-              "bundle_identifiers": [
-                "io.alacritty",
-                "org.gnu.Emacs"
-              ]
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "w",
-            "modifiers": {
-              "mandatory": [
-                "left_option"
-              ]
-            }
-          },
-          "to": [
-            {
-              "key_code": "c",
-              "modifiers": [
-                  "left_command"
-              ]
             }
           ],
           "conditions": [
