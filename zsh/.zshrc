@@ -38,7 +38,7 @@ setopt PROMPT_SUBST
 PROMPT="%(?:%{$fg[green]%}%n% :%{$fg[red]%}%n% ) "
 # PROMPT+="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
 PROMPT+="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
-PROMPT+='%{$fg[yellow]%}%c%{$reset_color%}$(git_prompt_info) '
+PROMPT+='%{$fg[blue]%}%c%{$reset_color%}$(git_prompt_info) '
 
 # add 24h time the right side
 # RPROMPT="%(?:%{$fg[green]%}%D{%k:%M:%S} :%{$fg[red]%}%D{%k:%M:%S} )"
