@@ -3,7 +3,7 @@ local hotkey = require("hs.hotkey")
 local fnutils = require("hs.fnutils")
 local application = require("hs.application")
 
-local modifiers = { "ctrl", "alt", 'shift', 'cmd' }
+local modifiers = { "ctrl", "alt" }
 
 grid.setMargins({ 0, 0 })
 
