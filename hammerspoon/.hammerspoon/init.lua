@@ -12,10 +12,10 @@ hs.window.animationDuration = 0
 --                            ** Requires **                                 --
 --- ---------------------------------------------------------------------------
 
--- require("modules/reload")
+require("modules/reload")
 -- require("modules/mocha")
 require("modules/launcher")
-require("modules/pomodoor")
--- require("modules/windows")
+-- require("modules/pomodoor")
+require("modules/windows")
 -- require("modules/vim_bindings")
 -- require("modules/application_watcher")

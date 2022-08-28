@@ -37,7 +37,7 @@ yabai -m config mouse_action2                resize
 # border
 #===============================================================================
 yabai -m config window_border                   off
-yabai -m config window_border_width             05
+yabai -m config window_border_width             06
 yabai -m config active_window_border_color      0xff005577
 yabai -m config normal_window_border_color      0xff555555
 yabai -m config insert_feedback_color           0xffd75f5f
@@ -50,7 +50,7 @@ yabai -m config top_padding                  04
 yabai -m config bottom_padding               04
 yabai -m config left_padding                 04
 yabai -m config right_padding                04
-yabai -m config window_gap                   04
+yabai -m config window_gap                   06
 
 #===============================================================================
 # mission-control desktop labels
