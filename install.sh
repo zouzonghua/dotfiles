@@ -7,11 +7,8 @@ packages=(
     "alacritty"
     "git"
     "hammerspoon"
-    "karabiner"
     "rime"
-    "skhd"
     "tmux"
-    "yabai"
     "zsh"
 )
 
