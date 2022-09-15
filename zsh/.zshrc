@@ -1,22 +1,23 @@
 #===============================================================================
 # \time zsh -i -c exit
+# \time zsh --no-rcs -i -c exit
 #===============================================================================
 export ZSH=~/.zsh
 
 #===============================================================================
-# enable color
+# Enable color
 #===============================================================================
 autoload -U colors && colors
 
 #===============================================================================
-# plugins
+# Plugins
 #===============================================================================
 source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-. ~/.zsh/plugins/z/z.sh
+source ~/.zsh/plugins/z/z.sh
 
 #===============================================================================
-# prompt
+# Prompt
 #===============================================================================
 git_prompt_info() {
   local ref=$(git symbolic-ref --short HEAD 2>/dev/null)
@@ -34,9 +35,8 @@ git_prompt_info() {
   fi
 }
 setopt PROMPT_SUBST
-# PROMPT='%{$fg[green]%}%n%{$reset_color%} %{$fg[green]%}➜ %{$fg[yellow]%}%1~%{$reset_color%}$(git_prompt_info) '
+
 PROMPT="%(?:%{$fg[green]%}%n% :%{$fg[red]%}%n% ) "
-# PROMPT+="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
 PROMPT+="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
 PROMPT+='%{$fg[blue]%}%c%{$reset_color%}$(git_prompt_info) '
 
@@ -45,20 +45,23 @@ PROMPT+='%{$fg[blue]%}%c%{$reset_color%}$(git_prompt_info) '
 # RPROMPT='%D{%k:%M:%S}'
 
 #===============================================================================
-# nvm
+# Locale
 #===============================================================================
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-# [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+#===============================================================================
+# Nvm
+#===============================================================================
 export NVM_DIR="$HOME/.nvm"
 nvm() {
   . "$NVM_DIR/nvm.sh"
   nvm $@
 }
-export PATH=$HOME/.nvm/versions/node/v14.18.3/bin/:$PATH
+export PATH=$HOME/.nvm/versions/node/v16.17.0/bin/:$PATH
 
 #===============================================================================
-# alias
+# Alias
 #===============================================================================
 alias proxy="export http_proxy=http://127.0.0.1:1087;export https_proxy=http://127.0.0.1:1087;export ALL_PROXY=socks5://127.0.0.1:1080 && curl ip.sb"
 alias unproxy="unset http_proxy https_proxy ALL_PROXY && curl ip.sb"
@@ -77,14 +80,7 @@ alias ec='emacsclient -a "" -c -n'
 alias eq='emacsclient -e "(kill-emacs)"'
 
 #===============================================================================
-# locale
-#===============================================================================
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-
-
-#===============================================================================
-# android sdk
+# Android sdk
 #===============================================================================
 export ANDROID_HOME=$HOME/Library/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/emulator
@@ -93,19 +89,6 @@ export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 #===============================================================================
-# other
+# Other
 #===============================================================================
 export PATH="/usr/local/sbin:$PATH"
-
-#export ALTERNATE_EDITOR=""                      # 系统会自动的尝试使用 emacs --daemon 命令来启动. 否则直接打开.
-export EDITOR='emacsclient -a "" -t "$@"' # $EDITOR opens in terminal
-# export VISUAL="emacsclient -c -a emacs"         # $VISUAL opens in GUI mode
-
-PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-
-#===============================================================================
-# keybings
-# @see https://github.com/alacritty/alacritty/issues/1408#issuecomment-467970836
-#===============================================================================
-bindkey "^[[1;5C" forward-word
-bindkey "^[[1;5D" backward-word
