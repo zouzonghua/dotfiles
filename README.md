@@ -84,7 +84,7 @@ map ? showHelp
 
 ```sh
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" Search Engines
+"" Search engines
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 w: https://www.wikipedia.org/w/index.php?title=Special:Search&search=%s Wikipedia
 b: https://www.baidu.com/s?wd=%s Baidu
