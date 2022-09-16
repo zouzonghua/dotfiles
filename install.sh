@@ -45,7 +45,7 @@ then
   fi
 fi
 
-# check if Git is installed
+# check if git is installed
 hash git >/dev/null && /usr/bin/env git clone -b 'main' git@github.com:zouzonghua/dotfiles.git ~/Dotfiles && cd ~/Dotfiles || {
     echo "Sorry, Git is not installed yet!"
   exit
@@ -57,7 +57,7 @@ hash stow >/dev/null || {
   exit
 }
 
-# check if Font is installed
+# check if font is installed
 if [ ! -f "$font_file" ]; then
     echo "install font..."
     cd ~/Library/Fonts && curl -fLo "Meslo LG M Regular Nerd Font Complete.ttf" "$font_file_url"
