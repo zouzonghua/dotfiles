@@ -235,15 +235,6 @@
                 "left_option"
               ]
             }
-          ],
-          "conditions": [
-            {
-              "type": "frontmost_application_unless",
-              "bundle_identifiers": [
-                "io.alacritty",
-                "org.gnu.Emacs"
-              ]
-            }
           ]
         },
         {
@@ -263,15 +254,6 @@
                 "left_option"
               ]
 
-            }
-          ],
-          "conditions": [
-            {
-              "type": "frontmost_application_unless",
-              "bundle_identifiers": [
-                "io.alacritty",
-                "org.gnu.Emacs"
-              ]
             }
           ]
         }
