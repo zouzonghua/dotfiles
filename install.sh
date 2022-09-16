@@ -46,7 +46,7 @@ then
 fi
 
 # check if Git is installed
-hash git >/dev/null && /usr/bin/env git clone -b 'main' https@github.com:zouzonghua/dotfiles.git ~/Dotfiles && cd ~/Dotfiles || {
+hash git >/dev/null && /usr/bin/env git clone -b 'main' git@github.com:zouzonghua/dotfiles.git ~/Dotfiles && cd ~/Dotfiles || {
     echo "Sorry, Git is not installed yet!"
   exit
 }
