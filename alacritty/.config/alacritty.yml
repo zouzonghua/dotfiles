@@ -87,7 +87,7 @@ cursor:
     blinking: Always
 
   # Cursor blinking interval in milliseconds.
-  blink_interval: 600
+  blink_interval: 400
 
 #===============================================================================
 # colorscheme
