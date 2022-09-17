@@ -121,11 +121,13 @@ colors:
     white:   '0xf8f8f8'
 
 #===============================================================================
-# key_bindings
-# 解决 Emacs 键位 失效问题
+# Key bindings
+#
 # @see https://github.com/alacritty/alacritty/issues/62#issuecomment-347552058
-# 解决 退格键问题
 # @see https://github.com/alacritty/alacritty/issues/1606
+# @see https://github.com/alacritty/alacritty/issues/1408#issuecomment-467970836
+# @see http://www.blogface.org/2015/03/ctrl-in-emacs-in-mac-terminal.html
+# @see https://github.com/alacritty/alacritty/issues/5508
 # how get chars @see https://www.joshmedeski.com/posts/macos-keyboard-shortcuts-for-tmux
 # $ xxd -psd
 #===============================================================================
@@ -208,8 +210,6 @@ key_bindings:
   - { key: Backslash, mods: Alt,       chars: "\x1b\\"                      } # Alt + \
   - { key: Backslash, mods: Alt|Shift, chars: "\x1b|"                       } # Alt + |
   - { key: Backslash, mods: Alt|Shift, chars: "\x1b|"                       } # Alt + |
-  # @see http://www.blogface.org/2015/03/ctrl-in-emacs-in-mac-terminal.html
-  # @see https://github.com/alacritty/alacritty/issues/5508
   - { key: LBracket,  mods: Alt|Shift,     chars: "\x1b[1;5A"               } # C-{
   - { key: RBracket,  mods: Alt|Shift,     chars: "\x1b[1;5B"               } # C-}
   - { key: LBracket,  mods: Alt,           chars: "\x5b"                    } # [
@@ -225,6 +225,5 @@ key_bindings:
   - { key: A,         mods: Shift|Control,     chars: "\x00\x01"            } # C-@ C-A
   - { key: Return,    mods: Control,           chars: "\x05\x1bj"           } # C-e M-j
   - { key: Return,    mods: Shift|Control,     chars: "\x10\x05\x1bj"       } # C-p C-e M-j
-  # @see https://github.com/alacritty/alacritty/issues/1408#issuecomment-467970836
   - { key: Left,      mods: Alt,               chars: "\x1bb"               } # Option + Left
   - { key: Right,     mods: Alt,               chars: "\x1bf"               } # Option + Right
