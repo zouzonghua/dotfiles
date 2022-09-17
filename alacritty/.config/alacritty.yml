@@ -1,5 +1,5 @@
 #===============================================================================
-# window
+# Window
 #===============================================================================
 window:
   # 窗口的外边框
@@ -30,34 +30,27 @@ window:
   # background_opacity: 0.99
 
 #===============================================================================
-# font
+# Font
 #===============================================================================
 font:
-  # 常规字体
   normal:
     family: MesloLGM Nerd Font
-    # 字体风格
     style: Regular
 
-  # 粗体
   bold:
     family: Menlo
     style: Bold
 
-  # 斜体
   italic:
     family: Menlo
     style: Italic
 
-  # 斜粗体
   bold_italic:
      family: Menlo
      style: Bold Italic
 
-  # 字体大小
   size: 14
 
-  # 每个字符的间的字间距。"offset.y" 可以控制行距，"offset.x" 可以改变字符间距。
   offset:
     x: 0
     y: 0
@@ -221,7 +214,6 @@ key_bindings:
   - { key: RBracket,  mods: Alt|Shift,     chars: "\x1b[1;5B"               } # C-}
   - { key: LBracket,  mods: Alt,           chars: "\x5b"                    } # [
   - { key: RBracket,  mods: Alt,           chars: "\x5d"                    } # ]
-  - { key: RBracket,  mods: control,       chars: "\x1bq"                   } # ] => tmux M-q
   - { key: Back,      action: ReceiveChar                                   } # back
   - { key: Back,      mods: Control,           chars: "\x1bb\x1bd"          } # M-b + M-d
   - { key: Back,      mods: Control|Shift,     chars: "\x01\x0b"            } # C-a + C-k
@@ -233,5 +225,6 @@ key_bindings:
   - { key: A,         mods: Shift|Control,     chars: "\x00\x01"            } # C-@ C-A
   - { key: Return,    mods: Control,           chars: "\x05\x1bj"           } # C-e M-j
   - { key: Return,    mods: Shift|Control,     chars: "\x10\x05\x1bj"       } # C-p C-e M-j
-  # - { key: A,         mods: Command,           chars: "\x1bq"               } # tmux M-q
-  # - { key: C,        mods: Command,           chars: "\x1bw"               } # emacs M-w
+  # @see https://github.com/alacritty/alacritty/issues/1408#issuecomment-467970836
+  - { key: Left,      mods: Alt,               chars: "\x1bb"               } # Option + Left
+  - { key: Right,     mods: Alt,               chars: "\x1bf"               } # Option + Right
