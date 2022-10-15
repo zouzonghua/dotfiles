@@ -2,32 +2,12 @@
 # Window
 #===============================================================================
 window:
-  # 窗口的外边框
-  #
-  # 可以为如下的值:
-  #     - full: 边框和标题栏
-  #     - none: 边框和标题栏都没有
-  #
-  # macos 可以独占的配置:
-  #     - transparent: 标题栏，透明背景和标题栏按钮
-  #     - buttonless: 标题栏，透明背景，但没有标题栏按钮
   decorations: buttonless
 
-  # 窗口内边距（配置变更需要重启生效）
-  #
-  # 调整窗口的内边距（单位为像素）。此填充由DPI缩放，并且始终在相对的两边添加指定的值。
-  # 注解：内边距是窗口边框相对于终端显示内容的空白部分，可以参考 CSS
   padding:
     x: 5
     y: 5
-  # 在终端内容周围平均分配额外的 padding
   dynamic_padding: true
-  # 窗口标题
-  # title: Alacritty
-  # 是否允许终端的应用更改窗口标题
-  # dynamic_title: true
-  # 背景透明度
-  # background_opacity: 0.99
 
 #===============================================================================
 # Font
@@ -54,38 +34,21 @@ font:
   offset:
     x: 0
     y: 0
-  # 细线字体渲染（仅适用于macOS）
-  # retina 可以设置为 true，非 retina 屏幕建议设置为 false
   use_thin_strokes: true
-# If `true`, bold text is drawn using the bright color variants.
-# draw_bold_text_with_bright_colors: true
-cursor:
-  # Cursor style
-  style:
-    # Cursor shape
-    #
-    # Values for `shape`:
-    #   - ▇ Block
-    #   - _ Underline
-    #   - | Beam
-    shape: Block
 
-    # Cursor blinking state
-    #
-    # Values for `blinking`:
-    #   - Never: Prevent the cursor from ever blinking
-    #   - Off: Disable blinking by default
-    #   - On: Enable blinking by default
-    #   - Always: Force the cursor to always blink
+#===============================================================================
+# Cursor
+#===============================================================================
+cursor:
+  style:
+    shape: Block
     blinking: Always
 
-  # Cursor blinking interval in milliseconds.
   blink_interval: 400
 
 #===============================================================================
-# colorscheme
+# Colorscheme
 #===============================================================================
-
 # Colors (Base16 Default Dark)
 colors:
   # Default colors
