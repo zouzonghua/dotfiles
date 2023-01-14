@@ -261,7 +261,6 @@ systemctl enable --now dhcpcd
 systemctl enable --now iwd
 ```
 
-配置静态 ip
 vim /etc/dhcpcd.conf
 
 ```sh
