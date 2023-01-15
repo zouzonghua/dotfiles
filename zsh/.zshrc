@@ -54,8 +54,6 @@ alias df='df -h'
 alias proxy="export http_proxy=http://127.0.0.1:7890;export https_proxy=http://127.0.0.1:7890;export ALL_PROXY=socks5://127.0.0.1:7890 && curl ip.sb"
 alias unproxy="unset http_proxy https_proxy ALL_PROXY && curl ip.sb"
 alias g="git"
-alias vi="nvim"
-alias vim="nvim"
 alias wechat="/opt/apps/com.qq.weixin.deepin/files/run.sh"
 
 
