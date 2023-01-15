@@ -64,6 +64,19 @@ then
 	polybar bspwm &
 fi
 
+# Run the tool that sets the wallpaper.  A program could be used that
+# handles the desktop in general, including the option to set icons.
+# But this is enough for my case.  Here is a command I tested and which
+# works (using the Xfce desktop manager):
+# xfdesktop --sm-client-disable --disable-wm-check &
+if _check feh
+then
+    if [ -f "$HOME"/.fehbg ]
+    then
+        "$HOME"/.fehbg &
+    fi
+fi
+
 
 # Load my Xresources
 _check xrdb && [ -f "$HOME"/.Xresources ] && xrdb -I "$HOME" -merge "$HOME"/.Xresources
