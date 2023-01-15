@@ -8,7 +8,7 @@ super + Return
 
 # program launcher
 super + @space
-	dmenu_run
+	rofi -show drun
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -130,9 +130,9 @@ XF86AudioLowerVolume
 XF86AudioRaiseVolume
 	sh -c "pactl set-sink-mute 0 false ; pactl set-sink-volume 0 +5%"
 XF86AudioMute
-  pactl set-sink-mute 0 toggle
+	pactl set-sink-mute 0 toggle
 XF86AudioMicMute
-  pactl set-source-mute 1 toggle
+	pactl set-source-mute 1 toggle
 
 # brightness control
 XF86MonBrightnessDown
