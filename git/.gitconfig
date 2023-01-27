@@ -66,9 +66,9 @@
   total = "!git ls-files | xargs cat | wc -l"
 
 [diff]
-  tool = nvimdiff
-[difftool "nvimdiff"]
-  cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
+  tool = vimdiff
+[difftool "vimdiff"]
+  cmd = vim -d \"$LOCAL\" \"$REMOTE\"
   path =
 
 #===============================================================================
@@ -99,8 +99,8 @@
 #
 #===============================================================================
 
-[mergetool "nvimdiff"]
-  cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c '$wincmd J'
+[mergetool "vimdiff"]
+  cmd = vim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c '$wincmd J'
 
 [init]
 	defaultBranch = main
