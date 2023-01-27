@@ -1,0 +1,9 @@
+# Rime user dictionary
+#@/db_name	clover
+#@/db_type	userdb
+#@/rime_version	1.7.3
+#@/tick	1
+#@/user_id	sync_config
+zong hua 	宗华	c=0 d=0.1 t=0
+zou 	邹	c=0 d=0.1 t=0
+zou zong hua 	邹宗华	c=1 d=1 t=1
