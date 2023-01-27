@@ -272,6 +272,7 @@ static domain_name_servers=192.168.1.254
 ### 安装输入法和中文字体
 
 ```sh
+yay -S rime-cloverpinyin
 sudo pacman -S fcitx5-im fcitx5-rime
 sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
 sudo pacman -S adobe-source-han-serif-cn-fonts wqy-zenhei
