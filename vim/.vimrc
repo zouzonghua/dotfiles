@@ -1,53 +1,40 @@
-" Vim configuration file "
+set nocompatible
 
-" enable mouse support "
+" show the matching part of pairs [] {} and ()
+set showmatch
+
+" enable mouse support
 set mouse=a
 
-" enable syntax "
+" enable syntax
 syntax on
 
-" enable line numbers "
+" indent
+set autoindent
+set expandtab
+set tabstop=2
+set softtabstop=2
+set shiftwidth=4
+
+" appearance
 set number
-
-" highlight current line "
 set cursorline
-highlight Cursorline cterm=bold ctermbg=black
+set textwidth=80
+set wrap
+set showcmd
+set showmode
+set t_Co=256
+set termguicolors
+colorscheme elflord
 
-" enable highlight search pattern "
+" search
 set hlsearch
-
-" enable smartcase search sensitivity "
+set incsearch
 set ignorecase
-set smartcase
 
 " edit
+set noswapfile
 set listchars=tab:»■,trail:■
 set list
 set noerrorbells
 set encoding=utf-8
-
-" Indentation using spaces "
-" tabstop:	width of tab character
-" softtabstop:	fine tunes the amount of whitespace to be added
-" shiftwidth:	determines the amount of whitespace to add in normal mode
-" expandtab:	when on use space instead of tab
-" textwidth:	text wrap width
-" autoindent:	autoindent in new line
-set tabstop	=4
-set softtabstop	=4
-set shiftwidth	=4
-set textwidth	=79
-set expandtab
-set autoindent
-
-" show the matching part of pairs [] {} and () "
-set showmatch
-
-" enable color themes "
-set t_Co=256
-
-" enable true colors support "
-set termguicolors
-
-" Vim colorscheme "
-colorscheme elflord
