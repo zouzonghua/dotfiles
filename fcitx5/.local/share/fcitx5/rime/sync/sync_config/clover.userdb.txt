@@ -2,8 +2,14 @@
 #@/db_name	clover
 #@/db_type	userdb
 #@/rime_version	1.7.3
-#@/tick	1
+#@/tick	7
 #@/user_id	sync_config
-zong hua 	宗华	c=0 d=0.1 t=0
-zou 	邹	c=0 d=0.1 t=0
-zou zong hua 	邹宗华	c=1 d=1 t=1
+ce 	测	c=1 d=1 t=2
+fan yi 	翻译	c=1 d=1 t=3
+pei zhi 	配置	c=1 d=1 t=5
+ruan yi feng 	阮一峰	c=1 d=1 t=7
+wen jian 	文件	c=1 d=1 t=6
+yi dong 	移动	c=1 d=1 t=4
+zong hua 	宗华	c=0 d=0.0995012 t=7
+zou 	邹	c=0 d=0.0995012 t=7
+zou zong hua 	邹宗华	c=1 d=1 t=7
