@@ -120,10 +120,6 @@ super + alt + shift + {h,j,k,l}
 super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
 
-# pkill panel
-super + alt + Escape
-	pkill -x panel; bspc quit
-
 # volume control
 XF86AudioLowerVolume
 	sh -c "pactl set-sink-mute 0 false ; pactl set-sink-volume 0 -5%"
@@ -144,3 +140,6 @@ XF86MonBrightnessUp
 super + x
 	betterlockscreen -l dimblur
 
+# toggole theme
+super + F7
+	delight

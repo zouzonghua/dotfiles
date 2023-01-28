@@ -4,7 +4,7 @@ set nocompatible
 set showmatch
 
 " enable mouse support
-set mouse=a
+" set mouse=a
 
 " enable syntax
 syntax on
@@ -25,7 +25,7 @@ set showcmd
 set showmode
 set t_Co=256
 set termguicolors
-colorscheme elflord
+colorscheme default
 
 " search
 set hlsearch

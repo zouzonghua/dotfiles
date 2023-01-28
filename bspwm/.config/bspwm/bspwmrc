@@ -1,5 +1,7 @@
 #! /bin/sh
 
+export DESKTOP_SESSION=bspwm
+
 ### Essentials
 
 # Truncate a couple of common commands that are used herein.
