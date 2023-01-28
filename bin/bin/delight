@@ -70,10 +70,10 @@ _emacs ()
 
     # Just switch to the appropriate theme for Emacs:
     # https://git.sr.ht/~protesilaos/modus-themes
-    case "$1"
+    case "$(cat "$wm_theme")"
     in
-        l*) emacsclient -e "(load-theme '${light_theme} :no-confirm)" > /dev/null ;;
-        d*) emacsclient -e "(load-theme '${dark_theme} :no-confirm)"  > /dev/null ;;
+        light) emacsclient -e "(load-theme '${light_theme} :no-confirm)" > /dev/null ;;
+        dark) emacsclient -e "(load-theme '${dark_theme} :no-confirm)"  > /dev/null ;;
     esac
 }
 
@@ -152,9 +152,9 @@ _bspwm ()
 
     _depcheck "$conf_colors" && "$conf_colors"
 
-    #_emacs "$style" &
     #_xsettingsd "$style" &
     #_xterm &
+    _emacs &
     _alacritty &
     _feh &
     _rofi &
