@@ -15,8 +15,8 @@
 
 ;; Set default font
 (set-face-attribute 'default nil
-                    :family "MesloLGM Nerd Font"
-                    :height 140
+                    :family "DejaVuSansMono Nerd Font Mono"
+                    :height 120
                     :weight 'normal
                     :width 'normal)
 
