@@ -94,7 +94,7 @@ ttw: https://translate.google.com/?source=osdd#auto|zh-TW|%s Google Translator
 
 ```
 
-## archlinux
+## Arch Linux
 
 ### 分区
 
