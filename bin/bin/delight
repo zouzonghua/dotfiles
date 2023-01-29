@@ -152,7 +152,6 @@ _bspwm ()
 
     _depcheck "$conf_colors" && "$conf_colors"
 
-    #_xsettingsd "$style" &
     #_xterm &
     _emacs &
     _alacritty &
@@ -224,7 +223,7 @@ _gtheme ()
         style=light
         _gtk_common 'Adwaita' 'Adwaita' 'false'
         _ggtk_set 'Adwaita'
-        _gcolor_scheme_set 'prefer-light'
+        _gcolor_scheme_set 'default'
     fi
 }
 
