@@ -15,10 +15,13 @@
 
 ;; Set default font
 (set-face-attribute 'default nil
-                    :family "DejaVuSansMono Nerd Font Mono"
+                    :family "Monospace"
                     :height 120
                     :weight 'normal
                     :width 'normal)
+(dolist (charset '(han cjk-misc chinese-gbk))
+(set-fontset-font "fontset-default"
+                  charset (font-spec :family "Noto Sans Mono CJK SC")))
 
 
 ;; Suppress GUI features
