@@ -10,7 +10,7 @@
 (setq   modus-themes-italic-constructs t
         modus-themes-bold-constructs nil
         modus-themes-region '(bg-only no-extend))
-(load-theme 'modus-vivendi)
+(load-theme 'modus-operandi)
 
 
 ;; Set default font
