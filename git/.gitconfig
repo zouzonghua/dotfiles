@@ -26,7 +26,7 @@
   # 撤销已提交的文件
   rc = "!git log --pretty=oneline | peco | awk '{print $1}' | xargs git reset --soft"
   # 对比文件差异
-  d = "!git status --short | peco | awk '{print $2}' | xargs git difftool -y HEAD"
+  d = "!git status --short | peco | awk '{print $2}' | xargs -o git difftool -y HEAD"
   # 对比全部文件差异
   da = difftool -y
   # 对比线上文件差异
@@ -65,11 +65,17 @@
   # 统计项目代码的总行数
   total = "!git ls-files | xargs cat | wc -l"
 
+[init]
+	defaultBranch = main
+[core]
+	quotepath = false
 [diff]
   tool = vimdiff
 [difftool "vimdiff"]
   cmd = vim -d \"$LOCAL\" \"$REMOTE\"
   path =
+[mergetool "vimdiff"]
+  cmd = vim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c '$wincmd J'
 
 #===============================================================================
 # merge code
@@ -98,12 +104,3 @@
 #  git clean -f || g clf
 #
 #===============================================================================
-
-[mergetool "vimdiff"]
-  cmd = vim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c '$wincmd J'
-
-[init]
-	defaultBranch = main
-[core]
-	quotepath = false
-  editor = emacsclient -t -a=\\\"\\\"
