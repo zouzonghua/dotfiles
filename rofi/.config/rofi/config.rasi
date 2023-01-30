@@ -23,7 +23,7 @@ configuration {
 /*	tokenize: true;*/
 /*	m: "-5";*/
 /*	filter: ;*/
-/*	dpi: 100;*/
+	dpi: 110;
 	threads: 0;
 /*	scroll-method: 0;*/
 	window-format: "{w:0}	{n:0}	{t:0}";
