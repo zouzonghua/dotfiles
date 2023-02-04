@@ -138,7 +138,7 @@ XF86MonBrightnessUp
 
 # lockscreen
 super + x
-	betterlockscreen -l dimblur
+	loginctl lock-session
 
 # toggole theme
 super + F7

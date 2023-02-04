@@ -45,8 +45,18 @@ bspc monitor -d 1 2 3 4 5
 
 
 ### autostart
-
 #pgrep -x panel > /dev/null || panel &
+
+if _check xss-lock
+then
+    if _check i3lock
+    then
+        xset s on &
+        xset s 300 300 &
+        xset s dpms 300 300 300 &
+        xss-lock -- i3lock &
+    fi
+fi
 
 # Parse my custom key mappings.  These make Caps behave as another Ctrl
 # key.  We need to evaluate this first otherwise it might mess up with
