@@ -43,9 +43,9 @@ git_prompt_info() {
 }
 setopt PROMPT_SUBST
 # PROMPT='%{$fg[green]%}%n%{$reset_color%} %{$fg[green]%}➜ %{$fg[yellow]%}%1~%{$reset_color%}$(git_prompt_info) '
-PROMPT="%(?:%{$fg[green]%}%n% :%{$fg[red]%}%n% ) "
+PROMPT="%(?:%{$fg[green]%}%n% :%{$fg[red]%}%n% )"
 # PROMPT+="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
-PROMPT+="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
+PROMPT+="%(?:%{$fg_bold[green]%} ➜  :%{$fg_bold[red]%} ➜  )"
 PROMPT+='%{$fg[blue]%}%c%{$reset_color%}$(git_prompt_info) '
 
 #===============================================================================
@@ -81,3 +81,4 @@ export LANG=en_US.UTF-8
 export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 
 
+source /usr/share/nvm/init-nvm.sh
