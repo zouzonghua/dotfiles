@@ -207,7 +207,7 @@ fi
 
 if _checkexec stow
 then
-    alias stow="stow --no-foding --verbose"
+    alias stow="stow --no-folding --verbose"
 fi
 
 ### Functions
