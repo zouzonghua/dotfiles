@@ -272,7 +272,6 @@ static domain_name_servers=192.168.1.254
 ### 输入法和字体
 
 ```sh
-yay -S rime-cloverpinyin
 sudo pacman -S fcitx5-im fcitx5-rime
 sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-noto-nerd
 ```
