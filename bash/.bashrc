@@ -191,7 +191,8 @@ alias lsla='ls -lhpvA --color=auto --group-directories-first'
 
 
 #### Extra tasks and infrequently used tools
-if _checkexec mpv
+
+if _checkexec emacs
 then
     alias et='emacsclient -a "" -t'
     alias ec='emacsclient -a "" -c -n'
@@ -201,6 +202,12 @@ fi
 if _checkexec git
 then
     alias g="git"
+fi
+
+
+if _checkexec stow
+then
+    alias stow="stow --no-foding --verbose"
 fi
 
 ### Functions
