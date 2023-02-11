@@ -16,17 +16,6 @@ set tabstop=2
 set softtabstop=2
 set shiftwidth=4
 
-" appearance
-set number
-set cursorline
-set textwidth=80
-set wrap
-set showcmd
-set showmode
-set t_Co=256
-set termguicolors
-colorscheme default
-
 " search
 set hlsearch
 set incsearch
@@ -38,3 +27,15 @@ set listchars=tab:»■,trail:■
 set list
 set noerrorbells
 set encoding=utf-8
+
+" appearance
+set number
+set cursorline
+set textwidth=80
+set wrap
+set showcmd
+set showmode
+set t_Co=256
+set termguicolors
+colorscheme default
+
