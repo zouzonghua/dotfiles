@@ -11,17 +11,20 @@ syntax on
 
 " indent
 set autoindent
-set expandtab
-set tabstop=2
-set softtabstop=2
+set tabstop=4
+set softtabstop=4
 set shiftwidth=4
+set expandtab
+filetype plugin indent on
 
 " search
 set hlsearch
 set incsearch
 set ignorecase
+nnoremap <cr> :set hlsearch!<cr>
 
 " edit
+set wildmenu
 set noswapfile
 set listchars=tab:»■,trail:■
 set list
@@ -30,8 +33,8 @@ set encoding=utf-8
 
 " appearance
 set number
-set cursorline
 set textwidth=80
+set colorcolumn=80
 set wrap
 set showcmd
 set showmode
