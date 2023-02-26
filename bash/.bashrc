@@ -162,6 +162,9 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 
+alias df="df -h"
+alias du="du -h --max-depth=1"
+
 # Safer default for cp, mv, rm.  These will print a verbose output of
 # the operations.  If an existing file is affected, they will ask for
 # confirmation.  This can make things a bit more cumbersome, but is a
