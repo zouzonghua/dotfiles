@@ -14,7 +14,7 @@ set autoindent
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-set expandtab
+" set expandtab
 filetype plugin indent on
 
 " search
