@@ -402,6 +402,15 @@ chsh -s /bin/zsh
 sudo reboot
 ```
 
+#### pip beancount fava
+
+```bash
+sudo apt install python3-venv python3-pip  
+sudo -H pip3 install --upgrade pip
+pip3 install --user beancount fava
+```
+
+
 #### 更新软件源、软件、删除没用到的包
 
 ```sh
