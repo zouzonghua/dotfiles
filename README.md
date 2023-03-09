@@ -360,9 +360,21 @@ sudo systemctl restart ssh
 
 ### 安装常用软件
 
+
+### tpl
+
+```bash
+1、sudo apt install tlp tlp-rdw
+2、sudo tlp start 开启
+3、sudo tlp-stat 查看信息
+4、sudo tlp-stat -b 的输出将指导您安装哪个包
+5、sudo apt install acpi-call-dkms 内核模块 Linux 内核 5.17 以下需要安装
+6、sudo tlp setcharge 20 80 BAT0 配置电池充电阀值
+```
+
 #### 蓝牙
 
-```
+```bash
 sudo apt-get install pulseaudio pulseaudio-module-bluetooth pavucontrol bluez-firmware blueman
 sudo service bluetooth restart
 sudo killall pulseaudio
