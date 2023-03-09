@@ -360,6 +360,14 @@ sudo systemctl restart ssh
 
 ### 安装常用软件
 
+#### 蓝牙
+
+```
+sudo apt-get install pulseaudio pulseaudio-module-bluetooth pavucontrol bluez-firmware blueman
+sudo service bluetooth restart
+sudo killall pulseaudio
+```
+
 #### zsh
 
 查看系统当前的 shell
