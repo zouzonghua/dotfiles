@@ -24,6 +24,7 @@ xterm*locale: true
 xterm*utf8: 1
 xterm*utf8Fonts: always
 xterm*dynamicColors: true
+XTerm*disallowedWindowOps: 20,21,SetXprop
 
 ! UI components
 xterm*toolBar: false
