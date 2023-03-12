@@ -2,7 +2,7 @@
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/zouzonghua/dotfiles/blob/main/LICENSE)
 
-![shreenshot](https://raw.githubusercontent.com/zouzonghua/image-hosting/main/img/Screenshot_2023-03-01_12-22-51.png)
+![shreenshot](https://raw.githubusercontent.com/zouzonghua/image-hosting/main/img/Screenshot_2023-03-12_11-07-19.png)
 
 ## installation
 
