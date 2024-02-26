@@ -30,6 +30,7 @@ set listchars=tab:»■,trail:■
 set list
 set noerrorbells
 set encoding=utf-8
+set hidden
 
 " appearance
 set number
