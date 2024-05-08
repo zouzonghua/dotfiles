@@ -435,3 +435,11 @@ sudo apt-get upgrade
 ### 转换仓库地址
 
  ```git remote set-url origin git@github.com:zouzonghua/dotfiles.git```
+
+### 修改 ssh 密钥权限
+
+```
+    chmod 600 ~/.ssh/id_rsa
+    ssh -T git@github.com
+```
+
