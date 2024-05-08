@@ -432,3 +432,6 @@ sudo mv info info.bak
 sudo mkdir info
 sudo apt-get upgrade
 ```
+### 转换仓库地址
+
+ ```git remote set-url origin git@github.com:zouzonghua/dotfiles.git```
