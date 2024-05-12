@@ -408,7 +408,9 @@ sudo reboot
 sudo apt install python3-venv python3-pip  
 sudo -H pip3 install --upgrade pip
 sudo -H pip3 install --break-system-packages --upgrade pip
+sudo -H pip3 install -i https://pypi.mirrors.ustc.edu.cn/simple --break-system-packages --upgrade pip
 pip3 install --user beancount fava
+pip3 install --user  -i https://pypi.mirrors.ustc.edu.cn/simple --break-system-packages  beancount fava
 ```
 #### xclip xsel
 ```bash
