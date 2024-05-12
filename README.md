@@ -407,6 +407,7 @@ sudo reboot
 ```bash
 sudo apt install python3-venv python3-pip  
 sudo -H pip3 install --upgrade pip
+sudo -H pip3 install --break-system-packages --upgrade pip
 pip3 install --user beancount fava
 ```
 #### xclip xsel
