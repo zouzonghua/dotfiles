@@ -321,7 +321,7 @@ usermod -aG sudo zouzonghua
 > 在本地计算机的 PowerShell 中执行 ssh-keygen.exe 命令，会在 C:\Users\Herald/.ssh/ 目录生成一个名为 id_rsa 的私钥和一个名为 id_rsa.pub 的公钥。
 
 ```sh
-PS C:\Users\zouzonghua> ssh-keygen.exe
+ssh-keygen.exe
 ```
 
 ##### MacOS & Linux 系统
@@ -336,7 +336,7 @@ ssh-keygen
 
 ###### 通用方法
 
-> Windows 系统将命令中的 ~/.ssh/id_rsa.pub 替换成 C:\Users\zouzonghua/.ssh/id_rsa.pub。
+> Windows 系统将命令中的 ~/.ssh/id_rsa.pub 替换成 C:\Users\zonghua\.ssh\id_rsa.pub。
 
 username 替换为登录云服务器的用户名，remote_host 替换为云服务器的 IP 地址。
 
@@ -407,7 +407,10 @@ sudo reboot
 ```bash
 sudo apt install python3-venv python3-pip  
 sudo -H pip3 install --upgrade pip
+sudo -H pip3 install --break-system-packages --upgrade pip
+sudo -H pip3 install -i https://pypi.mirrors.ustc.edu.cn/simple --break-system-packages --upgrade pip
 pip3 install --user beancount fava
+pip3 install --user  -i https://pypi.mirrors.ustc.edu.cn/simple --break-system-packages  beancount fava
 ```
 #### xclip xsel
 ```bash
