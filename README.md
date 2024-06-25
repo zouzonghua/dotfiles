@@ -435,9 +435,22 @@ sudo mv info info.bak
 sudo mkdir info
 sudo apt-get upgrade
 ```
-### 转换仓库地址
 
- ```git remote set-url origin git@github.com:zouzonghua/dotfiles.git```
+### 首次使用
+
+```
+brew install git-crypt
+brew install gpg
+gpg --import path/to/public/key/backup/file
+gpg --import path/to/secret/key/backup/file
+git-crypt unlock
+```
+
+### 导入 ssh 配置
+```
+brew install stow
+stow --no-folding --verbose --adopt ssh
+```
 
 ### 修改 ssh 密钥权限
 
@@ -445,4 +458,8 @@ sudo apt-get upgrade
     chmod 600 ~/.ssh/id_rsa
     ssh -T git@github.com
 ```
+
+### 转换仓库地址
+
+ ```git remote set-url origin git@github.com:zouzonghua/dotfiles.git```
 
