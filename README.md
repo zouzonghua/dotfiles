@@ -455,8 +455,8 @@ stow --no-folding --verbose --adopt ssh
 ### 修改 ssh 密钥权限
 
 ```
-    chmod 600 ~/.ssh/id_rsa
-    ssh -T git@github.com
+chmod 600 ~/.ssh/id_rsa
+ssh -T git@github.com
 ```
 
 ### 转换仓库地址
