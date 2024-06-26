@@ -40,6 +40,6 @@ set wrap
 set showcmd
 set showmode
 set t_Co=256
-set termguicolors
+"set termguicolors
 colorscheme default
 
