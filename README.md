@@ -10,6 +10,33 @@
 sh <(curl -L https://github.com/zouzonghua/dotfiles/raw/main/install.sh)
 ```
 
+
+## macOS 全局 Emacs 快捷键（极简版）
+
+| 功能             | 快捷键               | 说明 | 类型 |
+| ---------------- | ------------------- | ---- | ---- |
+| 光标移动到行首   | `Ctrl + a`          | 光标移动到当前行首 | Native |
+| 光标移动到行尾   | `Ctrl + e`          | 光标移动到当前行尾 | Native |
+| 光标向上移动     | `Ctrl + p`          | 光标移动到上一行 | Native |
+| 光标向下移动     | `Ctrl + n`          | 光标移动到下一行 | Native |
+| 光标向前移动     | `Ctrl + f`          | 光标向前移动一个字符 | Native |
+| 光标向后移动     | `Ctrl + b`          | 光标向后移动一个字符 | Native |
+| 删除             | `Delete`            | 使用键盘原生 Delete | Native |
+| 撤销             | `Cmd + z`           | 撤销上一步操作 | Native |
+| 重做             | `Cmd + Shift + z`   | 重做上一步操作 | Native |
+| 复制             | `Cmd + c`           | 系统原生命令 | Native |
+| 粘贴             | `Cmd + v`           | 系统原生命令 | Native |
+| 向前一个单词     | `Option + f`        | 光标向前移动一个单词 | Hack |
+| 向后一个单词     | `Option + b`        | 光标向后移动一个单词 | Hack |
+| 向前选择一个单词 | `Option + Shift + f`| 选中光标所在位置到下一个单词 | Hack |
+| 向后选择一个单词 | `Option + Shift + b`| 选中光标所在位置到前一个单词 | Hack |
+| 选择上一行       | `Ctrl + Shift + P`  | 光标向上选中一行 | Hack |
+| 选择下一行       | `Ctrl + Shift + N`  | 光标向下选中一行 | Hack |
+| Page Down        | `Ctrl + v`          | 向下翻页一屏 | Hack |
+| Page Up          | `Option + v`        | 向上翻页一屏 | Hack |
+| Escape           | `Ctrl + g`          | 退出当前操作或取消选中状态 | Hack |
+
+
 ## vimium
 
 ### vim key mappings
