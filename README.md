@@ -123,6 +123,34 @@ ttw: https://translate.google.com/?source=osdd#auto|zh-TW|%s Google Translator
 
 ## Arch Linux
 
+### 配置网络
+
+连接网络
+```sh
+iwctl
+device list
+station wlan0 scan
+station wlan0 get-networks
+station wlan0 connect wifi-name
+exit
+```
+
+```sh
+# 设置密码 使用 ssh 登录
+passwd
+```
+
+禁用 reflector 服务
+```sh
+systemctl stop reflector.service
+```
+
+修改软件源
+```sh
+vim /etc/pacman.d/mirrorlist
+Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch
+```
+
 ### 分区
 
 ```sh
@@ -171,28 +199,6 @@ mount /dev/sda3 /mnt
 mkdir /mnt/boot
 mount /dev/sda1 /mnt/boot
 swapon /dev/sda2
-```
-
-### 配置网络
-
-禁用 reflector 服务
-```sh
-systemctl stop reflector.service
-```
-
-连接网络
-```sh
-iwctl
-device list
-station wlan0 scan
-station wlan0 get-networks
-station wlan0 connect wifi-name
-exit
-```
-
-修改软件源
-```sh
-vim /etc/pacman.d/mirrorlist
 ```
 
 ### 安装系统
@@ -276,6 +282,7 @@ pacman -S grub efibootmgr
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=ARCH
 vim /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
+exit
 reboot
 ```
 
