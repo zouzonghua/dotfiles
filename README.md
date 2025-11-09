@@ -135,8 +135,8 @@ station wlan0 connect wifi-name
 exit
 ```
 
+设置密码 使用 ssh 登录
 ```sh
-# 设置密码 使用 ssh 登录
 passwd
 ```
 
