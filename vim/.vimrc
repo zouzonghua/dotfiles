@@ -22,6 +22,7 @@ set expandtab
 set hlsearch
 set incsearch
 set ignorecase
+set smartcase
 nnoremap <cr> :set hlsearch!<cr>
 
 " edit
@@ -34,12 +35,11 @@ set encoding=utf-8
 set hidden
 
 " appearance
-"set number
+set number
 set textwidth=80
 set colorcolumn=80
 set wrap
 set showcmd
 set showmode
-set t_Co=256
-" set termguicolors
+"set termguicolors
 colorscheme default
