@@ -7,7 +7,7 @@ TMUX_DIR := $(HOME)/.config/tmux
 SSH_DIR := $(HOME)/.ssh
 VIMRC := $(HOME)/.vimrc
 
-.PHONY: git tmux ssh vim all
+.PHONY: git tmux ssh vim check all
 
 all: git tmux ssh vim
 
@@ -38,3 +38,7 @@ ssh:
 
 vim:
 	$(call link_file,$(DOTFILES)/vim/.vimrc,$(VIMRC))
+
+check:
+	@bash -n $(DOTFILES)/tmux/scripts/*.sh
+	@tmux -f /dev/null source-file -n $(DOTFILES)/tmux/tmux.conf
