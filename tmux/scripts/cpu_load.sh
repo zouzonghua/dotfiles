@@ -33,8 +33,8 @@ else
     COLOR=$C_NORMAL
 fi
 
-# 格式化输出
-CPU_STR=$(echo "$LOADS" | awk -v cpus="$CPUS" '{printf "%.1f%% %.1f%% %.1f%%", $1/cpus*100, $2/cpus*100, $3/cpus*100}')
+# Format only the 1 minute load average as a percentage.
+CPU_STR=$(echo "$LOADS" | awk -v cpus="$CPUS" '{printf "%.1f%%", $1/cpus*100}')
 
 # 适配 Terminal.app 的输出格式
 echo "#[fg=colour${COLOR}]CPU: ${CPU_STR}#[default]"
