@@ -12,7 +12,7 @@ VIMRC := $(HOME)/.vimrc
 
 all: git tmux ssh shell vim
 
-GIT_PROMPT_SOURCE := [ -f ~/.config/shell/git_prompt.sh ] && source ~/.config/shell/git_prompt.sh
+SHELL_INIT_SOURCE := [ -f ~/.config/shell/init.sh ] && source ~/.config/shell/init.sh
 EXPLICIT_GOALS := $(filter-out all,$(MAKECMDGOALS))
 
 define link_file
@@ -48,21 +48,25 @@ ssh:
 
 shell:
 	@mkdir -p $(SHELL_DIR)
-	$(call link_file,$(DOTFILES)/shell/git_prompt.sh,$(SHELL_DIR)/git_prompt.sh)
+	$(call link_file,$(DOTFILES)/shell/init.sh,$(SHELL_DIR)/init.sh)
+	$(call link_file,$(DOTFILES)/shell/prompt.sh,$(SHELL_DIR)/prompt.sh)
+	$(call link_file,$(DOTFILES)/shell/history.sh,$(SHELL_DIR)/history.sh)
 	@ensure_line() { \
 		file="$$1"; \
+		comment="$$2"; \
+		line="$$3"; \
 		touch "$$file"; \
-		if ! grep -Fqx '$(GIT_PROMPT_SOURCE)' "$$file"; then \
-			printf '\n%s\n%s\n' '# git-prompt' '$(GIT_PROMPT_SOURCE)' >> "$$file"; \
+		if ! grep -Fqx "$$line" "$$file"; then \
+			printf '\n%s\n%s\n' "$$comment" "$$line" >> "$$file"; \
 		fi; \
 	}; \
 	case "$${SHELL##*/}" in \
 		zsh) \
-			ensure_line "$(HOME)/.zshrc" \
+			ensure_line "$(HOME)/.zshrc" '# shell init' '$(SHELL_INIT_SOURCE)' \
 			;; \
 		bash) \
-			ensure_line "$(HOME)/.bashrc"; \
-			ensure_line "$(HOME)/.bash_profile" \
+			ensure_line "$(HOME)/.bashrc" '# shell init' '$(SHELL_INIT_SOURCE)'; \
+			ensure_line "$(HOME)/.bash_profile" '# shell init' '$(SHELL_INIT_SOURCE)' \
 			;; \
 		*) \
 			echo "skip rc injection for unsupported shell: $$SHELL"; \
