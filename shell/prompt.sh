@@ -25,11 +25,11 @@ prompt_git_segment_bash() {
   branch=$(prompt_git_branch) || return
 
   if prompt_git_dirty; then
-    color_open='\[\033[31m\]'
+    color_open=$'\001\033[31m\002'
   else
-    color_open='\[\033[32m\]'
+    color_open=$'\001\033[32m\002'
   fi
-  color_close='\[\033[0m\]'
+  color_close=$'\001\033[0m\002'
 
   printf '%s[%s]%s' "$color_open" "$branch" "$color_close"
 }
