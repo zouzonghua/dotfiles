@@ -16,12 +16,10 @@ if [ -n "$ZSH_VERSION" ]; then
 
   # Skip repeated commands and commands prefixed with a space.
   setopt HIST_IGNORE_DUPS
-  setopt HIST_IGNORE_ALL_DUPS
   setopt HIST_IGNORE_SPACE
 
-  # Clean up whitespace in stored commands and prefer dropping duplicates first.
+  # Clean up whitespace in stored commands without aggressively rewriting history.
   setopt HIST_REDUCE_BLANKS
-  setopt HIST_EXPIRE_DUPS_FIRST
 
 elif [ -n "$BASH_VERSION" ]; then
   # Match the zsh history size closely while keeping bash defaults intact.
@@ -31,6 +29,11 @@ elif [ -n "$BASH_VERSION" ]; then
   # Append to ~/.bash_history instead of overwriting it on shell exit.
   shopt -s histappend
 
-  # Ignore commands prefixed with a space and erase older duplicate entries.
-  HISTCONTROL=ignoreboth:erasedups
+  # Ignore commands prefixed with a space and avoid obvious duplicate noise.
+  HISTCONTROL=ignoreboth
+
+  # On each new prompt, write this session's new commands and then import
+  # commands written by other bash sessions. In tmux this means another pane's
+  # history usually becomes visible after you hit Enter and return to a prompt.
+  PROMPT_COMMAND="history -a; history -n${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
 fi
