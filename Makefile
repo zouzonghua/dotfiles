@@ -8,7 +8,7 @@ TMUX_DIR := $(HOME)/.config/tmux
 SSH_DIR := $(HOME)/.ssh
 VIMRC := $(HOME)/.vimrc
 
-.PHONY: git tmux ssh shell vim check all
+.PHONY: git tmux ssh shell vim check uninstall all
 
 all: git tmux ssh shell vim
 
@@ -65,8 +65,7 @@ shell:
 			ensure_line "$(HOME)/.zshrc" '# shell init' '$(SHELL_INIT_SOURCE)' \
 			;; \
 		bash) \
-			ensure_line "$(HOME)/.bashrc" '# shell init' '$(SHELL_INIT_SOURCE)'; \
-			ensure_line "$(HOME)/.bash_profile" '# shell init' '$(SHELL_INIT_SOURCE)' \
+			ensure_line "$(HOME)/.bashrc" '# shell init' '$(SHELL_INIT_SOURCE)' \
 			;; \
 		*) \
 			echo "skip rc injection for unsupported shell: $$SHELL"; \
@@ -88,3 +87,40 @@ vim:
 check:
 	@bash -n $(DOTFILES)/tmux/bin/*.sh
 	@tmux -f /dev/null source-file -n $(DOTFILES)/tmux/tmux.conf
+
+uninstall:
+	@cleanup_line() { \
+		file="$$1"; \
+		comment="$$2"; \
+		line="$$3"; \
+		[ -f "$$file" ] || return 0; \
+		tmp="$${file}.tmp"; \
+		awk -v comment="$$comment" -v line="$$line" ' \
+			$$0 == comment { getline nextline; if (nextline == line) next; print; $$0 = nextline } \
+			$$0 != line { print } \
+		' "$$file" > "$$tmp"; \
+		mv "$$tmp" "$$file"; \
+	}; \
+	restore_link() { \
+		path="$$1"; \
+		if [ -L "$$path" ]; then \
+			rm -f "$$path"; \
+		fi; \
+		if [ -e "$$path.backup" ]; then \
+			mv "$$path.backup" "$$path"; \
+		fi; \
+	}; \
+	cleanup_line "$(HOME)/.zshrc" '# shell init' '$(SHELL_INIT_SOURCE)'; \
+	cleanup_line "$(HOME)/.bashrc" '# shell init' '$(SHELL_INIT_SOURCE)'; \
+	restore_link "$(SHELL_DIR)/init.sh"; \
+	restore_link "$(SHELL_DIR)/prompt.sh"; \
+	restore_link "$(SHELL_DIR)/history.sh"; \
+	restore_link "$(TMUX_DIR)/tmux.conf"; \
+	restore_link "$(TMUX_DIR)/conf"; \
+	restore_link "$(TMUX_DIR)/bin"; \
+	restore_link "$(GIT_DIR)/config"; \
+	restore_link "$(GIT_DIR)/work"; \
+	restore_link "$(GIT_DIR)/personal"; \
+	restore_link "$(SSH_DIR)/config"; \
+	restore_link "$(VIMRC)"; \
+	printf 'uninstall complete\n'
