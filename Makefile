@@ -3,14 +3,15 @@ SHELL := /bin/bash
 DOTFILES := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 
 GIT_DIR := $(HOME)/.config/git
+PECO_DIR := $(HOME)/.config/peco
 SHELL_DIR := $(HOME)/.config/shell
 TMUX_DIR := $(HOME)/.config/tmux
 SSH_DIR := $(HOME)/.ssh
 VIMRC := $(HOME)/.vimrc
 
-.PHONY: git tmux ssh shell vim check uninstall all
+.PHONY: git peco tmux ssh shell vim check uninstall all
 
-all: git tmux ssh shell vim
+all: git peco tmux ssh shell vim
 
 SHELL_INIT_SOURCE := [ -f ~/.config/shell/init.sh ] && source ~/.config/shell/init.sh
 EXPLICIT_GOALS := $(filter-out all,$(MAKECMDGOALS))
@@ -29,6 +30,11 @@ git:
 	$(call link_file,$(DOTFILES)/git/work,$(GIT_DIR)/work)
 	$(call link_file,$(DOTFILES)/git/personal,$(GIT_DIR)/personal)
 	@if [ "$(EXPLICIT_GOALS)" = "git" ]; then printf 'git setup complete\n'; fi
+
+peco:
+	@mkdir -p $(PECO_DIR)
+	$(call link_file,$(DOTFILES)/peco/config.json,$(PECO_DIR)/config.json)
+	@if [ "$(EXPLICIT_GOALS)" = "peco" ]; then printf 'peco setup complete\n'; fi
 
 tmux:
 	@mkdir -p $(TMUX_DIR)
@@ -123,6 +129,7 @@ uninstall:
 	restore_link "$(GIT_DIR)/config"; \
 	restore_link "$(GIT_DIR)/work"; \
 	restore_link "$(GIT_DIR)/personal"; \
+	restore_link "$(PECO_DIR)/config.json"; \
 	restore_link "$(SSH_DIR)/config"; \
 	restore_link "$(VIMRC)"; \
 	printf 'uninstall complete\n'
