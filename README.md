@@ -21,6 +21,7 @@ git remote set-url origin git@github-personal:zouzonghua/dotfiles.git
 
 managed configs:
 
+* `alacritty` → `~/.config/alacritty/alacritty.toml`
 * `git` → `~/.config/git`
 * `shell` → `~/.config/shell`
 * `tmux` → `~/.config/tmux`
@@ -31,6 +32,7 @@ managed configs:
 
 ```sh
 make        # setup all
+make alacritty  # setup alacritty only
 make git    # setup git only
 make shell  # setup shell only
 make tmux   # setup tmux only
