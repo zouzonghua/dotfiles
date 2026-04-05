@@ -49,6 +49,7 @@ ssh:
 shell:
 	@mkdir -p $(SHELL_DIR)
 	$(call link_file,$(DOTFILES)/shell/init.sh,$(SHELL_DIR)/init.sh)
+	$(call link_file,$(DOTFILES)/shell/aliases.sh,$(SHELL_DIR)/aliases.sh)
 	$(call link_file,$(DOTFILES)/shell/prompt.sh,$(SHELL_DIR)/prompt.sh)
 	$(call link_file,$(DOTFILES)/shell/history.sh,$(SHELL_DIR)/history.sh)
 	@ensure_line() { \
@@ -113,6 +114,7 @@ uninstall:
 	cleanup_line "$(HOME)/.zshrc" '# shell init' '$(SHELL_INIT_SOURCE)'; \
 	cleanup_line "$(HOME)/.bashrc" '# shell init' '$(SHELL_INIT_SOURCE)'; \
 	restore_link "$(SHELL_DIR)/init.sh"; \
+	restore_link "$(SHELL_DIR)/aliases.sh"; \
 	restore_link "$(SHELL_DIR)/prompt.sh"; \
 	restore_link "$(SHELL_DIR)/history.sh"; \
 	restore_link "$(TMUX_DIR)/tmux.conf"; \
