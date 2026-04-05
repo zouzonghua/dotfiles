@@ -103,8 +103,10 @@ uninstall:
 		[ -f "$$file" ] || return 0; \
 		tmp="$${file}.tmp"; \
 		awk -v comment="$$comment" -v line="$$line" ' \
-			$$0 == comment { getline nextline; if (nextline == line) next; print; $$0 = nextline } \
-			$$0 != line { print } \
+			prev == comment && $$0 == line { prev = ""; next } \
+			prev != ""                     { print prev } \
+			                               { prev = $$0 } \
+			END                            { if (prev != "") print prev } \
 		' "$$file" > "$$tmp"; \
 		mv "$$tmp" "$$file"; \
 	}; \
