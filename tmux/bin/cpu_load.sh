@@ -1,16 +1,17 @@
 #!/bin/bash
-# 接收参数: $1=正常, $2=警告, $3=高压 (均为 256 色代号)
+# Parameters: $1=normal, $2=warning, $3=critical (256 color codes)
 normalize_color() {
     local c="$1"
     c="${c#colour}"
     echo "$c"
 }
 
+# Define the color codes.
 C_NORMAL=$(normalize_color "${1:-76}")
 C_WARN=$(normalize_color "${2:-142}")
 C_CRIT=$(normalize_color "${3:-160}")
 
-# 获取核心数与负载
+# Get the number of cores and load.
 if [[ "$OSTYPE" == "darwin"* ]]; then
     CPUS=$(sysctl -n hw.ncpu)
     LOADS=$(uptime | awk -F'load averages: ' '{print $2}' | sed 's/,//g')
@@ -19,12 +20,12 @@ else
     LOADS=$(uptime | awk -F'load average: ' '{print $2}' | sed 's/,//g')
 fi
 
-# 计算 1 分钟负载百分比
+# Calculate the 1 minute load percentage.
 CPUS=${CPUS:-1}
 L1=$(echo $LOADS | awk '{print $1}')
 PCT_VAL=$(awk -v l="$L1" -v c="$CPUS" 'BEGIN {printf "%.0f", (l/c)*100}')
 
-# 颜色判定
+# Determine the color.
 if [ "$PCT_VAL" -gt 80 ]; then
     COLOR=$C_CRIT
 elif [ "$PCT_VAL" -gt 50 ]; then
@@ -33,8 +34,8 @@ else
     COLOR=$C_NORMAL
 fi
 
-# Format only the 1 minute load average as a percentage.
+# Format the 1 minute load average as a percentage.
 CPU_STR=$(echo "$LOADS" | awk -v cpus="$CPUS" '{printf "%.1f%%", $1/cpus*100}')
 
-# 适配 Terminal.app 的输出格式
-echo "#[fg=colour${COLOR}]CPU: ${CPU_STR}#[default]"
+# Format the output string with the color.
+echo "#[fg=colour${COLOR}]${CPU_STR}#[default]"
