@@ -31,10 +31,11 @@ endef
 
 alacritty:
 	@mkdir -p $(ALACRITTY_DIR)
+	@rm -f $(ALACRITTY_DIR)/selenized-white.toml $(ALACRITTY_DIR)/selenized-dark.toml
 	$(call link_file,$(DOTFILES)/alacritty/alacritty.toml,$(ALACRITTY_DIR)/alacritty.toml)
 	$(call link_file,$(DOTFILES)/alacritty/bin,$(ALACRITTY_DIR)/bin)
-	$(call link_file,$(DOTFILES)/alacritty/selenized-white.toml,$(ALACRITTY_DIR)/selenized-white.toml)
-	$(call link_file,$(DOTFILES)/alacritty/selenized-dark.toml,$(ALACRITTY_DIR)/selenized-dark.toml)
+	$(call link_file,$(DOTFILES)/alacritty/theme-light.toml,$(ALACRITTY_DIR)/theme-light.toml)
+	$(call link_file,$(DOTFILES)/alacritty/theme-dark.toml,$(ALACRITTY_DIR)/theme-dark.toml)
 	@$(ALACRITTY_DIR)/bin/theme_sync.sh
 	@if [ "$(EXPLICIT_GOALS)" = "alacritty" ]; then printf 'alacritty setup complete\n'; fi
 
@@ -109,6 +110,10 @@ vim:
 check:
 	@bash -n $(DOTFILES)/tmux/bin/*.sh
 	@bash -n $(DOTFILES)/alacritty/bin/*.sh
+	@tmux -f /dev/null source-file -n $(DOTFILES)/tmux/conf/statusline-dark.conf
+	@tmux -f /dev/null source-file -n $(DOTFILES)/tmux/conf/statusline-light.conf
+	@tmux -f /dev/null source-file -n $(DOTFILES)/tmux/conf/macos.conf
+	@tmux -f /dev/null source-file -n $(DOTFILES)/tmux/conf/linux.conf
 	@tmux -f /dev/null source-file -n $(DOTFILES)/tmux/tmux.conf
 
 uninstall:
@@ -144,8 +149,9 @@ uninstall:
 	restore_link "$(SHELL_DIR)/alacritty.sh"; \
 	restore_link "$(ALACRITTY_DIR)/alacritty.toml"; \
 	restore_link "$(ALACRITTY_DIR)/bin"; \
-	restore_link "$(ALACRITTY_DIR)/selenized-white.toml"; \
-	restore_link "$(ALACRITTY_DIR)/selenized-dark.toml"; \
+	rm -f "$(ALACRITTY_DIR)/selenized-white.toml" "$(ALACRITTY_DIR)/selenized-dark.toml"; \
+	restore_link "$(ALACRITTY_DIR)/theme-light.toml"; \
+	restore_link "$(ALACRITTY_DIR)/theme-dark.toml"; \
 	rm -f "$(ALACRITTY_DIR)/theme-active.generated.toml" "$(ALACRITTY_DIR)/.theme-sync.pid"; \
 	restore_link "$(TMUX_DIR)/tmux.conf"; \
 	restore_link "$(TMUX_DIR)/conf"; \

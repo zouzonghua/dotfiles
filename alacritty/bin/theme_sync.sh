@@ -4,8 +4,8 @@ set -euo pipefail
 
 ALACRITTY_DIR="${HOME}/.config/alacritty"
 THEME_FILE="${ALACRITTY_DIR}/theme-active.generated.toml"
-LIGHT_THEME="${ALACRITTY_DIR}/selenized-white.toml"
-DARK_THEME="${ALACRITTY_DIR}/selenized-dark.toml"
+LIGHT_THEME="${ALACRITTY_DIR}/theme-light.toml"
+DARK_THEME="${ALACRITTY_DIR}/theme-dark.toml"
 WATCH_INTERVAL=5
 PID_FILE="${ALACRITTY_DIR}/.theme-sync.pid"
 

@@ -1,15 +1,8 @@
 #!/bin/bash
-# Parameters: $1=normal, $2=warning, $3=critical (256 color codes)
-normalize_color() {
-    local c="$1"
-    c="${c#colour}"
-    echo "$c"
-}
-
-# Define the color codes.
-C_NORMAL=$(normalize_color "${1:-76}")
-C_WARN=$(normalize_color "${2:-142}")
-C_CRIT=$(normalize_color "${3:-160}")
+# Parameters: $1=normal, $2=warning, $3=critical (256 color codes or hex values)
+C_NORMAL="${1:-76}"
+C_WARN="${2:-142}"
+C_CRIT="${3:-160}"
 
 # Get the number of cores and load.
 if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -38,4 +31,9 @@ fi
 CPU_STR=$(echo "$LOADS" | awk -v cpus="$CPUS" '{printf "%.1f%%", $1/cpus*100}')
 
 # Format the output string with the color.
-echo "#[fg=colour${COLOR}]${CPU_STR}#[default]"
+if [[ "$COLOR" == \#* ]]; then
+    echo "#[fg=${COLOR}]${CPU_STR}#[default]"
+else
+    COLOR="${COLOR#colour}"
+    echo "#[fg=colour${COLOR}]${CPU_STR}#[default]"
+fi
