@@ -1,28 +1,25 @@
-# Colors (Solarized Light)
+# Colors (Selenized Light)
 
-# Default colors
 [colors.primary]
-background = '#fdf6e3'
-foreground = '#586e75'
+background = '#fbf3db'
+foreground = '#53676d'
 
-# Normal colors
 [colors.normal]
-black   = '#073642'
-red     = '#dc322f'
-green   = '#859900'
-yellow  = '#b58900'
-blue    = '#268bd2'
-magenta = '#d33682'
-cyan    = '#2aa198'
-white   = '#eee8d5'
+black   = '#ece3cc'
+red     = '#d2212d'
+green   = '#489100'
+yellow  = '#ad8900'
+blue    = '#0072d4'
+magenta = '#ca4898'
+cyan    = '#009c8f'
+white   = '#909995'
 
-# Bright colors
 [colors.bright]
-black   = '#002b36'
-red     = '#cb4b16'
-green   = '#586e75'
-yellow  = '#657b83'
-blue    = '#839496'
-magenta = '#6c71c4'
-cyan    = '#93a1a1'
-white   = '#fdf6e3'
+black   = '#d5cdb6'
+red     = '#cc1729'
+green   = '#428b00'
+yellow  = '#a78300'
+blue    = '#006dce'
+magenta = '#c44392'
+cyan    = '#00978a'
+white   = '#3a4d53'
