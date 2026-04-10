@@ -5,7 +5,7 @@ set nocompatible
 set showmatch
 
 " enable mouse support
-set mouse=a
+"set mouse=a
 
 " enable syntax
 syntax on
