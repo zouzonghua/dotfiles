@@ -40,6 +40,17 @@ make check      # validate configs
 
 `make` is idempotent: it creates missing dirs, backs up existing files to `*.backup`, and relinks with `ln -sfn`.
 
+## nnn plugins
+
+Install or update nnn plugins with:
+
+```sh
+sh -c "$(curl -Ls https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs)"
+```
+
+This downloads the matching nnn plugin bundle and installs it to `~/.config/nnn/plugins`.
+It backs up any existing plugin directory before updating.
+
 `make check` runs:
 
 - `bash -n` on tmux shell scripts
