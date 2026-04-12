@@ -1,14 +1,14 @@
 # dotfiles
 
-Minimal setup: git repo + manual symlink.
+Plain git repo + symlinks.
 
-## rules
+## principles
 
-* no bare repo
-* no stow / chezmoi
-* no install script
-* config only
-* no private keys
+- no bare repo
+- no stow / chezmoi
+- no install script
+- config only
+- no private keys
 
 ## bootstrap
 
@@ -19,36 +19,28 @@ make
 git remote set-url origin git@github-personal:zouzonghua/dotfiles.git
 ```
 
-managed configs:
+## targets
 
-* `alacritty` → `~/.config/alacritty/alacritty.toml`
-* `git` → `~/.config/git`
-* `shell` → `~/.config/shell`
-* `tmux` → `~/.config/tmux`
-* `ssh` → `~/.ssh/config`
-* `vim` → `~/.vimrc`
+- `alacritty` → `~/.config/alacritty/alacritty.toml`
+- `aerospace` → `~/.config/aerospace/aerospace.toml`
+- `git` → `~/.config/git`
+- `peco` → `~/.config/peco`
+- `shell` → `~/.config/shell`
+- `tmux` → `~/.config/tmux`
+- `ssh` → `~/.ssh/config`
+- `vim` → `~/.vimrc`
 
-## make
+## usage
 
 ```sh
-make        # setup all
-make alacritty  # setup alacritty only
-make git    # setup git only
-make shell  # setup shell only
-make tmux   # setup tmux only
-make ssh    # setup ssh only
-make vim    # setup vim only
-make check  # validate config files
+make            # setup all
+make <target>   # setup one target
+make check      # validate configs
 ```
 
-behavior:
+`make` is idempotent: it creates missing dirs, backs up existing files to `*.backup`, and relinks with `ln -sfn`.
 
-* create target directories if missing
-* backup existing files to `*.backup`
-* create symlink with `ln -sfn`
-* safe to run multiple times
+`make check` runs:
 
-checks:
-
-* `bash -n` for tmux shell scripts
-* `tmux -n` parse check for `tmux.conf`
+- `bash -n` on tmux shell scripts
+- `tmux -f /dev/null source-file -n` on tmux configs
