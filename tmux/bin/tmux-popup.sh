@@ -164,11 +164,11 @@ show_menu() {
   target_pane="$2"
 
   tmux display-menu -c "$target_client" -t "$target_pane" -T "#[align=centre]AI tools" -x P -y P \
+    "OpenCode AI" o "run-shell -b 'nohup \"$script_path\" open opencode \"#{pane_current_path}\" \"#{client_name}\" \"#{pane_id}\" >/dev/null 2>&1 &'" \
     "Claude Code" c "run-shell -b 'nohup \"$script_path\" open claude \"#{pane_current_path}\" \"#{client_name}\" \"#{pane_id}\" >/dev/null 2>&1 &'" \
     "OpenAI Codex" x "run-shell -b 'nohup \"$script_path\" open codex \"#{pane_current_path}\" \"#{client_name}\" \"#{pane_id}\" >/dev/null 2>&1 &'" \
     "Google Gemini" g "run-shell -b 'nohup \"$script_path\" open gemini \"#{pane_current_path}\" \"#{client_name}\" \"#{pane_id}\" >/dev/null 2>&1 &'" \
-    "Hermes Agent" h "run-shell -b 'nohup \"$script_path\" open hermes \"#{pane_current_path}\" \"#{client_name}\" \"#{pane_id}\" >/dev/null 2>&1 &'" \
-    "OpenCode AI" o "run-shell -b 'nohup \"$script_path\" open opencode \"#{pane_current_path}\" \"#{client_name}\" \"#{pane_id}\" >/dev/null 2>&1 &'"
+    "Hermes Agent" h "run-shell -b 'nohup \"$script_path\" open hermes \"#{pane_current_path}\" \"#{client_name}\" \"#{pane_id}\" >/dev/null 2>&1 &'"
 }
 
 show_menu_action() {
