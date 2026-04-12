@@ -3,6 +3,7 @@ SHELL := /bin/bash
 DOTFILES := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 
 ALACRITTY_DIR := $(HOME)/.config/alacritty
+AEROSPACE_DIR := $(HOME)/.config/aerospace
 GIT_DIR := $(HOME)/.config/git
 PECO_DIR := $(HOME)/.config/peco
 SHELL_DIR := $(HOME)/.config/shell
@@ -10,9 +11,9 @@ TMUX_DIR := $(HOME)/.config/tmux
 SSH_DIR := $(HOME)/.ssh
 VIMRC := $(HOME)/.vimrc
 
-.PHONY: alacritty git peco tmux ssh shell vim check uninstall all
+.PHONY: alacritty aerospace git peco tmux ssh shell vim check uninstall all
 
-all: alacritty git peco tmux ssh shell vim
+all: alacritty aerospace git peco tmux ssh shell vim
 
 SHELL_INIT_SOURCE := [ -f ~/.config/shell/init.sh ] && source ~/.config/shell/init.sh
 EXPLICIT_GOALS := $(filter-out all,$(MAKECMDGOALS))
@@ -31,13 +32,14 @@ endef
 
 alacritty:
 	@mkdir -p $(ALACRITTY_DIR)
-	@rm -f $(ALACRITTY_DIR)/selenized-white.toml $(ALACRITTY_DIR)/selenized-dark.toml
 	$(call link_file,$(DOTFILES)/alacritty/alacritty.toml,$(ALACRITTY_DIR)/alacritty.toml)
-	$(call link_file,$(DOTFILES)/alacritty/bin,$(ALACRITTY_DIR)/bin)
-	$(call link_file,$(DOTFILES)/alacritty/theme-light.toml,$(ALACRITTY_DIR)/theme-light.toml)
-	$(call link_file,$(DOTFILES)/alacritty/theme-dark.toml,$(ALACRITTY_DIR)/theme-dark.toml)
-	@$(ALACRITTY_DIR)/bin/theme_sync.sh
+	$(call link_file,$(DOTFILES)/alacritty/theme.toml,$(ALACRITTY_DIR)/theme.toml)
 	@if [ "$(EXPLICIT_GOALS)" = "alacritty" ]; then printf 'alacritty setup complete\n'; fi
+
+aerospace:
+	@mkdir -p $(AEROSPACE_DIR)
+	$(call link_file,$(DOTFILES)/aerospace/aerospace.toml,$(AEROSPACE_DIR)/aerospace.toml)
+	@if [ "$(EXPLICIT_GOALS)" = "aerospace" ]; then printf 'aerospace setup complete\n'; fi
 
 git:
 	@mkdir -p $(GIT_DIR)
@@ -73,7 +75,6 @@ shell:
 	$(call link_file,$(DOTFILES)/shell/aliases.sh,$(SHELL_DIR)/aliases.sh)
 	$(call link_file,$(DOTFILES)/shell/prompt.sh,$(SHELL_DIR)/prompt.sh)
 	$(call link_file,$(DOTFILES)/shell/history.sh,$(SHELL_DIR)/history.sh)
-	$(call link_file,$(DOTFILES)/shell/alacritty.sh,$(SHELL_DIR)/alacritty.sh)
 	@ensure_line() { \
 		file="$$1"; \
 		comment="$$2"; \
@@ -109,12 +110,9 @@ vim:
 
 check:
 	@bash -n $(DOTFILES)/tmux/bin/*.sh
-	@bash -n $(DOTFILES)/alacritty/bin/*.sh
-	@tmux -f /dev/null source-file -n $(DOTFILES)/tmux/conf/statusline-dark.conf
-	@tmux -f /dev/null source-file -n $(DOTFILES)/tmux/conf/statusline-light.conf
-	@tmux -f /dev/null source-file -n $(DOTFILES)/tmux/conf/macos.conf
-	@tmux -f /dev/null source-file -n $(DOTFILES)/tmux/conf/linux.conf
-	@tmux -f /dev/null source-file -n $(DOTFILES)/tmux/tmux.conf
+	@for file in $(DOTFILES)/tmux/conf/*.conf $(DOTFILES)/tmux/tmux.conf; do \
+		tmux -f /dev/null source-file -n "$$file"; \
+	done
 
 uninstall:
 	@cleanup_line() { \
@@ -146,13 +144,9 @@ uninstall:
 	restore_link "$(SHELL_DIR)/aliases.sh"; \
 	restore_link "$(SHELL_DIR)/prompt.sh"; \
 	restore_link "$(SHELL_DIR)/history.sh"; \
-	restore_link "$(SHELL_DIR)/alacritty.sh"; \
 	restore_link "$(ALACRITTY_DIR)/alacritty.toml"; \
-	restore_link "$(ALACRITTY_DIR)/bin"; \
-	rm -f "$(ALACRITTY_DIR)/selenized-white.toml" "$(ALACRITTY_DIR)/selenized-dark.toml"; \
-	restore_link "$(ALACRITTY_DIR)/theme-light.toml"; \
-	restore_link "$(ALACRITTY_DIR)/theme-dark.toml"; \
-	rm -f "$(ALACRITTY_DIR)/theme-active.generated.toml" "$(ALACRITTY_DIR)/.theme-sync.pid"; \
+	restore_link "$(ALACRITTY_DIR)/theme.toml"; \
+	restore_link "$(AEROSPACE_DIR)/aerospace.toml"; \
 	restore_link "$(TMUX_DIR)/tmux.conf"; \
 	restore_link "$(TMUX_DIR)/conf"; \
 	restore_link "$(TMUX_DIR)/bin"; \

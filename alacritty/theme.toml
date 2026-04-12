@@ -1,0 +1,34 @@
+# Solarized Dark Patched
+
+[colors.primary]
+background = "#001e27"
+#background = "#031219"
+foreground = "#708284"
+
+[colors.cursor]
+text = "#002831"
+cursor = "#708284"
+
+[colors.selection]
+text = "#819090"
+background = "#002831"
+
+[colors.normal]
+black   = "#002831"
+red     = "#d11c24"
+green   = "#738a05"
+yellow  = "#a57706"
+blue    = "#2176c7"
+magenta = "#c61c6f"
+cyan    = "#259286"
+white   = "#eae3cb"
+
+[colors.bright]
+black   = "#475b62"
+red     = "#bd3613"
+green   = "#475b62"
+yellow  = "#536870"
+blue    = "#708284"
+magenta = "#5956ba"
+cyan    = "#819090"
+white   = "#fcf4dc"
