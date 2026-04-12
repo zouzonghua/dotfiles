@@ -1,6 +1,6 @@
 # dotfiles
 
-Plain git repo + symlinks.
+git repo + symlinks.
 
 ## principles
 
