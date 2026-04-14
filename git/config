@@ -22,11 +22,13 @@
     lf = log --graph --name-status --pretty=format:\"%C(red)%h %C(reset)%cd %C(blue)[%an] %Creset%s %C(yellow)%d%Creset\" --date=relative
 
 [includeIf "gitdir:~/work/"]
-    path = ~/.config/git/work
+    path = ~/.config/git/host-work
 
 [includeIf "gitdir:~/personal/"]
-    path = ~/.config/git/personal
+    path = ~/.config/git/host-personal
 [gpg]
 	format = ssh
 [commit]
 	gpgsign = true
+[gpg "ssh"]
+	allowedSignersFile = /Users/zonghua/.config/git/allowed_signers
