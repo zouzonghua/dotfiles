@@ -1,7 +1,7 @@
 [user]
     name = zonghuazou
     email = zonghuazou@ddmarketinghub.com
-    signingkey = ~/.ssh/id_ed25519.pub
+    signingkey = ~/.ssh/id_ed25519_work.pub
 
 [init]
     defaultBranch = main
