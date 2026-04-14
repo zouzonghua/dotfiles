@@ -147,7 +147,7 @@ popup_width() {
     lazygit) printf '%s\n' '80%' ;;
     nnn) printf '%s\n' '40%' ;;
     term) printf '%s\n' '100%' ;;
-    claude|codex|gemini|hermes|opencode) printf '%s\n' '55%' ;;
+    claude|codex|gemini|hermes|opencode) printf '%s\n' '80%' ;;
     *) return 1 ;;
   esac
 }
@@ -157,7 +157,7 @@ popup_height() {
     lazygit) printf '%s\n' '80%' ;;
     nnn) printf '%s\n' '100%' ;;
     term) printf '%s\n' '50%' ;;
-    claude|codex|gemini|hermes|opencode) printf '%s\n' '100%' ;;
+    claude|codex|gemini|hermes|opencode) printf '%s\n' '80%' ;;
     *) return 1 ;;
   esac
 }
@@ -165,8 +165,7 @@ popup_height() {
 popup_x() {
   case "$1" in
     nnn|term) printf '%s\n' '0' ;;
-    claude|codex|gemini|hermes|opencode) printf '%s\n' '100%' ;;
-    lazygit) printf '%s\n' '' ;;
+    claude|codex|gemini|hermes|opencode|lazygit) printf '%s\n' '' ;;
     *) return 1 ;;
   esac
 }
@@ -175,8 +174,7 @@ popup_y() {
   case "$1" in
     nnn) printf '%s\n' '0' ;;
     term) printf '%s\n' '100%' ;;
-    claude|codex|gemini|hermes|opencode) printf '%s\n' '0' ;;
-    lazygit) printf '%s\n' '' ;;
+    claude|codex|gemini|hermes|opencode|lazygit) printf '%s\n' '' ;;
     *) return 1 ;;
   esac
 }
