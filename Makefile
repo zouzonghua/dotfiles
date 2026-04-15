@@ -66,21 +66,21 @@ define print_check
 endef
 
 define print_check_ok
-	@printf '[ok]\n'
+	@printf '[OK]\n'
 endef
 
 define print_check_skip
-	@printf '[skip]\n'
+	@printf '[SKIP]\n'
 endef
 
 define run_check
 	@printf '%-32s' 'check $(1)'; \
 	tmp=$$(mktemp); \
 	if { $(2); } > /dev/null 2>"$$tmp"; then \
-		printf '[ok]\n'; \
+		printf '[OK]\n'; \
 		rm -f "$$tmp"; \
 	else \
-		printf '[err]\n'; \
+		printf '[FAIL]\n'; \
 		cat "$$tmp" >&2; \
 		rm -f "$$tmp"; \
 		exit 1; \
@@ -164,16 +164,16 @@ check:
 		printf '%-32s' 'check ghostty config'; \
 		tmp=$$(mktemp); \
 		if { "$(GHOSTTY_BIN)" +validate-config --config-file="$(DOTFILES)/ghostty/config"; } > /dev/null 2>"$$tmp"; then \
-			printf '[ok]\n'; \
+			printf '[OK]\n'; \
 			rm -f "$$tmp"; \
 		else \
-			printf '[err]\n'; \
+			printf '[FAIL]\n'; \
 			cat "$$tmp" >&2; \
 			rm -f "$$tmp"; \
 			exit 1; \
 		fi; \
 	else \
-		printf '%-32s[skip]\n' 'check ghostty config'; \
+		printf '%-32s[SKIP]\n' 'check ghostty config'; \
 	fi
 	$(call run_check,ssh config,ssh -T -F $(DOTFILES)/ssh/config -G $(SSH_CHECK_HOST))
 	$(call run_check,ssh devcontainer,ssh -T -F $(DOTFILES)/ssh/devcontainer -G $(SSH_CHECK_HOST))
