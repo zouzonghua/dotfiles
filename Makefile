@@ -2,6 +2,7 @@ SHELL := /bin/bash
 
 DOTFILES := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 
+GHOSTTY_BIN := $(firstword $(wildcard /Applications/Ghostty.app/Contents/MacOS/ghostty) $(shell command -v ghostty 2>/dev/null))
 GHOSTTY_DIR := $(HOME)/.config/ghostty
 HAMMERSPOON_DIR := $(HOME)/.hammerspoon
 HAMMERSPOON_SPOONS_DIR := $(HAMMERSPOON_DIR)/Spoons
@@ -13,6 +14,14 @@ SHELL_DIR := $(HOME)/.config/shell
 TMUX_DIR := $(HOME)/.config/tmux
 SSH_DIR := $(HOME)/.ssh
 VIMRC := $(HOME)/.vimrc
+
+GHOSTTY_FILES := config
+GIT_FILES := config work.identity personal.identity personal.devcontainer work.devcontainer
+PECO_FILES := config.json
+SHELL_FILES := init.sh aliases.sh prompt.sh history.sh
+TMUX_FILES := tmux.conf conf bin
+SSH_FILES := config devcontainer
+SSH_CHECK_HOST := github-personal
 
 .PHONY: ghostty hammerspoon git peco tmux ssh shell vim check uninstall all
 
@@ -33,37 +42,76 @@ define link_file
 	@ln -sfn "$(1)" "$(2)"
 endef
 
+define link_files
+$(foreach file,$(3),$(call link_file,$(1)/$(file),$(2)/$(file)))
+endef
+
+define spoon_hint
+	@if [ ! -d "$(2)" ]; then \
+		printf 'missing $(1)\n'; \
+		printf 'run: git clone $(3) "%s"\n' "$(2)"; \
+	else \
+		printf 'update $(1): cd "%s" && git pull\n' "$(2)"; \
+	fi
+endef
+
+define chmod_files
+	@for file in $(2); do \
+		if [ -f "$(1)/$$file" ]; then chmod 600 "$(1)/$$file"; fi; \
+	done
+endef
+
+define print_check
+	@printf '%-32s' 'check $(1)'
+endef
+
+define print_check_ok
+	@printf '[ok]\n'
+endef
+
+define print_check_skip
+	@printf '[skip]\n'
+endef
+
+define run_check
+	@printf '%-32s' 'check $(1)'; \
+	tmp=$$(mktemp); \
+	if { $(2); } > /dev/null 2>"$$tmp"; then \
+		printf '[ok]\n'; \
+		rm -f "$$tmp"; \
+	else \
+		printf '[err]\n'; \
+		cat "$$tmp" >&2; \
+		rm -f "$$tmp"; \
+		exit 1; \
+	fi
+endef
+
 ghostty:
 	@mkdir -p $(GHOSTTY_DIR)
-	$(call link_file,$(DOTFILES)/ghostty/config,$(GHOSTTY_DIR)/config)
+	$(call link_files,$(DOTFILES)/ghostty,$(GHOSTTY_DIR),$(GHOSTTY_FILES))
 	@if [ "$(EXPLICIT_GOALS)" = "ghostty" ]; then printf 'ghostty setup complete\n'; fi
 
 hammerspoon:
 	@mkdir -p $(HAMMERSPOON_DIR) $(HAMMERSPOON_SPOONS_DIR)
 	$(call link_file,$(DOTFILES)/hammerspoon/init.lua,$(HAMMERSPOON_DIR)/init.lua)
-	@if [ ! -d "$(PAPERWM_SPOON)" ]; then git clone https://github.com/mogenson/PaperWM.spoon.git "$(PAPERWM_SPOON)"; fi
-	@if [ ! -d "$(SPACEINDICATOR_SPOON)" ]; then git clone https://github.com/zouzonghua/SpaceIndicator.spoon.git "$(SPACEINDICATOR_SPOON)"; fi
+	$(call spoon_hint,PaperWM.spoon,$(PAPERWM_SPOON),https://github.com/mogenson/PaperWM.spoon.git)
+	$(call spoon_hint,SpaceIndicator.spoon,$(SPACEINDICATOR_SPOON),https://github.com/zouzonghua/SpaceIndicator.spoon.git)
 	@if [ "$(EXPLICIT_GOALS)" = "hammerspoon" ]; then printf 'hammerspoon setup complete\n'; fi
 
 git:
 	@mkdir -p $(GIT_DIR)
-	$(call link_file,$(DOTFILES)/git/config,$(GIT_DIR)/config)
-	$(call link_file,$(DOTFILES)/git/work.identity,$(GIT_DIR)/work.identity)
-	$(call link_file,$(DOTFILES)/git/personal.identity,$(GIT_DIR)/personal.identity)
-	$(call link_file,$(DOTFILES)/git/personal.devcontainer,$(GIT_DIR)/personal.devcontainer)
-	$(call link_file,$(DOTFILES)/git/work.devcontainer,$(GIT_DIR)/work.devcontainer)
+	$(call link_files,$(DOTFILES)/git,$(GIT_DIR),$(GIT_FILES))
 	@if [ "$(EXPLICIT_GOALS)" = "git" ]; then printf 'git setup complete\n'; fi
 
 peco:
 	@mkdir -p $(PECO_DIR)
-	$(call link_file,$(DOTFILES)/peco/config.json,$(PECO_DIR)/config.json)
+	$(call link_files,$(DOTFILES)/peco,$(PECO_DIR),$(PECO_FILES))
 	@if [ "$(EXPLICIT_GOALS)" = "peco" ]; then printf 'peco setup complete\n'; fi
 
 tmux:
 	@mkdir -p $(TMUX_DIR)
-	$(call link_file,$(DOTFILES)/tmux/tmux.conf,$(TMUX_DIR)/tmux.conf)
-	$(call link_file,$(DOTFILES)/tmux/conf,$(TMUX_DIR)/conf)
-	$(call link_file,$(DOTFILES)/tmux/bin,$(TMUX_DIR)/bin)
+	$(call link_files,$(DOTFILES)/tmux,$(TMUX_DIR),$(TMUX_FILES))
 	@if [ "$(EXPLICIT_GOALS)" = "tmux" ]; then \
 		printf 'tmux setup complete\n'; \
 		printf 'reload tmux with: tmux source-file ~/.config/tmux/tmux.conf\n'; \
@@ -71,18 +119,13 @@ tmux:
 
 ssh:
 	@mkdir -p $(SSH_DIR)
-	$(call link_file,$(DOTFILES)/ssh/config,$(SSH_DIR)/config)
-	$(call link_file,$(DOTFILES)/ssh/devcontainer,$(SSH_DIR)/devcontainer)
-	@if [ -f $(SSH_DIR)/config ]; then chmod 600 $(SSH_DIR)/config; fi
-	@if [ -f $(SSH_DIR)/devcontainer ]; then chmod 600 $(SSH_DIR)/devcontainer; fi
+	$(call link_files,$(DOTFILES)/ssh,$(SSH_DIR),$(SSH_FILES))
+	$(call chmod_files,$(SSH_DIR),$(SSH_FILES))
 	@if [ "$(EXPLICIT_GOALS)" = "ssh" ]; then printf 'ssh setup complete\n'; fi
 
 shell:
 	@mkdir -p $(SHELL_DIR)
-	$(call link_file,$(DOTFILES)/shell/init.sh,$(SHELL_DIR)/init.sh)
-	$(call link_file,$(DOTFILES)/shell/aliases.sh,$(SHELL_DIR)/aliases.sh)
-	$(call link_file,$(DOTFILES)/shell/prompt.sh,$(SHELL_DIR)/prompt.sh)
-	$(call link_file,$(DOTFILES)/shell/history.sh,$(SHELL_DIR)/history.sh)
+	$(call link_files,$(DOTFILES)/shell,$(SHELL_DIR),$(SHELL_FILES))
 	@ensure_line() { \
 		file="$$1"; \
 		comment="$$2"; \
@@ -117,10 +160,26 @@ vim:
 	@if [ "$(EXPLICIT_GOALS)" = "vim" ]; then printf 'vim setup complete\n'; fi
 
 check:
-	@bash -n $(DOTFILES)/tmux/bin/*.sh
-	@for file in $(DOTFILES)/tmux/conf/*.conf $(DOTFILES)/tmux/tmux.conf; do \
-		tmux -f /dev/null source-file -n "$$file"; \
-	done
+	@if [ -n "$(GHOSTTY_BIN)" ]; then \
+		printf '%-32s' 'check ghostty config'; \
+		tmp=$$(mktemp); \
+		if { "$(GHOSTTY_BIN)" +validate-config --config-file="$(DOTFILES)/ghostty/config"; } > /dev/null 2>"$$tmp"; then \
+			printf '[ok]\n'; \
+			rm -f "$$tmp"; \
+		else \
+			printf '[err]\n'; \
+			cat "$$tmp" >&2; \
+			rm -f "$$tmp"; \
+			exit 1; \
+		fi; \
+	else \
+		printf '%-32s[skip]\n' 'check ghostty config'; \
+	fi
+	$(call run_check,ssh config,ssh -T -F $(DOTFILES)/ssh/config -G $(SSH_CHECK_HOST))
+	$(call run_check,ssh devcontainer,ssh -T -F $(DOTFILES)/ssh/devcontainer -G $(SSH_CHECK_HOST))
+	$(call run_check,shell scripts,bash -n $(DOTFILES)/shell/*.sh)
+	$(call run_check,tmux scripts,bash -n $(DOTFILES)/tmux/bin/*.sh)
+	$(call run_check,tmux config,for file in $(DOTFILES)/tmux/conf/*.conf $(DOTFILES)/tmux/tmux.conf; do tmux -f /dev/null source-file -n "$$file"; done)
 
 uninstall:
 	@cleanup_line() { \
@@ -148,22 +207,12 @@ uninstall:
 	}; \
 	cleanup_line "$(HOME)/.zshrc" '# shell init' '$(SHELL_INIT_SOURCE)'; \
 	cleanup_line "$(HOME)/.bashrc" '# shell init' '$(SHELL_INIT_SOURCE)'; \
-	restore_link "$(SHELL_DIR)/init.sh"; \
-	restore_link "$(SHELL_DIR)/aliases.sh"; \
-	restore_link "$(SHELL_DIR)/prompt.sh"; \
-	restore_link "$(SHELL_DIR)/history.sh"; \
-	restore_link "$(GHOSTTY_DIR)/config"; \
+	for file in $(SHELL_FILES); do restore_link "$(SHELL_DIR)/$$file"; done; \
+	for file in $(GHOSTTY_FILES); do restore_link "$(GHOSTTY_DIR)/$$file"; done; \
 	restore_link "$(HAMMERSPOON_DIR)/init.lua"; \
-	restore_link "$(TMUX_DIR)/tmux.conf"; \
-	restore_link "$(TMUX_DIR)/conf"; \
-	restore_link "$(TMUX_DIR)/bin"; \
-	restore_link "$(GIT_DIR)/config"; \
-	restore_link "$(GIT_DIR)/work.identity"; \
-	restore_link "$(GIT_DIR)/personal.identity"; \
-	restore_link "$(GIT_DIR)/work.devcontainer"; \
-	restore_link "$(GIT_DIR)/personal.devcontainer"; \
-	restore_link "$(PECO_DIR)/config.json"; \
-	restore_link "$(SSH_DIR)/config"; \
-	restore_link "$(SSH_DIR)/devcontainer"; \
+	for file in $(TMUX_FILES); do restore_link "$(TMUX_DIR)/$$file"; done; \
+	for file in $(GIT_FILES); do restore_link "$(GIT_DIR)/$$file"; done; \
+	for file in $(PECO_FILES); do restore_link "$(PECO_DIR)/$$file"; done; \
+	for file in $(SSH_FILES); do restore_link "$(SSH_DIR)/$$file"; done; \
 	restore_link "$(VIMRC)"; \
 	printf 'uninstall complete\n'
