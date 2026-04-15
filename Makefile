@@ -43,10 +43,6 @@ define link_file
 	@ln -sfn "$(1)" "$(2)"
 endef
 
-define link_files
-$(foreach file,$(3),$(call link_file,$(1)/$(file),$(2)/$(file)))
-endef
-
 define spoon_hint
 	@if [ ! -d "$(2)" ]; then \
 		printf 'missing $(1)\n'; \
@@ -64,7 +60,7 @@ endef
 
 ghostty:
 	@mkdir -p $(GHOSTTY_DIR)
-	$(call link_files,$(DOTFILES)/ghostty,$(GHOSTTY_DIR),$(GHOSTTY_FILES))
+	$(call link_file,$(DOTFILES)/ghostty/config,$(GHOSTTY_DIR)/config)
 	@if [ "$(EXPLICIT_GOALS)" = "ghostty" ]; then printf 'ghostty setup complete\n'; fi
 
 hammerspoon:
@@ -76,17 +72,23 @@ hammerspoon:
 
 git:
 	@mkdir -p $(GIT_DIR)
-	$(call link_files,$(DOTFILES)/git,$(GIT_DIR),$(GIT_FILES))
+	$(call link_file,$(DOTFILES)/git/config,$(GIT_DIR)/config)
+	$(call link_file,$(DOTFILES)/git/work.identity,$(GIT_DIR)/work.identity)
+	$(call link_file,$(DOTFILES)/git/personal.identity,$(GIT_DIR)/personal.identity)
+	$(call link_file,$(DOTFILES)/git/personal.devcontainer,$(GIT_DIR)/personal.devcontainer)
+	$(call link_file,$(DOTFILES)/git/work.devcontainer,$(GIT_DIR)/work.devcontainer)
 	@if [ "$(EXPLICIT_GOALS)" = "git" ]; then printf 'git setup complete\n'; fi
 
 peco:
 	@mkdir -p $(PECO_DIR)
-	$(call link_files,$(DOTFILES)/peco,$(PECO_DIR),$(PECO_FILES))
+	$(call link_file,$(DOTFILES)/peco/config.json,$(PECO_DIR)/config.json)
 	@if [ "$(EXPLICIT_GOALS)" = "peco" ]; then printf 'peco setup complete\n'; fi
 
 tmux:
 	@mkdir -p $(TMUX_DIR)
-	$(call link_files,$(DOTFILES)/tmux,$(TMUX_DIR),$(TMUX_FILES))
+	$(call link_file,$(DOTFILES)/tmux/tmux.conf,$(TMUX_DIR)/tmux.conf)
+	$(call link_file,$(DOTFILES)/tmux/conf,$(TMUX_DIR)/conf)
+	$(call link_file,$(DOTFILES)/tmux/bin,$(TMUX_DIR)/bin)
 	@if [ "$(EXPLICIT_GOALS)" = "tmux" ]; then \
 		printf 'tmux setup complete\n'; \
 		printf 'reload tmux with: tmux source-file ~/.config/tmux/tmux.conf\n'; \
@@ -94,13 +96,17 @@ tmux:
 
 ssh:
 	@mkdir -p $(SSH_DIR)
-	$(call link_files,$(DOTFILES)/ssh,$(SSH_DIR),$(SSH_FILES))
+	$(call link_file,$(DOTFILES)/ssh/config,$(SSH_DIR)/config)
+	$(call link_file,$(DOTFILES)/ssh/devcontainer,$(SSH_DIR)/devcontainer)
 	$(call chmod_files,$(SSH_DIR),$(SSH_FILES))
 	@if [ "$(EXPLICIT_GOALS)" = "ssh" ]; then printf 'ssh setup complete\n'; fi
 
 shell:
 	@mkdir -p $(SHELL_DIR)
-	$(call link_files,$(DOTFILES)/shell,$(SHELL_DIR),$(SHELL_FILES))
+	$(call link_file,$(DOTFILES)/shell/init.sh,$(SHELL_DIR)/init.sh)
+	$(call link_file,$(DOTFILES)/shell/aliases.sh,$(SHELL_DIR)/aliases.sh)
+	$(call link_file,$(DOTFILES)/shell/prompt.sh,$(SHELL_DIR)/prompt.sh)
+	$(call link_file,$(DOTFILES)/shell/history.sh,$(SHELL_DIR)/history.sh)
 	@$(SCRIPTS_DIR)/setup-shell-init.sh "$(SHELL_INIT_SOURCE)"
 	@if [ "$(EXPLICIT_GOALS)" = "shell" ]; then \
 		printf 'shell setup complete\n'; \
