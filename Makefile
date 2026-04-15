@@ -2,7 +2,7 @@ SHELL := /bin/bash
 
 DOTFILES := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 
-ALACRITTY_DIR := $(HOME)/.config/alacritty
+GHOSTTY_DIR := $(HOME)/.config/ghostty
 HAMMERSPOON_DIR := $(HOME)/.hammerspoon
 HAMMERSPOON_SPOONS_DIR := $(HAMMERSPOON_DIR)/Spoons
 PAPERWM_SPOON := $(HAMMERSPOON_DIR)/Spoons/PaperWM.spoon
@@ -14,9 +14,9 @@ TMUX_DIR := $(HOME)/.config/tmux
 SSH_DIR := $(HOME)/.ssh
 VIMRC := $(HOME)/.vimrc
 
-.PHONY: alacritty hammerspoon git peco tmux ssh shell vim check uninstall all
+.PHONY: ghostty hammerspoon git peco tmux ssh shell vim check uninstall all
 
-all: alacritty hammerspoon git peco tmux ssh shell vim
+all: ghostty hammerspoon git peco tmux ssh shell vim
 
 SHELL_INIT_SOURCE := [ -f ~/.config/shell/init.sh ] && source ~/.config/shell/init.sh
 EXPLICIT_GOALS := $(filter-out all,$(MAKECMDGOALS))
@@ -33,11 +33,10 @@ define link_file
 	@ln -sfn "$(1)" "$(2)"
 endef
 
-alacritty:
-	@mkdir -p $(ALACRITTY_DIR)
-	$(call link_file,$(DOTFILES)/alacritty/alacritty.toml,$(ALACRITTY_DIR)/alacritty.toml)
-	$(call link_file,$(DOTFILES)/alacritty/theme.toml,$(ALACRITTY_DIR)/theme.toml)
-	@if [ "$(EXPLICIT_GOALS)" = "alacritty" ]; then printf 'alacritty setup complete\n'; fi
+ghostty:
+	@mkdir -p $(GHOSTTY_DIR)
+	$(call link_file,$(DOTFILES)/ghostty/config,$(GHOSTTY_DIR)/config)
+	@if [ "$(EXPLICIT_GOALS)" = "ghostty" ]; then printf 'ghostty setup complete\n'; fi
 
 hammerspoon:
 	@mkdir -p $(HAMMERSPOON_DIR) $(HAMMERSPOON_SPOONS_DIR)
@@ -71,6 +70,7 @@ tmux:
 	fi
 
 ssh:
+	@mkdir -p $(SSH_DIR)
 	$(call link_file,$(DOTFILES)/ssh/config,$(SSH_DIR)/config)
 	$(call link_file,$(DOTFILES)/ssh/devcontainer,$(SSH_DIR)/devcontainer)
 	@if [ -f $(SSH_DIR)/config ]; then chmod 600 $(SSH_DIR)/config; fi
@@ -152,8 +152,7 @@ uninstall:
 	restore_link "$(SHELL_DIR)/aliases.sh"; \
 	restore_link "$(SHELL_DIR)/prompt.sh"; \
 	restore_link "$(SHELL_DIR)/history.sh"; \
-	restore_link "$(ALACRITTY_DIR)/alacritty.toml"; \
-	restore_link "$(ALACRITTY_DIR)/theme.toml"; \
+	restore_link "$(GHOSTTY_DIR)/config"; \
 	restore_link "$(HAMMERSPOON_DIR)/init.lua"; \
 	restore_link "$(TMUX_DIR)/tmux.conf"; \
 	restore_link "$(TMUX_DIR)/conf"; \
