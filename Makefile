@@ -3,7 +3,10 @@ SHELL := /bin/bash
 DOTFILES := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 
 ALACRITTY_DIR := $(HOME)/.config/alacritty
-AEROSPACE_DIR := $(HOME)/.config/aerospace
+HAMMERSPOON_DIR := $(HOME)/.hammerspoon
+HAMMERSPOON_SPOONS_DIR := $(HAMMERSPOON_DIR)/Spoons
+PAPERWM_SPOON := $(HAMMERSPOON_DIR)/Spoons/PaperWM.spoon
+SPACEINDICATOR_SPOON := $(HAMMERSPOON_DIR)/Spoons/SpaceIndicator.spoon
 GIT_DIR := $(HOME)/.config/git
 PECO_DIR := $(HOME)/.config/peco
 SHELL_DIR := $(HOME)/.config/shell
@@ -11,9 +14,9 @@ TMUX_DIR := $(HOME)/.config/tmux
 SSH_DIR := $(HOME)/.ssh
 VIMRC := $(HOME)/.vimrc
 
-.PHONY: alacritty aerospace git peco tmux ssh shell vim check uninstall all
+.PHONY: alacritty hammerspoon git peco tmux ssh shell vim check uninstall all
 
-all: alacritty aerospace git peco tmux ssh shell vim
+all: alacritty hammerspoon git peco tmux ssh shell vim
 
 SHELL_INIT_SOURCE := [ -f ~/.config/shell/init.sh ] && source ~/.config/shell/init.sh
 EXPLICIT_GOALS := $(filter-out all,$(MAKECMDGOALS))
@@ -36,16 +39,20 @@ alacritty:
 	$(call link_file,$(DOTFILES)/alacritty/theme.toml,$(ALACRITTY_DIR)/theme.toml)
 	@if [ "$(EXPLICIT_GOALS)" = "alacritty" ]; then printf 'alacritty setup complete\n'; fi
 
-aerospace:
-	@mkdir -p $(AEROSPACE_DIR)
-	$(call link_file,$(DOTFILES)/aerospace/aerospace.toml,$(AEROSPACE_DIR)/aerospace.toml)
-	@if [ "$(EXPLICIT_GOALS)" = "aerospace" ]; then printf 'aerospace setup complete\n'; fi
+hammerspoon:
+	@mkdir -p $(HAMMERSPOON_DIR) $(HAMMERSPOON_SPOONS_DIR)
+	$(call link_file,$(DOTFILES)/hammerspoon/init.lua,$(HAMMERSPOON_DIR)/init.lua)
+	@if [ ! -d "$(PAPERWM_SPOON)" ]; then git clone https://github.com/mogenson/PaperWM.spoon.git "$(PAPERWM_SPOON)"; fi
+	@if [ ! -d "$(SPACEINDICATOR_SPOON)" ]; then git clone https://github.com/zouzonghua/SpaceIndicator.spoon.git "$(SPACEINDICATOR_SPOON)"; fi
+	@if [ "$(EXPLICIT_GOALS)" = "hammerspoon" ]; then printf 'hammerspoon setup complete\n'; fi
 
 git:
 	@mkdir -p $(GIT_DIR)
 	$(call link_file,$(DOTFILES)/git/config,$(GIT_DIR)/config)
-	$(call link_file,$(DOTFILES)/git/work,$(GIT_DIR)/work)
-	$(call link_file,$(DOTFILES)/git/personal,$(GIT_DIR)/personal)
+	$(call link_file,$(DOTFILES)/git/work.identity,$(GIT_DIR)/work.identity)
+	$(call link_file,$(DOTFILES)/git/personal.identity,$(GIT_DIR)/personal.identity)
+	$(call link_file,$(DOTFILES)/git/personal.devcontainer,$(GIT_DIR)/personal.devcontainer)
+	$(call link_file,$(DOTFILES)/git/work.devcontainer,$(GIT_DIR)/work.devcontainer)
 	@if [ "$(EXPLICIT_GOALS)" = "git" ]; then printf 'git setup complete\n'; fi
 
 peco:
@@ -64,9 +71,10 @@ tmux:
 	fi
 
 ssh:
-	@mkdir -p $(SSH_DIR)
 	$(call link_file,$(DOTFILES)/ssh/config,$(SSH_DIR)/config)
+	$(call link_file,$(DOTFILES)/ssh/devcontainer,$(SSH_DIR)/devcontainer)
 	@if [ -f $(SSH_DIR)/config ]; then chmod 600 $(SSH_DIR)/config; fi
+	@if [ -f $(SSH_DIR)/devcontainer ]; then chmod 600 $(SSH_DIR)/devcontainer; fi
 	@if [ "$(EXPLICIT_GOALS)" = "ssh" ]; then printf 'ssh setup complete\n'; fi
 
 shell:
@@ -146,14 +154,17 @@ uninstall:
 	restore_link "$(SHELL_DIR)/history.sh"; \
 	restore_link "$(ALACRITTY_DIR)/alacritty.toml"; \
 	restore_link "$(ALACRITTY_DIR)/theme.toml"; \
-	restore_link "$(AEROSPACE_DIR)/aerospace.toml"; \
+	restore_link "$(HAMMERSPOON_DIR)/init.lua"; \
 	restore_link "$(TMUX_DIR)/tmux.conf"; \
 	restore_link "$(TMUX_DIR)/conf"; \
 	restore_link "$(TMUX_DIR)/bin"; \
 	restore_link "$(GIT_DIR)/config"; \
-	restore_link "$(GIT_DIR)/work"; \
-	restore_link "$(GIT_DIR)/personal"; \
+	restore_link "$(GIT_DIR)/work.identity"; \
+	restore_link "$(GIT_DIR)/personal.identity"; \
+	restore_link "$(GIT_DIR)/work.devcontainer"; \
+	restore_link "$(GIT_DIR)/personal.devcontainer"; \
 	restore_link "$(PECO_DIR)/config.json"; \
 	restore_link "$(SSH_DIR)/config"; \
+	restore_link "$(SSH_DIR)/devcontainer"; \
 	restore_link "$(VIMRC)"; \
 	printf 'uninstall complete\n'

@@ -22,10 +22,10 @@
     lf = log --graph --name-status --pretty=format:\"%C(red)%h %C(reset)%cd %C(blue)[%an] %Creset%s %C(yellow)%d%Creset\" --date=relative
 
 [includeIf "gitdir:~/work/"]
-    path = ~/.config/git/host-work
+    path = ~/.config/git/work.identity
 
 [includeIf "gitdir:~/personal/"]
-    path = ~/.config/git/host-personal
+    path = ~/.config/git/personal.identity
 [gpg]
 	format = ssh
 [commit]

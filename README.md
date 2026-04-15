@@ -2,14 +2,6 @@
 
 git repo + symlinks.
 
-## principles
-
-- no bare repo
-- no stow / chezmoi
-- no install script
-- config only
-- no private keys
-
 ## bootstrap
 
 ```sh
@@ -22,12 +14,12 @@ git remote set-url origin git@github-personal:zouzonghua/dotfiles.git
 ## targets
 
 - `alacritty` → `~/.config/alacritty/alacritty.toml`
-- `aerospace` → `~/.config/aerospace/aerospace.toml`
+- `hammerspoon` → `~/.hammerspoon/init.lua`
 - `git` → `~/.config/git`
 - `peco` → `~/.config/peco`
 - `shell` → `~/.config/shell`
 - `tmux` → `~/.config/tmux`
-- `ssh` → `~/.ssh/config`
+- `ssh` → `~/.ssh/config`, `~/.ssh/devcontainer`
 - `vim` → `~/.vimrc`
 
 ## usage
@@ -36,20 +28,10 @@ git remote set-url origin git@github-personal:zouzonghua/dotfiles.git
 make            # setup all
 make <target>   # setup one target
 make check      # validate configs
+make uninstall  # remove symlinks and restore backups
 ```
 
 `make` is idempotent: it creates missing dirs, backs up existing files to `*.backup`, and relinks with `ln -sfn`.
-
-## nnn plugins
-
-Install or update nnn plugins with:
-
-```sh
-sh -c "$(curl -Ls https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs)"
-```
-
-This downloads the matching nnn plugin bundle and installs it to `~/.config/nnn/plugins`.
-It backs up any existing plugin directory before updating.
 
 `make check` runs:
 
