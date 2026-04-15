@@ -1,6 +1,7 @@
 SHELL := /bin/bash
 
 DOTFILES := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
+SCRIPTS_DIR := $(DOTFILES)/scripts
 
 GHOSTTY_BIN := $(firstword $(wildcard /Applications/Ghostty.app/Contents/MacOS/ghostty) $(shell command -v ghostty 2>/dev/null))
 GHOSTTY_DIR := $(HOME)/.config/ghostty
@@ -61,32 +62,6 @@ define chmod_files
 	done
 endef
 
-define print_check
-	@printf '%-32s' 'check $(1)'
-endef
-
-define print_check_ok
-	@printf '[OK]\n'
-endef
-
-define print_check_skip
-	@printf '[SKIP]\n'
-endef
-
-define run_check
-	@printf '%-32s' 'check $(1)'; \
-	tmp=$$(mktemp); \
-	if { $(2); } > /dev/null 2>"$$tmp"; then \
-		printf '[OK]\n'; \
-		rm -f "$$tmp"; \
-	else \
-		printf '[FAIL]\n'; \
-		cat "$$tmp" >&2; \
-		rm -f "$$tmp"; \
-		exit 1; \
-	fi
-endef
-
 ghostty:
 	@mkdir -p $(GHOSTTY_DIR)
 	$(call link_files,$(DOTFILES)/ghostty,$(GHOSTTY_DIR),$(GHOSTTY_FILES))
@@ -126,26 +101,7 @@ ssh:
 shell:
 	@mkdir -p $(SHELL_DIR)
 	$(call link_files,$(DOTFILES)/shell,$(SHELL_DIR),$(SHELL_FILES))
-	@ensure_line() { \
-		file="$$1"; \
-		comment="$$2"; \
-		line="$$3"; \
-		touch "$$file"; \
-		if ! grep -Fqx "$$line" "$$file"; then \
-			printf '\n%s\n%s\n' "$$comment" "$$line" >> "$$file"; \
-		fi; \
-	}; \
-	case "$${SHELL##*/}" in \
-		zsh) \
-			ensure_line "$(HOME)/.zshrc" '# shell init' '$(SHELL_INIT_SOURCE)' \
-			;; \
-		bash) \
-			ensure_line "$(HOME)/.bashrc" '# shell init' '$(SHELL_INIT_SOURCE)' \
-			;; \
-		*) \
-			echo "skip rc injection for unsupported shell: $$SHELL"; \
-			;; \
-	esac
+	@$(SCRIPTS_DIR)/setup-shell-init.sh "$(SHELL_INIT_SOURCE)"
 	@if [ "$(EXPLICIT_GOALS)" = "shell" ]; then \
 		printf 'shell setup complete\n'; \
 		case "$${SHELL##*/}" in \
@@ -160,59 +116,7 @@ vim:
 	@if [ "$(EXPLICIT_GOALS)" = "vim" ]; then printf 'vim setup complete\n'; fi
 
 check:
-	@if [ -n "$(GHOSTTY_BIN)" ]; then \
-		printf '%-32s' 'check ghostty config'; \
-		tmp=$$(mktemp); \
-		if { "$(GHOSTTY_BIN)" +validate-config --config-file="$(DOTFILES)/ghostty/config"; } > /dev/null 2>"$$tmp"; then \
-			printf '[OK]\n'; \
-			rm -f "$$tmp"; \
-		else \
-			printf '[FAIL]\n'; \
-			cat "$$tmp" >&2; \
-			rm -f "$$tmp"; \
-			exit 1; \
-		fi; \
-	else \
-		printf '%-32s[SKIP]\n' 'check ghostty config'; \
-	fi
-	$(call run_check,ssh config,ssh -T -F $(DOTFILES)/ssh/config -G $(SSH_CHECK_HOST))
-	$(call run_check,ssh devcontainer,ssh -T -F $(DOTFILES)/ssh/devcontainer -G $(SSH_CHECK_HOST))
-	$(call run_check,shell scripts,bash -n $(DOTFILES)/shell/*.sh)
-	$(call run_check,tmux scripts,bash -n $(DOTFILES)/tmux/bin/*.sh)
-	$(call run_check,tmux config,for file in $(DOTFILES)/tmux/conf/*.conf $(DOTFILES)/tmux/tmux.conf; do tmux -f /dev/null source-file -n "$$file"; done)
+	@$(SCRIPTS_DIR)/check.sh "$(DOTFILES)" "$(GHOSTTY_BIN)" "$(SSH_CHECK_HOST)"
 
 uninstall:
-	@cleanup_line() { \
-		file="$$1"; \
-		comment="$$2"; \
-		line="$$3"; \
-		[ -f "$$file" ] || return 0; \
-		tmp="$${file}.tmp"; \
-		awk -v comment="$$comment" -v line="$$line" ' \
-			prev == comment && $$0 == line { prev = ""; next } \
-			prev != ""                     { print prev } \
-			                               { prev = $$0 } \
-			END                            { if (prev != "") print prev } \
-		' "$$file" > "$$tmp"; \
-		mv "$$tmp" "$$file"; \
-	}; \
-	restore_link() { \
-		path="$$1"; \
-		if [ -L "$$path" ]; then \
-			rm -f "$$path"; \
-		fi; \
-		if [ -e "$$path.backup" ]; then \
-			mv "$$path.backup" "$$path"; \
-		fi; \
-	}; \
-	cleanup_line "$(HOME)/.zshrc" '# shell init' '$(SHELL_INIT_SOURCE)'; \
-	cleanup_line "$(HOME)/.bashrc" '# shell init' '$(SHELL_INIT_SOURCE)'; \
-	for file in $(SHELL_FILES); do restore_link "$(SHELL_DIR)/$$file"; done; \
-	for file in $(GHOSTTY_FILES); do restore_link "$(GHOSTTY_DIR)/$$file"; done; \
-	restore_link "$(HAMMERSPOON_DIR)/init.lua"; \
-	for file in $(TMUX_FILES); do restore_link "$(TMUX_DIR)/$$file"; done; \
-	for file in $(GIT_FILES); do restore_link "$(GIT_DIR)/$$file"; done; \
-	for file in $(PECO_FILES); do restore_link "$(PECO_DIR)/$$file"; done; \
-	for file in $(SSH_FILES); do restore_link "$(SSH_DIR)/$$file"; done; \
-	restore_link "$(VIMRC)"; \
-	printf 'uninstall complete\n'
+	@$(SCRIPTS_DIR)/uninstall.sh "$(SHELL_INIT_SOURCE)" "$(SHELL_DIR)" "$(GHOSTTY_DIR)" "$(HAMMERSPOON_DIR)" "$(TMUX_DIR)" "$(GIT_DIR)" "$(PECO_DIR)" "$(SSH_DIR)" "$(VIMRC)"
