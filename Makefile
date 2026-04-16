@@ -7,10 +7,6 @@ GHOSTTY_BIN := $(firstword $(wildcard /Applications/Ghostty.app/Contents/MacOS/g
 KITTY_BIN := $(firstword $(wildcard /Applications/kitty.app/Contents/MacOS/kitty) $(shell command -v kitty 2>/dev/null))
 GHOSTTY_DIR := $(HOME)/.config/ghostty
 KITTY_DIR := $(HOME)/.config/kitty
-HAMMERSPOON_DIR := $(HOME)/.hammerspoon
-HAMMERSPOON_SPOONS_DIR := $(HAMMERSPOON_DIR)/Spoons
-PAPERWM_SPOON := $(HAMMERSPOON_DIR)/Spoons/PaperWM.spoon
-SPACEINDICATOR_SPOON := $(HAMMERSPOON_DIR)/Spoons/SpaceIndicator.spoon
 GIT_DIR := $(HOME)/.config/git
 PECO_DIR := $(HOME)/.config/peco
 SHELL_DIR := $(HOME)/.config/shell
@@ -27,9 +23,9 @@ TMUX_FILES := tmux.conf conf bin
 SSH_FILES := config devcontainer
 SSH_CHECK_HOST := github-personal
 
-.PHONY: ghostty kitty hammerspoon git peco tmux ssh shell vim check uninstall all
+.PHONY: ghostty kitty git peco tmux ssh shell vim check uninstall all
 
-all: ghostty kitty hammerspoon git peco tmux ssh shell vim
+all: ghostty kitty git peco tmux ssh shell vim
 
 SHELL_INIT_SOURCE := [ -f ~/.config/shell/init.sh ] && source ~/.config/shell/init.sh
 EXPLICIT_GOALS := $(filter-out all,$(MAKECMDGOALS))
@@ -70,13 +66,6 @@ kitty:
 	@mkdir -p $(KITTY_DIR)
 	$(call link_file,$(DOTFILES)/kitty/kitty.conf,$(KITTY_DIR)/kitty.conf)
 	@if [ "$(EXPLICIT_GOALS)" = "kitty" ]; then printf 'kitty setup complete\n'; fi
-
-hammerspoon:
-	@mkdir -p $(HAMMERSPOON_DIR) $(HAMMERSPOON_SPOONS_DIR)
-	$(call link_file,$(DOTFILES)/hammerspoon/init.lua,$(HAMMERSPOON_DIR)/init.lua)
-	$(call spoon_hint,PaperWM.spoon,$(PAPERWM_SPOON),https://github.com/mogenson/PaperWM.spoon.git)
-	$(call spoon_hint,SpaceIndicator.spoon,$(SPACEINDICATOR_SPOON),https://github.com/zouzonghua/SpaceIndicator.spoon.git)
-	@if [ "$(EXPLICIT_GOALS)" = "hammerspoon" ]; then printf 'hammerspoon setup complete\n'; fi
 
 git:
 	@mkdir -p $(GIT_DIR)
@@ -133,4 +122,4 @@ check:
 	@$(SCRIPTS_DIR)/check.sh "$(DOTFILES)" "$(GHOSTTY_BIN)" "$(KITTY_BIN)" "$(SSH_CHECK_HOST)"
 
 uninstall:
-	@$(SCRIPTS_DIR)/uninstall.sh "$(SHELL_INIT_SOURCE)" "$(SHELL_DIR)" "$(GHOSTTY_DIR)" "$(KITTY_DIR)" "$(HAMMERSPOON_DIR)" "$(TMUX_DIR)" "$(GIT_DIR)" "$(PECO_DIR)" "$(SSH_DIR)" "$(VIMRC)"
+	@$(SCRIPTS_DIR)/uninstall.sh "$(SHELL_INIT_SOURCE)" "$(SHELL_DIR)" "$(GHOSTTY_DIR)" "$(KITTY_DIR)" "$(TMUX_DIR)" "$(GIT_DIR)" "$(PECO_DIR)" "$(SSH_DIR)" "$(VIMRC)"

@@ -16,7 +16,6 @@ git remote set-url origin git@github-personal:zouzonghua/dotfiles.git
 - `alacritty` → `~/.config/alacritty/alacritty.toml`
 - `ghostty` → `~/.config/ghostty/config`
 - `kitty` → `~/.config/kitty/kitty.conf`
-- `hammerspoon` → `~/.hammerspoon/init.lua`
 - `git` → `~/.config/git`
 - `peco` → `~/.config/peco`
 - `shell` → `~/.config/shell`
