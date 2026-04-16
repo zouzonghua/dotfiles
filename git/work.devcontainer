@@ -15,5 +15,13 @@
 [gpg]
 	format = ssh
 
+[fetch]
+    prune = true
+
 [commit]
 	gpgsign = true
+
+[url "git@github-work:"]
+    insteadOf = https://github.com/
+    insteadOf = git@github.com:
+    insteadOf = git+ssh://git@github.com/

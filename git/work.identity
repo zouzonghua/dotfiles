@@ -2,3 +2,8 @@
     name = zonghuazou
     email = zonghuazou@ddmarketinghub.com
     signingkey = ~/.ssh/id_ed25519_work.pub
+
+[url "git@github-work:"]
+    insteadOf = https://github.com/
+    insteadOf = git@github.com:
+    insteadOf = git+ssh://git@github.com/

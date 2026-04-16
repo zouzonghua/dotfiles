@@ -12,8 +12,16 @@
 [push]
     autoSetupRemote = true
 
+[fetch]
+    prune = true
+
 [gpg]
 	format = ssh
 
 [commit]
 	gpgsign = true
+
+[url "git@github-personal:"]
+    insteadOf = https://github.com/
+    insteadOf = git@github.com:
+    insteadOf = git+ssh://git@github.com/

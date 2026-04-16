@@ -2,3 +2,8 @@
     name = zouzonghua
     email = zouzonghua.cn@gmail.com
     signingkey = ~/.ssh/id_ed25519_personal.pub
+
+[url "git@github-personal:"]
+    insteadOf = https://github.com/
+    insteadOf = git@github.com:
+    insteadOf = git+ssh://git@github.com/

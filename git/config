@@ -7,6 +7,9 @@
 [push]
     autoSetupRemote = true
 
+[fetch]
+    prune = true
+
 [alias]
     st = status
     ci = commit
@@ -30,5 +33,3 @@
 	format = ssh
 [commit]
 	gpgsign = true
-[gpg "ssh"]
-	allowedSignersFile = /Users/zonghua/.config/git/allowed_signers
