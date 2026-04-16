@@ -35,7 +35,3 @@ make uninstall  # remove symlinks and restore backups
 
 `make` is idempotent: it creates missing dirs, backs up existing files to `*.backup`, and relinks with `ln -sfn`.
 
-`make check` runs:
-
-- `bash -n` on tmux shell scripts
-- `tmux -f /dev/null source-file -n` on tmux configs
