@@ -4,7 +4,9 @@ DOTFILES := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 SCRIPTS_DIR := $(DOTFILES)/scripts
 
 GHOSTTY_BIN := $(firstword $(wildcard /Applications/Ghostty.app/Contents/MacOS/ghostty) $(shell command -v ghostty 2>/dev/null))
+KITTY_BIN := $(firstword $(wildcard /Applications/kitty.app/Contents/MacOS/kitty) $(shell command -v kitty 2>/dev/null))
 GHOSTTY_DIR := $(HOME)/.config/ghostty
+KITTY_DIR := $(HOME)/.config/kitty
 HAMMERSPOON_DIR := $(HOME)/.hammerspoon
 HAMMERSPOON_SPOONS_DIR := $(HAMMERSPOON_DIR)/Spoons
 PAPERWM_SPOON := $(HAMMERSPOON_DIR)/Spoons/PaperWM.spoon
@@ -17,6 +19,7 @@ SSH_DIR := $(HOME)/.ssh
 VIMRC := $(HOME)/.vimrc
 
 GHOSTTY_FILES := config
+KITTY_FILES := kitty.conf
 GIT_FILES := config work.identity personal.identity personal.devcontainer work.devcontainer
 PECO_FILES := config.json
 SHELL_FILES := init.sh aliases.sh prompt.sh history.sh
@@ -24,9 +27,9 @@ TMUX_FILES := tmux.conf conf bin
 SSH_FILES := config devcontainer
 SSH_CHECK_HOST := github-personal
 
-.PHONY: ghostty hammerspoon git peco tmux ssh shell vim check uninstall all
+.PHONY: ghostty kitty hammerspoon git peco tmux ssh shell vim check uninstall all
 
-all: ghostty hammerspoon git peco tmux ssh shell vim
+all: ghostty kitty hammerspoon git peco tmux ssh shell vim
 
 SHELL_INIT_SOURCE := [ -f ~/.config/shell/init.sh ] && source ~/.config/shell/init.sh
 EXPLICIT_GOALS := $(filter-out all,$(MAKECMDGOALS))
@@ -62,6 +65,11 @@ ghostty:
 	@mkdir -p $(GHOSTTY_DIR)
 	$(call link_file,$(DOTFILES)/ghostty/config,$(GHOSTTY_DIR)/config)
 	@if [ "$(EXPLICIT_GOALS)" = "ghostty" ]; then printf 'ghostty setup complete\n'; fi
+
+kitty:
+	@mkdir -p $(KITTY_DIR)
+	$(call link_file,$(DOTFILES)/kitty/kitty.conf,$(KITTY_DIR)/kitty.conf)
+	@if [ "$(EXPLICIT_GOALS)" = "kitty" ]; then printf 'kitty setup complete\n'; fi
 
 hammerspoon:
 	@mkdir -p $(HAMMERSPOON_DIR) $(HAMMERSPOON_SPOONS_DIR)
@@ -122,7 +130,7 @@ vim:
 	@if [ "$(EXPLICIT_GOALS)" = "vim" ]; then printf 'vim setup complete\n'; fi
 
 check:
-	@$(SCRIPTS_DIR)/check.sh "$(DOTFILES)" "$(GHOSTTY_BIN)" "$(SSH_CHECK_HOST)"
+	@$(SCRIPTS_DIR)/check.sh "$(DOTFILES)" "$(GHOSTTY_BIN)" "$(KITTY_BIN)" "$(SSH_CHECK_HOST)"
 
 uninstall:
-	@$(SCRIPTS_DIR)/uninstall.sh "$(SHELL_INIT_SOURCE)" "$(SHELL_DIR)" "$(GHOSTTY_DIR)" "$(HAMMERSPOON_DIR)" "$(TMUX_DIR)" "$(GIT_DIR)" "$(PECO_DIR)" "$(SSH_DIR)" "$(VIMRC)"
+	@$(SCRIPTS_DIR)/uninstall.sh "$(SHELL_INIT_SOURCE)" "$(SHELL_DIR)" "$(GHOSTTY_DIR)" "$(KITTY_DIR)" "$(HAMMERSPOON_DIR)" "$(TMUX_DIR)" "$(GIT_DIR)" "$(PECO_DIR)" "$(SSH_DIR)" "$(VIMRC)"

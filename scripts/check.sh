@@ -4,7 +4,8 @@ set -euo pipefail
 
 dotfiles_dir="$1"
 ghostty_bin="${2:-}"
-ssh_check_host="$3"
+kitty_bin="${3:-}"
+ssh_check_host="$4"
 
 print_status() {
 	label="$1"
@@ -48,6 +49,12 @@ if [[ -n "$ghostty_bin" ]]; then
 	run_check "ghostty config" "$ghostty_bin" +validate-config --config-file="${dotfiles_dir}/ghostty/config"
 else
 	print_status "ghostty config" "SKIP"
+fi
+
+if [[ -n "$kitty_bin" ]]; then
+	run_check "kitty config" "$kitty_bin" +runpy 'from kitty.config import load_config; import sys; load_config(*sys.argv[1:])' "${dotfiles_dir}/kitty/kitty.conf"
+else
+	print_status "kitty config" "SKIP"
 fi
 
 run_check "ssh config" ssh -T -F "${dotfiles_dir}/ssh/config" -G "$ssh_check_host"
