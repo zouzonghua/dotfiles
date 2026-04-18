@@ -11,6 +11,7 @@ git_dir="$6"
 peco_dir="$7"
 ssh_dir="$8"
 vimrc="$9"
+aerospace_config="${10}"
 
 cleanup_line() {
 	file="$1"
@@ -57,8 +58,10 @@ restore_files "$ghostty_dir" config
 restore_files "$kitty_dir" kitty.conf
 restore_files "$tmux_dir" tmux.conf conf bin
 restore_files "$git_dir" config work.identity personal.identity personal.devcontainer work.devcontainer
+restore_link "${git_dir}/allowed_signers"
 restore_files "$peco_dir" config.json
 restore_files "$ssh_dir" config devcontainer
 restore_link "$vimrc"
+restore_link "$aerospace_config"
 
 printf 'uninstall complete\n'

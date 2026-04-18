@@ -5,6 +5,7 @@ SCRIPTS_DIR := $(DOTFILES)/scripts
 
 GHOSTTY_BIN := $(firstword $(wildcard /Applications/Ghostty.app/Contents/MacOS/ghostty) $(shell command -v ghostty 2>/dev/null))
 KITTY_BIN := $(firstword $(wildcard /Applications/kitty.app/Contents/MacOS/kitty) $(shell command -v kitty 2>/dev/null))
+AEROSPACE_BIN := $(shell command -v aerospace 2>/dev/null)
 GHOSTTY_DIR := $(HOME)/.config/ghostty
 KITTY_DIR := $(HOME)/.config/kitty
 GIT_DIR := $(HOME)/.config/git
@@ -13,6 +14,7 @@ SHELL_DIR := $(HOME)/.config/shell
 TMUX_DIR := $(HOME)/.config/tmux
 SSH_DIR := $(HOME)/.ssh
 VIMRC := $(HOME)/.vimrc
+AEROSPACE_CONFIG := $(HOME)/.config/aerospace/aerospace.toml
 
 GHOSTTY_FILES := config
 KITTY_FILES := kitty.conf
@@ -23,9 +25,17 @@ TMUX_FILES := tmux.conf conf bin
 SSH_FILES := config devcontainer
 SSH_CHECK_HOST := github-personal
 
-.PHONY: ghostty kitty git peco tmux ssh shell vim check uninstall all
+.PHONY: aerospace ghostty kitty git peco tmux ssh shell vim check
+.PHONY: check-aerospace check-ghostty check-kitty check-git check-peco check-tmux check-ssh check-shell check-vim
+.PHONY: preflight install all
+.PHONY: install-aerospace install-ghostty install-kitty install-git install-peco install-tmux install-ssh install-shell install-vim
 
-all: ghostty kitty git peco tmux ssh shell vim
+all:
+	@bash $(SCRIPTS_DIR)/check.sh install-ok "$(DOTFILES)" "$(GHOSTTY_BIN)" "$(KITTY_BIN)" "$(AEROSPACE_BIN)" "$(SSH_CHECK_HOST)" "$(MAKE)"
+
+preflight: check
+
+install: install-aerospace install-ghostty install-kitty install-git install-peco install-tmux install-ssh install-shell install-vim
 
 SHELL_INIT_SOURCE := [ -f ~/.config/shell/init.sh ] && source ~/.config/shell/init.sh
 EXPLICIT_GOALS := $(filter-out all,$(MAKECMDGOALS))
@@ -57,31 +67,96 @@ define chmod_files
 	done
 endef
 
-ghostty:
+define prepare_generated_file
+	@if [ -e "$(1)" ] && [ ! -L "$(1)" ] && [ ! -e "$(1).backup" ]; then \
+		echo "backup $(1)"; \
+		mv "$(1)" "$(1).backup"; \
+	fi
+	@if [ -L "$(1)" ]; then rm -f "$(1)"; fi
+endef
+
+aerospace: check-aerospace install-aerospace
+
+check-aerospace:
+	@if [ -n "$(AEROSPACE_BIN)" ]; then \
+		printf '%-32s[%s]\n' "check aerospace installed" "OK"; \
+	else \
+		printf '%-32s[%s]\n' "check aerospace installed" "SKIP"; \
+		printf '  aerospace binary not found\n'; \
+		exit 1; \
+	fi
+
+install-aerospace:
+	$(call link_file,$(DOTFILES)/aerospace/aerospace.toml,$(AEROSPACE_CONFIG))
+	@if [ "$(EXPLICIT_GOALS)" = "aerospace" ]; then \
+		printf 'aerospace setup complete\n'; \
+		printf 'reload AeroSpace with: aerospace reload-config\n'; \
+	fi
+
+ghostty: check-ghostty install-ghostty
+
+check-ghostty:
+	@if [ -n "$(GHOSTTY_BIN)" ]; then \
+		printf '%-32s[%s]\n' "check ghostty installed" "OK"; \
+	else \
+		printf '%-32s[%s]\n' "check ghostty installed" "SKIP"; \
+		printf '  ghostty binary not found\n'; \
+		exit 1; \
+	fi
+
+install-ghostty:
 	@mkdir -p $(GHOSTTY_DIR)
 	$(call link_file,$(DOTFILES)/ghostty/config,$(GHOSTTY_DIR)/config)
 	@if [ "$(EXPLICIT_GOALS)" = "ghostty" ]; then printf 'ghostty setup complete\n'; fi
 
-kitty:
+kitty: check-kitty install-kitty
+
+check-kitty:
+	@bash $(SCRIPTS_DIR)/check.sh report-kitty "$(DOTFILES)" "$(GHOSTTY_BIN)" "$(KITTY_BIN)" "$(AEROSPACE_BIN)" "$(SSH_CHECK_HOST)"
+
+install-kitty:
 	@mkdir -p $(KITTY_DIR)
 	$(call link_file,$(DOTFILES)/kitty/kitty.conf,$(KITTY_DIR)/kitty.conf)
 	@if [ "$(EXPLICIT_GOALS)" = "kitty" ]; then printf 'kitty setup complete\n'; fi
 
-git:
+git: check-git install-git
+
+check-git:
+	@tmp="$$(mktemp)"; \
+		bash $(SCRIPTS_DIR)/generate-allowed-signers.sh "$$tmp" \
+			"$(DOTFILES)/git/personal.identity" \
+			"$(DOTFILES)/git/work.identity"; \
+		rm -f "$$tmp"
+
+install-git:
 	@mkdir -p $(GIT_DIR)
 	$(call link_file,$(DOTFILES)/git/config,$(GIT_DIR)/config)
 	$(call link_file,$(DOTFILES)/git/work.identity,$(GIT_DIR)/work.identity)
 	$(call link_file,$(DOTFILES)/git/personal.identity,$(GIT_DIR)/personal.identity)
 	$(call link_file,$(DOTFILES)/git/personal.devcontainer,$(GIT_DIR)/personal.devcontainer)
 	$(call link_file,$(DOTFILES)/git/work.devcontainer,$(GIT_DIR)/work.devcontainer)
+	$(call prepare_generated_file,$(GIT_DIR)/allowed_signers)
+	@bash $(SCRIPTS_DIR)/generate-allowed-signers.sh "$(GIT_DIR)/allowed_signers" \
+		"$(DOTFILES)/git/personal.identity" \
+		"$(DOTFILES)/git/work.identity"
 	@if [ "$(EXPLICIT_GOALS)" = "git" ]; then printf 'git setup complete\n'; fi
 
-peco:
+peco: check-peco install-peco
+
+check-peco:
+	@:
+
+install-peco:
 	@mkdir -p $(PECO_DIR)
 	$(call link_file,$(DOTFILES)/peco/config.json,$(PECO_DIR)/config.json)
 	@if [ "$(EXPLICIT_GOALS)" = "peco" ]; then printf 'peco setup complete\n'; fi
 
-tmux:
+tmux: check-tmux install-tmux
+
+check-tmux:
+	@bash $(SCRIPTS_DIR)/check.sh report-tmux "$(DOTFILES)" "$(GHOSTTY_BIN)" "$(KITTY_BIN)" "$(AEROSPACE_BIN)" "$(SSH_CHECK_HOST)"
+
+install-tmux:
 	@mkdir -p $(TMUX_DIR)
 	$(call link_file,$(DOTFILES)/tmux/tmux.conf,$(TMUX_DIR)/tmux.conf)
 	$(call link_file,$(DOTFILES)/tmux/conf,$(TMUX_DIR)/conf)
@@ -91,14 +166,24 @@ tmux:
 		printf 'reload tmux with: tmux source-file ~/.config/tmux/tmux.conf\n'; \
 	fi
 
-ssh:
+ssh: check-ssh install-ssh
+
+check-ssh:
+	@bash $(SCRIPTS_DIR)/check.sh report-ssh "$(DOTFILES)" "$(GHOSTTY_BIN)" "$(KITTY_BIN)" "$(AEROSPACE_BIN)" "$(SSH_CHECK_HOST)"
+
+install-ssh:
 	@mkdir -p $(SSH_DIR)
 	$(call link_file,$(DOTFILES)/ssh/config,$(SSH_DIR)/config)
 	$(call link_file,$(DOTFILES)/ssh/devcontainer,$(SSH_DIR)/devcontainer)
 	$(call chmod_files,$(SSH_DIR),$(SSH_FILES))
 	@if [ "$(EXPLICIT_GOALS)" = "ssh" ]; then printf 'ssh setup complete\n'; fi
 
-shell:
+shell: check-shell install-shell
+
+check-shell:
+	@bash $(SCRIPTS_DIR)/check.sh report-shell "$(DOTFILES)" "$(GHOSTTY_BIN)" "$(KITTY_BIN)" "$(AEROSPACE_BIN)" "$(SSH_CHECK_HOST)"
+
+install-shell:
 	@mkdir -p $(SHELL_DIR)
 	$(call link_file,$(DOTFILES)/shell/init.sh,$(SHELL_DIR)/init.sh)
 	$(call link_file,$(DOTFILES)/shell/aliases.sh,$(SHELL_DIR)/aliases.sh)
@@ -114,12 +199,17 @@ shell:
 		esac; \
 	fi
 
-vim:
+vim: check-vim install-vim
+
+check-vim:
+	@:
+
+install-vim:
 	$(call link_file,$(DOTFILES)/vim/.vimrc,$(VIMRC))
 	@if [ "$(EXPLICIT_GOALS)" = "vim" ]; then printf 'vim setup complete\n'; fi
 
 check:
-	@$(SCRIPTS_DIR)/check.sh "$(DOTFILES)" "$(GHOSTTY_BIN)" "$(KITTY_BIN)" "$(SSH_CHECK_HOST)"
+	@bash $(SCRIPTS_DIR)/check.sh report "$(DOTFILES)" "$(GHOSTTY_BIN)" "$(KITTY_BIN)" "$(AEROSPACE_BIN)" "$(SSH_CHECK_HOST)"
 
 uninstall:
-	@$(SCRIPTS_DIR)/uninstall.sh "$(SHELL_INIT_SOURCE)" "$(SHELL_DIR)" "$(GHOSTTY_DIR)" "$(KITTY_DIR)" "$(TMUX_DIR)" "$(GIT_DIR)" "$(PECO_DIR)" "$(SSH_DIR)" "$(VIMRC)"
+	@$(SCRIPTS_DIR)/uninstall.sh "$(SHELL_INIT_SOURCE)" "$(SHELL_DIR)" "$(GHOSTTY_DIR)" "$(KITTY_DIR)" "$(TMUX_DIR)" "$(GIT_DIR)" "$(PECO_DIR)" "$(SSH_DIR)" "$(VIMRC)" "$(AEROSPACE_CONFIG)"

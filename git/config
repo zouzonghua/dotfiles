@@ -31,5 +31,7 @@
     path = ~/.config/git/personal.identity
 [gpg]
 	format = ssh
+[gpg "ssh"]
+	allowedSignersFile = ~/.config/git/allowed_signers
 [commit]
 	gpgsign = true
