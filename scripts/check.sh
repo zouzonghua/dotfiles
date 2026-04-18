@@ -4,11 +4,10 @@ set -euo pipefail
 
 mode="${1:-report}"
 dotfiles_dir="$2"
-ghostty_bin="${3:-}"
-kitty_bin="${4:-}"
-aerospace_bin="${5:-}"
-ssh_check_host="$6"
-make_bin="${7:-make}"
+kitty_bin="${3:-}"
+aerospace_bin="${4:-}"
+ssh_check_host="$5"
+make_bin="${6:-make}"
 
 print_status() {
 	label="$1"
@@ -54,6 +53,17 @@ has_target() {
 		fi
 	done
 	return 1
+}
+
+is_strict_target_mode() {
+	case "$mode" in
+		report-kitty|report-ssh|report-shell|report-tmux)
+			return 0
+			;;
+		*)
+			return 1
+			;;
+	esac
 }
 
 require_command() {
@@ -117,18 +127,6 @@ run_check_shell() {
 	return 1
 }
 
-check_ghostty() {
-	if [[ -n "$ghostty_bin" ]]; then
-		print_status "ghostty installed" "OK"
-		add_target "install-ghostty"
-	else
-		print_skip "ghostty installed" "ghostty binary not found"
-		if [[ "$mode" == "install-ok" ]]; then
-			print_install_skip "ghostty" "ghostty is not installed"
-		fi
-	fi
-}
-
 check_kitty() {
 	if [[ -n "$kitty_bin" ]]; then
 		print_status "kitty installed" "OK"
@@ -136,12 +134,15 @@ check_kitty() {
 			add_target "install-kitty"
 		elif [[ "$mode" == "install-ok" ]]; then
 			print_install_skip "kitty" "kitty config check failed"
+		elif is_strict_target_mode; then
+			return 1
 		fi
 	else
 		print_skip "kitty installed" "kitty binary not found"
-		print_skip "kitty config" "kitty is not installed"
 		if [[ "$mode" == "install-ok" ]]; then
 			print_install_skip "kitty" "kitty is not installed"
+		elif is_strict_target_mode; then
+			return 1
 		fi
 	fi
 }
@@ -163,6 +164,8 @@ check_ssh() {
 		add_target "install-ssh"
 	elif [[ "$mode" == "install-ok" ]]; then
 		print_install_skip "ssh" "ssh checks did not pass"
+	elif is_strict_target_mode; then
+		return 1
 	fi
 }
 
@@ -171,6 +174,8 @@ check_shell() {
 		add_target "install-shell"
 	elif [[ "$mode" == "install-ok" ]]; then
 		print_install_skip "shell" "shell checks did not pass"
+	elif is_strict_target_mode; then
+		return 1
 	fi
 }
 
@@ -187,6 +192,8 @@ check_tmux() {
 		add_target "install-tmux"
 	elif [[ "$mode" == "install-ok" ]]; then
 		print_install_skip "tmux" "tmux checks did not pass"
+	elif is_strict_target_mode; then
+		return 1
 	fi
 }
 
@@ -199,7 +206,6 @@ check_always_installable() {
 run_checks_for_mode() {
 	case "$mode" in
 		report)
-			check_ghostty
 			check_kitty
 			check_aerospace
 			check_ssh
@@ -219,7 +225,6 @@ run_checks_for_mode() {
 			check_tmux
 			;;
 		install-ok)
-			check_ghostty
 			check_kitty
 			check_aerospace
 			check_always_installable
@@ -243,7 +248,6 @@ if [[ "$mode" == "install-ok" ]]; then
 	if has_target "install-ssh"; then print_install_status "ssh" "OK"; fi
 	if has_target "install-shell"; then print_install_status "shell" "OK"; fi
 	if has_target "install-tmux"; then print_install_status "tmux" "OK"; fi
-	if has_target "install-ghostty"; then print_install_status "ghostty" "OK"; fi
 	if has_target "install-kitty"; then print_install_status "kitty" "OK"; fi
 	if has_target "install-aerospace"; then print_install_status "aerospace" "OK"; fi
 	"$make_bin" -C "$dotfiles_dir" "${selected_targets[@]}"

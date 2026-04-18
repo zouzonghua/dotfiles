@@ -13,8 +13,6 @@ git remote set-url origin git@github-personal:zouzonghua/dotfiles.git
 
 ## targets
 
-- `alacritty` → `~/.config/alacritty/alacritty.toml`
-- `ghostty` → `~/.config/ghostty/config`
 - `kitty` → `~/.config/kitty/kitty.conf`
 - `git` → `~/.config/git`
 - `peco` → `~/.config/peco`
@@ -33,4 +31,3 @@ make uninstall  # remove symlinks and restore backups
 ```
 
 `make` is idempotent: it creates missing dirs, backs up existing files to `*.backup`, and relinks with `ln -sfn`.
-

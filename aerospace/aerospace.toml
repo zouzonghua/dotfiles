@@ -44,9 +44,5 @@ persistent-workspaces = ["1", "2", "3", "4", "5"]
     "1" = 1
 
 [[on-window-detected]]
-if.app-id = 'org.alacritty'
-run = ['move-node-to-workspace 5']
-
-[[on-window-detected]]
 if.app-id = 'net.kovidgoyal.kitty'
 run = ['move-node-to-workspace 5']
