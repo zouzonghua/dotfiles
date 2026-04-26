@@ -1,6 +1,6 @@
 # dotfiles
 
-git repo + symlinks.
+git repo + stow-managed symlinks.
 
 ## bootstrap
 
@@ -9,6 +9,22 @@ git clone https://github.com/zouzonghua/dotfiles.git ~/personal/dotfiles
 cd ~/personal/dotfiles
 make
 git remote set-url origin git@github-personal:zouzonghua/dotfiles.git
+```
+
+Install `stow` first:
+
+```sh
+# macOS
+brew install stow
+
+# Debian/Ubuntu
+sudo apt install stow
+
+# Fedora
+sudo dnf install stow
+
+# Arch
+sudo pacman -S stow
 ```
 
 ## targets
@@ -20,14 +36,18 @@ git remote set-url origin git@github-personal:zouzonghua/dotfiles.git
 - `tmux` → `~/.config/tmux`
 - `ssh` → `~/.ssh/config`, `~/.ssh/devcontainer`
 - `vim` → `~/.vimrc`
+- `aerospace` → `~/.config/aerospace/aerospace.toml` (macOS only)
 
 ## usage
 
 ```sh
 make            # setup all
 make <target>   # setup one target
-make check      # validate configs
-make uninstall  # remove symlinks and restore backups
+make check      # check dependencies
+make setup      # regenerate dynamic files and shell rc injection
+make uninstall  # remove stow symlinks and generated files
 ```
 
-`make` is idempotent: it creates missing dirs, backs up existing files to `*.backup`, and relinks with `ln -sfn`.
+`make` uses `stow --no-folding` so generated files like `~/.config/git/allowed_signers` stay outside the repo. `make setup` keeps the non-stow bits: git `allowed_signers`, SSH permissions, and shell rc injection.
+
+Linux installs core packages only. macOS also installs `aerospace` by default.
