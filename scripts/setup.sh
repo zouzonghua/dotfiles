@@ -44,6 +44,8 @@ ensure_block() {
 
 	touch "$file"
 
+	# Use awk for atomic block update. 
+	# Compatible with both BSD awk (macOS) and GNU awk (Linux).
 	if grep -Fqx "$block_start" "$file" && grep -Fqx "$block_end" "$file"; then
 		# Update existing block
 		tmp_file="$(mktemp)"

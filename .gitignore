@@ -1,2 +1,5 @@
+*.bak
+.DS_Store
 ssh/id_*
 ssh/known_hosts
+CLAUDE.md.bak
