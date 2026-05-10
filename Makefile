@@ -5,7 +5,7 @@ ifeq ($(UNAME_S),Darwin)
 PROFILE := desktop
 endif
 
-PACKAGES_CLI := git peco shell ssh tmux vim
+PACKAGES_CLI := git peco shell ssh tmux vim gemini
 PACKAGES_GUI := kitty
 PACKAGES_DARWIN := aerospace
 PACKAGES := $(PACKAGES_CLI)
