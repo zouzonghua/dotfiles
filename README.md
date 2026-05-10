@@ -1,58 +1,28 @@
 # dotfiles
 
-git repo + stow-managed symlinks.
+Personal configuration files managed with **GNU Stow**.
 
-## bootstrap
+## Bootstrap
 
-```sh
-git clone https://github.com/zouzonghua/dotfiles.git ~/personal/dotfiles
-cd ~/personal/dotfiles
-make install
-git remote set-url origin git@github-personal:zouzonghua/dotfiles.git
-```
+1. **Install GNU Stow**
+   ```sh
+   # macOS
+   brew install stow
 
-Install `stow` first:
+   # Debian/Ubuntu
+   sudo apt install stow
+   ```
 
-```sh
-# macOS
-brew install stow
+2. **Clone and Install**
+   ```sh
+   git clone https://github.com/zouzonghua/dotfiles.git ~/personal/dotfiles
+   cd ~/personal/dotfiles
+   make install
+   
+   # Set SSH remote
+   git remote set-url origin git@github.com:zouzonghua/dotfiles.git
+   ```
 
-# Debian/Ubuntu
-sudo apt install stow
+## Documentation
 
-# Fedora
-sudo dnf install stow
-
-# Arch
-sudo pacman -S stow
-```
-
-## targets
-
-- `kitty` → `~/.config/kitty/kitty.conf`
-- `git` → `~/.config/git`
-- `peco` → `~/.config/peco`
-- `shell` → `~/.config/shell`
-- `tmux` → `~/.config/tmux`
-- `ssh` → `~/.ssh/config`, `~/.ssh/devcontainer`
-- `vim` → `~/.vimrc`
-- `aerospace` → `~/.config/aerospace/aerospace.toml` (macOS only)
-- `gemini` / `codex` / `claude` → AI Agent Configurations (Single Source of Truth via `ai/`)
-
-## usage
-
-```sh
-make            # show help (default goal)
-make install    # setup all (auto-detect profile)
-make desktop    # setup desktop profile on Linux
-make <target>   # setup one target
-make check      # check dependencies
-make setup      # run post-install logic (git, ssh, shell)
-make uninstall  # remove symlinks and cleanup
-```
-
-`make` uses `stow --no-folding` so generated files like `~/.config/git/allowed_signers` stay outside the repo. `make setup` keeps the non-stow bits: git `allowed_signers`, SSH permissions, and shell rc injection.
-
-CLI packages are installed everywhere: `git peco shell ssh tmux vim gemini codex claude`.
-GUI packages are installed by `make desktop`, and by default on macOS: `kitty`.
-Darwin packages are installed only on macOS: `aerospace`.
+For detailed information on module mapping, advanced commands, and architecture, please refer to [AGENTS.md](./AGENTS.md).
