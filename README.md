@@ -7,7 +7,7 @@ git repo + stow-managed symlinks.
 ```sh
 git clone https://github.com/zouzonghua/dotfiles.git ~/personal/dotfiles
 cd ~/personal/dotfiles
-make
+make install
 git remote set-url origin git@github-personal:zouzonghua/dotfiles.git
 ```
 
@@ -42,12 +42,13 @@ sudo pacman -S stow
 ## usage
 
 ```sh
-make            # setup all
+make            # show help (default goal)
+make install    # setup all (auto-detect profile)
 make desktop    # setup desktop profile on Linux
 make <target>   # setup one target
 make check      # check dependencies
-make setup      # regenerate dynamic files and shell rc injection
-make uninstall  # remove stow symlinks and generated files
+make setup      # run post-install logic (git, ssh, shell)
+make uninstall  # remove symlinks and cleanup
 ```
 
 `make` uses `stow --no-folding` so generated files like `~/.config/git/allowed_signers` stay outside the repo. `make setup` keeps the non-stow bits: git `allowed_signers`, SSH permissions, and shell rc injection.
