@@ -5,8 +5,8 @@ This file provides the primary project context and architectural guidance for al
 ## Commands
 
 ```sh
-make              # install all packages (auto-detects macOS → desktop profile)
-make install      # install CLI packages only (server profile)
+make              # show help (default goal)
+make install      # install all packages (auto-detects macOS → desktop profile)
 make desktop      # install CLI + GUI packages (Linux explicit desktop)
 make <package>    # install a single package, e.g. make tmux
 make setup        # re-run post-install: git signing, SSH permissions, shell rc injection
