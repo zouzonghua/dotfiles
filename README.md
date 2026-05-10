@@ -37,7 +37,7 @@ sudo pacman -S stow
 - `ssh` → `~/.ssh/config`, `~/.ssh/devcontainer`
 - `vim` → `~/.vimrc`
 - `aerospace` → `~/.config/aerospace/aerospace.toml` (macOS only)
-- `gemini` / `codex` / `claude` → AI 代理配置入口（均指向 `ai-shared/preferences.md`，单一真实源）
+- `gemini` / `codex` / `claude` → AI Agent Configurations (Single Source of Truth via `ai-shared/`)
 
 ## usage
 
