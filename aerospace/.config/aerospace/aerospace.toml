@@ -20,6 +20,9 @@ persistent-workspaces = ["1", "2", "3", "4", "5"]
     alt-slash = 'layout tiles horizontal vertical'
     alt-comma = 'layout accordion horizontal vertical'
 
+    alt-tab = 'focus dfs-next --boundaries-action wrap-around-the-workspace'
+    alt-shift-tab = 'focus dfs-prev --boundaries-action wrap-around-the-workspace'
+
     alt-minus = 'resize smart -50'
     alt-equal = 'resize smart +50'
 
