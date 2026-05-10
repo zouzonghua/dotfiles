@@ -36,7 +36,7 @@ This repo uses **GNU Stow** to manage symlinks. Each top-level directory is a St
 | `codex/` | `~/.codex/` |
 | `claude/` | `~/.claude/CLAUDE.md`（only file symlink, keep runtime data local）|
 
-**AI configurations**: `gemini/.gemini/GEMINI.md`, `codex/.codex/AGENTS.md`, and `claude/.claude/CLAUDE.md` are symlinks to `ai-shared/preferences.md`. Modify AI rules in `ai-shared/preferences.md` for SSOT.
+**AI configurations**: `gemini/.gemini/GEMINI.md`, `codex/.codex/AGENTS.md`, and `claude/.claude/CLAUDE.md` are symlinks to `ai/instructions.md`. Modify AI rules in `ai/instructions.md` for SSOT.
 
 ### `scripts/setup.sh` — what it does
 

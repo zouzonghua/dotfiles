@@ -1,1 +1,1 @@
-../../ai-shared/preferences.md
+../../ai/instructions.md
