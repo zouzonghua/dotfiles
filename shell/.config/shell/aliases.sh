@@ -9,5 +9,8 @@ alias cp='cp -i'
 alias mv='mv -i'
 
 # Productivity
-alias ls='ls --color=auto'
-alias ll='ls -alF'
+if [[ "$(uname -s)" == "Darwin" ]]; then
+    alias ls='ls -G'
+else
+    alias ls='ls --color=auto'
+fi
