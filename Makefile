@@ -22,6 +22,23 @@ STOW := stow --no-folding -t "$(HOME)"
 
 .PHONY: install desktop uninstall setup check $(PACKAGES_CLI) $(PACKAGES_GUI) $(PACKAGES_DARWIN)
 
+.DEFAULT_GOAL := help
+
+help:
+	@echo "Usage: make [target]"
+	@echo ""
+	@echo "Targets:"
+	@echo "  install    Install all CLI packages and run setup"
+	@echo "  desktop    Install all CLI + GUI packages"
+	@echo "  setup      Run post-install configuration (Git, SSH, Shell)"
+	@echo "  check      Verify required dependencies"
+	@echo "  uninstall  Remove symlinks and cleanup configurations"
+	@echo "  <package>  Install a specific package (e.g., make tmux)"
+	@echo ""
+	@echo "Profiles:"
+	@echo "  PROFILE=server (default on Linux)"
+	@echo "  PROFILE=desktop (default on macOS)"
+
 install: check
 	$(STOW) $(PACKAGES)
 	$(MAKE) setup

@@ -3,6 +3,8 @@
 set -euo pipefail
 
 shell_init_source='[ -f ~/.config/shell/init.sh ] && source ~/.config/shell/init.sh'
+block_start='# BEGIN DOTFILES'
+block_end='# END DOTFILES'
 
 expand_path() {
 	path="$1"
@@ -20,8 +22,9 @@ generate_allowed_signer() {
 
 	[[ -f "$identity_file" ]] || return 0
 
-	email="$(awk '$1 == "email" && $2 == "=" { print $3; exit }' "$identity_file")"
-	signingkey="$(awk '$1 == "signingkey" && $2 == "=" { print $3; exit }' "$identity_file")"
+	# Use git config to parse the identity file robustly
+	email="$(git config -f "$identity_file" user.email || true)"
+	signingkey="$(git config -f "$identity_file" user.signingkey || true)"
 
 	[[ -n "$email" ]] || return 0
 	[[ -n "$signingkey" ]] || return 0
@@ -29,23 +32,30 @@ generate_allowed_signer() {
 	public_key_file="$(expand_path "$signingkey")"
 	[[ -f "$public_key_file" ]] || return 0
 
-	key_type="$(awk '{ print $1; exit }' "$public_key_file")"
-	key_value="$(awk '{ print $2; exit }' "$public_key_file")"
+	key_content="$(cat "$public_key_file")"
+	[[ -n "$key_content" ]] || return 0
 
-	[[ -n "$key_type" ]] || return 0
-	[[ -n "$key_value" ]] || return 0
-
-	printf '%s %s %s\n' "$email" "$key_type" "$key_value"
+	printf '%s %s\n' "$email" "$key_content"
 }
 
-ensure_line() {
+ensure_block() {
 	file="$1"
-	comment="$2"
-	line="$3"
+	content="$2"
 
 	touch "$file"
-	if ! grep -Fqx "$line" "$file"; then
-		printf '\n%s\n%s\n' "$comment" "$line" >> "$file"
+
+	if grep -Fqx "$block_start" "$file" && grep -Fqx "$block_end" "$file"; then
+		# Update existing block
+		tmp_file="$(mktemp)"
+		awk -v start="$block_start" -v end="$block_end" -v content="$content" '
+			$0 == start { print; print content; skip = 1; next }
+			$0 == end   { skip = 0; print; next }
+			!skip       { print }
+		' "$file" > "$tmp_file"
+		mv "$tmp_file" "$file"
+	else
+		# Append new block
+		printf '\n%s\n%s\n%s\n' "$block_start" "$content" "$block_end" >> "$file"
 	fi
 }
 
@@ -64,6 +74,11 @@ setup_git_signing() {
 }
 
 setup_ssh_permissions() {
+	# Ensure .ssh directory exists with correct permissions
+	if [[ -d "${HOME}/.ssh" ]]; then
+		chmod 700 "${HOME}/.ssh"
+	fi
+
 	for file in "${HOME}/.ssh/config" "${HOME}/.ssh/devcontainer"; do
 		if [[ -f "$file" ]]; then
 			chmod 600 "$file"
@@ -74,17 +89,12 @@ setup_ssh_permissions() {
 setup_shell_init() {
 	[[ -f "${HOME}/.config/shell/init.sh" ]] || return 0
 
-	case "${SHELL##*/}" in
-		zsh)
-			ensure_line "${HOME}/.zshrc" '# shell init' "$shell_init_source"
-			;;
-		bash)
-			ensure_line "${HOME}/.bashrc" '# shell init' "$shell_init_source"
-			;;
-		*)
-			echo "skip rc injection for unsupported shell: ${SHELL}"
-			;;
-	esac
+	# Inject into both zsh and bash if they exist, ensuring robustness
+	for rc in "${HOME}/.zshrc" "${HOME}/.bashrc"; do
+		if [[ -f "$rc" ]]; then
+			ensure_block "$rc" "$shell_init_source"
+		fi
+	done
 }
 
 setup_git_signing

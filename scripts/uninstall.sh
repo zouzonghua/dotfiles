@@ -2,28 +2,28 @@
 
 set -euo pipefail
 
-shell_init_source='[ -f ~/.config/shell/init.sh ] && source ~/.config/shell/init.sh'
+block_start='# BEGIN DOTFILES'
+block_end='# END DOTFILES'
 allowed_signers="${HOME}/.config/git/allowed_signers"
 
-cleanup_line() {
+cleanup_block() {
 	file="$1"
-	comment="$2"
-	line="$3"
 
 	[[ -f "$file" ]] || return 0
 
-	tmp="${file}.tmp"
-	awk -v comment="$comment" -v line="$line" '
-		prev == comment && $0 == line { prev = ""; next }
-		prev != ""                    { print prev }
-		                              { prev = $0 }
-		END                           { if (prev != "") print prev }
-	' "$file" > "$tmp"
-	mv "$tmp" "$file"
+	tmp_file="$(mktemp)"
+	awk -v start="$block_start" -v end="$block_end" '
+		$0 == start { skip = 1; next }
+		$0 == end   { skip = 0; next }
+		!skip       { print }
+	' "$file" > "$tmp_file"
+	
+	# Optional: Remove trailing empty lines or fix redundant spacing
+	mv "$tmp_file" "$file"
 }
 
-cleanup_line "${HOME}/.zshrc" '# shell init' "$shell_init_source"
-cleanup_line "${HOME}/.bashrc" '# shell init' "$shell_init_source"
+cleanup_block "${HOME}/.zshrc"
+cleanup_block "${HOME}/.bashrc"
 rm -f "$allowed_signers"
 
 printf 'uninstall complete\n'
