@@ -37,6 +37,7 @@ sudo pacman -S stow
 - `ssh` → `~/.ssh/config`, `~/.ssh/devcontainer`
 - `vim` → `~/.vimrc`
 - `aerospace` → `~/.config/aerospace/aerospace.toml` (macOS only)
+- `gemini` / `codex` / `claude` → AI 代理配置入口（均指向 `ai-shared/preferences.md`，单一真实源）
 
 ## usage
 
@@ -51,6 +52,6 @@ make uninstall  # remove stow symlinks and generated files
 
 `make` uses `stow --no-folding` so generated files like `~/.config/git/allowed_signers` stay outside the repo. `make setup` keeps the non-stow bits: git `allowed_signers`, SSH permissions, and shell rc injection.
 
-CLI packages are installed everywhere: `git peco shell ssh tmux vim`.
+CLI packages are installed everywhere: `git peco shell ssh tmux vim gemini codex claude`.
 GUI packages are installed by `make desktop`, and by default on macOS: `kitty`.
 Darwin packages are installed only on macOS: `aerospace`.

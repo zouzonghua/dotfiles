@@ -30,6 +30,7 @@ check_required stow
 check_required bash
 check_required ssh
 check_required git
+check_required awk
 
 check_optional peco
 check_optional tmux

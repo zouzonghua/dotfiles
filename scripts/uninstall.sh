@@ -24,6 +24,6 @@ cleanup_block() {
 
 cleanup_block "${HOME}/.zshrc"
 cleanup_block "${HOME}/.bashrc"
-rm -f "$allowed_signers"
+rm -f "$allowed_signers" "${allowed_signers}.bak"
 
 printf 'uninstall complete\n'

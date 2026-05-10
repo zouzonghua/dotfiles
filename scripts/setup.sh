@@ -70,7 +70,12 @@ setup_git_signing() {
 		generate_allowed_signer "${HOME}/.config/git/work.identity"
 	} | awk '!seen[$0]++' > "$tmp_file"
 
-	mv "$tmp_file" "${HOME}/.config/git/allowed_signers"
+	# Skip overwrite when generation produced nothing — preserves prior valid file.
+	[[ -s "$tmp_file" ]] || return 0
+
+	target="${HOME}/.config/git/allowed_signers"
+	[[ -f "$target" ]] && cp -p "$target" "${target}.bak"
+	mv "$tmp_file" "$target"
 }
 
 setup_ssh_permissions() {
