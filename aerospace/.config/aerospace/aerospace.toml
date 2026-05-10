@@ -82,6 +82,10 @@ if.app-id = 'com.todesktop.230313mzl4w4u92' # Cursor
 run = ['move-node-to-workspace 2']
 
 [[on-window-detected]]
+if.app-id = 'com.openai.codex'
+run = ['move-node-to-workspace 2']
+
+[[on-window-detected]]
 if.app-id = 'com.apple.dt.Xcode'
 run = ['move-node-to-workspace 2']
 
