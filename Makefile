@@ -40,6 +40,7 @@ help:
 	@echo "  PROFILE=desktop (default on macOS)"
 
 install: check
+	@bash scripts/backup.sh $(PACKAGES)
 	$(STOW) $(PACKAGES)
 	$(MAKE) setup
 
@@ -47,6 +48,7 @@ desktop:
 	$(MAKE) install PROFILE=desktop
 
 $(PACKAGES_CLI) $(PACKAGES_GUI) $(PACKAGES_DARWIN):
+	@bash scripts/backup.sh $@
 	$(STOW) $@
 	$(MAKE) setup
 
