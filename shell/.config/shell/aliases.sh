@@ -14,3 +14,8 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
 else
     alias ls='ls --color=auto'
 fi
+
+# Terminal specific
+if [[ "$TERM" == "xterm-kitty" ]] && command -v kitty >/dev/null 2>&1; then
+    alias ssh="kitty +kitten ssh"
+fi
