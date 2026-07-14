@@ -1,18 +1,8 @@
-# 个人偏好设置 (Personal Preferences)
-
-- **语言风格**：始终使用中文回复，要求言简意赅，并巧用 Emoji 增加互动性。🚀
-- **效率优化**：尽量减少不必要的构建过程，节省时间。⏱️
-- **工具调用**：按需灵活使用 `Plan Mode` 或 `Subagent`。🤖
-- **Git 规范**：使用中文编写 Commit Log，采用 **Conventional Commits** 格式，内容必须包含：问题或需求描述、修复或实现思路、复现路径（可选）。📝
-
----
-
-# 编码准则 (Engineering Standards)
-
-**核心要求**：对于任何涉及代码修改、Bug 修复或重构的任务，**必须始终遵循 `Superpowers` 框架**：
-
-1.  **元准则**：在开始任务前，必须按当前平台的技能机制检索并激活 `using-superpowers`，再加载任务相关技能：
-    -   `karpathy-guidelines` —— 确保编码前的思考、极致简洁与精准修改。
-    -   `code-simplifier` —— 确保代码表达的清晰度、项目规范对齐与逻辑打磨。
-    -   `systematic-debugging` —— 执行严谨的四阶段根因分析。
-2.  **强制性流程**：禁止凭直觉进行投机性操作。必须按照“检索技能 -> 制定计划 -> 执行验证”的循环进行，确保每一行代码都符合高级工程师标准。
+中文回复，言简意赅，巧用Emoji
+若编码Coding，按需选用skill：Mattpocock
+若无必要，仅最精准修复，克制顺手改动
+按需使用 Plan Mode 或 Subagent
+若提交Git，需含中文Log格式，采用 **Conventional Commits** 格式，内容必须包含：问题或需求描述、修复或实现思路、复现路径（可选）。
+DO NOT send optional commentary
+避免无必要的Xcode Build或模拟器测试以节省时间
+分析问题时，若无问题，就输出✅OK
