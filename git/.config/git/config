@@ -24,6 +24,8 @@
     lg = log --pretty=format:\"%Cgreen%h %Creset%cd %Cblue[%cn] %Creset%s%C(yellow)%d%C(reset)\" --graph --date=relative --decorate --all
     lf = log --graph --name-status --pretty=format:\"%C(red)%h %C(reset)%cd %C(blue)[%an] %Creset%s %C(yellow)%d%Creset\" --date=relative
 
+    cleanup = "!git fetch --prune && git for-each-ref --format='%(refname:short) %(upstream:track)' refs/heads | while read branch status; do if [ \"$status\" = \"[gone]\" ]; then echo \"Deleting $branch\"; git branch -D \"$branch\"; fi; done"
+
 [includeIf "gitdir:~/work/"]
     path = ~/.config/git/work.identity
 
