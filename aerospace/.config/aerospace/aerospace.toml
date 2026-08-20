@@ -16,14 +16,8 @@ persistent-workspaces = ["1", "2", "3", "4", "5"]
 
 [mode.main.binding]
     alt-enter = '''exec-and-forget open -a Kitty'''
-    alt-slash = 'layout tiles horizontal vertical'
-    alt-comma = 'layout accordion horizontal vertical'
-
-    alt-tab = 'focus dfs-next --boundaries-action wrap-around-the-workspace'
-    alt-shift-tab = 'focus dfs-prev --boundaries-action wrap-around-the-workspace'
-
-    alt-minus = 'resize smart -50'
-    alt-equal = 'resize smart +50'
+    alt-minus = 'layout accordion horizontal vertical'
+    alt-equal = 'layout tiles horizontal vertical'
 
     alt-1 = 'workspace 1'
     alt-2 = 'workspace 2'
@@ -36,12 +30,6 @@ persistent-workspaces = ["1", "2", "3", "4", "5"]
     alt-shift-3 = 'move-node-to-workspace 3'
     alt-shift-4 = 'move-node-to-workspace 4'
     alt-shift-5 = 'move-node-to-workspace 5'
-
-    alt-shift-semicolon = 'mode service'
-
-[mode.service.binding]
-    esc = ['reload-config', 'mode main']
-    f = ['layout floating tiling', 'mode main']
 
 [workspace-to-monitor-force-assignment]
     "1" = 1
