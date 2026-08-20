@@ -16,8 +16,8 @@ persistent-workspaces = ["1", "2", "3", "4", "5"]
 
 [mode.main.binding]
     alt-enter = '''exec-and-forget open -a Kitty'''
-    alt-minus = 'layout accordion horizontal vertical'
-    alt-equal = 'layout tiles horizontal vertical'
+    alt-minus = 'layout tiles horizontal vertical'
+    alt-equal = 'layout accordion horizontal vertical'
 
     alt-1 = 'workspace 1'
     alt-2 = 'workspace 2'
