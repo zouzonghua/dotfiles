@@ -31,6 +31,7 @@ This repo uses **GNU Stow** to manage symlinks. Each top-level directory is a St
 | `kitty/` | `~/.config/kitty/` (GUI/macOS) |
 | `aerospace/` | `~/.config/aerospace/` (macOS only) |
 | `vim/` | `~/.vimrc` |
+| `nvim/` | `~/.config/nvim/` |
 | `peco/` | `~/.config/peco/` |
 | `gemini/` | `~/.gemini/` |
 | `codex/` | `~/.codex/` |
