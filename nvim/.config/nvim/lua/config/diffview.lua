@@ -1,3 +1,5 @@
+local actions = require("diffview.actions")
+
 require("diffview").setup({
   view = {
     default = {
@@ -19,6 +21,17 @@ require("diffview").setup({
       height = 16,
     },
   },
+  keymaps = {
+    view = {
+      { "n", "q", actions.close, { desc = "Close Git view" } },
+    },
+    file_panel = {
+      { "n", "q", actions.close, { desc = "Close Git view" } },
+    },
+    file_history_panel = {
+      { "n", "q", actions.close, { desc = "Close Git history" } },
+    },
+  },
 })
 
 vim.keymap.set("n", "<leader>gd", "<cmd>DiffviewOpen<CR>", {
@@ -27,8 +40,4 @@ vim.keymap.set("n", "<leader>gd", "<cmd>DiffviewOpen<CR>", {
 
 vim.keymap.set("n", "<leader>gh", "<cmd>DiffviewFileHistory<CR>", {
   desc = "Open Git history",
-})
-
-vim.keymap.set("n", "<leader>gq", "<cmd>DiffviewClose<CR>", {
-  desc = "Close Git diff",
 })
