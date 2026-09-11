@@ -1,6 +1,6 @@
 # AGENTS.md
 
-This file provides the primary project context and architectural guidance for all AI Agents (Claude, Gemini, Codex, etc.).
+This file provides the primary project context and architectural guidance for all AI agents in this repository.
 
 ## Commands
 
@@ -35,9 +35,9 @@ This repo uses **GNU Stow** to manage symlinks. Each top-level directory is a St
 | `peco/` | `~/.config/peco/` |
 | `gemini/` | `~/.gemini/` |
 | `codex/` | `~/.codex/` |
-| `claude/` | `~/.claude/CLAUDE.md`（only file symlink, keep runtime data local）|
+| `pi/` | `~/.pi/agent/` |
 
-**AI configurations**: `gemini/.gemini/GEMINI.md`, `codex/.codex/AGENTS.md`, and `claude/.claude/CLAUDE.md` are symlinks to `ai/instructions.md`. Modify AI rules in `ai/instructions.md` for SSOT.
+**AI configurations**: `gemini/.gemini/GEMINI.md`, `codex/.codex/AGENTS.md`, and `pi/.pi/agent/AGENTS.md` are symlinks to `agents/AGENTS.md`. Modify AI rules in `agents/AGENTS.md` for SSOT.
 
 ### `scripts/setup.sh` — what it does
 
