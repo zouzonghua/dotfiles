@@ -1,8 +1,5 @@
 # shell/aliases.sh
 
-# Git
-alias g='git'
-
 # Safety
 alias rm='rm -i'
 alias cp='cp -i'
