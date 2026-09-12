@@ -18,8 +18,9 @@ cleanup_block() {
 		!skip       { print }
 	' "$file" > "$tmp_file"
 	
-	# Optional: Remove trailing empty lines or fix redundant spacing
-	mv "$tmp_file" "$file"
+	# Write back through existing symlinks and preserve file permissions.
+	cat "$tmp_file" > "$file"
+	rm -f "$tmp_file"
 }
 
 cleanup_block "${HOME}/.zshrc"

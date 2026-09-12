@@ -26,13 +26,12 @@ This repo uses **GNU Stow** to manage symlinks. Each top-level directory is a St
 |--------|-------------|
 | `git/` | `~/.config/git/` (config, identity files, allowed_signers) |
 | `shell/` | `~/.config/shell/` (init.sh, aliases.sh, prompt.sh, history.sh) |
-| `ssh/` | `~/.ssh/config`, `~/.ssh/devcontainer` |
+| `ssh/` | `~/.ssh/config` |
 | `tmux/` | `~/.config/tmux/` |
 | `kitty/` | `~/.config/kitty/` (GUI/macOS) |
 | `aerospace/` | `~/.config/aerospace/` (macOS only) |
 | `vim/` | `~/.vimrc` |
 | `nvim/` | `~/.config/nvim/` |
-| `peco/` | `~/.config/peco/` |
 | `gemini/` | `~/.gemini/` |
 | `codex/` | `~/.codex/` |
 | `pi/` | `~/.pi/agent/` |

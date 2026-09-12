@@ -35,5 +35,8 @@ elif [ -n "$BASH_VERSION" ]; then
   # On each new prompt, write this session's new commands and then import
   # commands written by other bash sessions. In tmux this means another pane's
   # history usually becomes visible after you hit Enter and return to a prompt.
-  PROMPT_COMMAND="history -a; history -n${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
+  case "${PROMPT_COMMAND-}" in
+    *'history -a; history -n'*) ;;
+    *) PROMPT_COMMAND="history -a; history -n${PROMPT_COMMAND:+; $PROMPT_COMMAND}" ;;
+  esac
 fi

@@ -21,7 +21,7 @@ for pkg in "${PACKAGES[@]}"; do
 
     # 进入包目录，寻找所有文件或目录
     # 使用 -mindepth 1 确保我们检查的是包内的内容
-    find "$pkg" -mindepth 1 | while read -r item; do
+    while IFS= read -r -d '' item; do
         # 获取相对路径，例如 "gemini/.gemini/GEMINI.md" -> ".gemini/GEMINI.md"
         rel_path="${item#$pkg/}"
         target="$HOME/$rel_path"
@@ -45,7 +45,7 @@ for pkg in "${PACKAGES[@]}"; do
             # 移动文件或目录
             mv "$target" "$BACKUP_DIR/$rel_path"
         fi
-    done
+    done < <(find "$pkg" -mindepth 1 -print0)
 done
 
 if [ "$HAS_CONFLICTS" -eq 1 ]; then

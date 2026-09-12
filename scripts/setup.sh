@@ -44,7 +44,7 @@ ensure_block() {
 
 	touch "$file"
 
-	# Use awk for atomic block update. 
+	# Generate the updated block before writing back to preserve symlinks and permissions.
 	# Compatible with both BSD awk (macOS) and GNU awk (Linux).
 	if grep -Fqx "$block_start" "$file" && grep -Fqx "$block_end" "$file"; then
 		# Update existing block
@@ -54,7 +54,8 @@ ensure_block() {
 			$0 == end   { skip = 0; print; next }
 			!skip       { print }
 		' "$file" > "$tmp_file"
-		mv "$tmp_file" "$file"
+		cat "$tmp_file" > "$file"
+		rm -f "$tmp_file"
 	else
 		# Append new block
 		printf '\n%s\n%s\n%s\n' "$block_start" "$content" "$block_end" >> "$file"
@@ -86,21 +87,17 @@ setup_ssh_permissions() {
 		chmod 700 "${HOME}/.ssh"
 	fi
 
-	for file in "${HOME}/.ssh/config" "${HOME}/.ssh/devcontainer"; do
-		if [[ -f "$file" ]]; then
-			chmod 600 "$file"
-		fi
-	done
+	if [[ -f "${HOME}/.ssh/config" ]]; then
+		chmod 600 "${HOME}/.ssh/config"
+	fi
 }
 
 setup_shell_init() {
 	[[ -f "${HOME}/.config/shell/init.sh" ]] || return 0
 
-	# Inject into both zsh and bash if they exist, ensuring robustness
+	# Create missing rc files and inject into both zsh and bash.
 	for rc in "${HOME}/.zshrc" "${HOME}/.bashrc"; do
-		if [[ -f "$rc" ]]; then
-			ensure_block "$rc" "$shell_init_source"
-		fi
+		ensure_block "$rc" "$shell_init_source"
 	done
 }
 
