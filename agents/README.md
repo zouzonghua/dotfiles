@@ -11,8 +11,8 @@ modules are the ones stowed into `$HOME`.
 
 ## Codex skills
 
-`karpathy-guidelines` and `code-simplifier` are installed directly into
-`~/.codex/skills`, not managed by Stow.
+`karpathy-guidelines` is installed directly into `~/.codex/skills`, not managed
+by Stow.
 
 Install `karpathy-guidelines`:
 
@@ -20,14 +20,6 @@ Install `karpathy-guidelines`:
 python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py \
   --repo multica-ai/andrej-karpathy-skills \
   --path skills/karpathy-guidelines
-```
-
-Install `code-simplifier`:
-
-```sh
-mkdir -p ~/.codex/skills/code-simplifier
-curl -fsSL https://raw.githubusercontent.com/anthropics/claude-plugins-official/main/plugins/code-simplifier/agents/code-simplifier.md \
-  -o ~/.codex/skills/code-simplifier/SKILL.md
 ```
 
 Restart Codex or open a new thread after installing skills.
