@@ -1,0 +1,5 @@
+{
+  "tui.editor.historyPrevious": "ctrl+p",
+  "tui.editor.historyNext": "ctrl+n",
+  "app.interrupt": "ctrl+c"
+}
