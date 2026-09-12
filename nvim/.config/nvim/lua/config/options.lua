@@ -2,6 +2,7 @@ local opt = vim.opt
 
 opt.number = true
 opt.cursorline = true
+opt.wrap = false
 opt.mouse = "a"
 opt.termguicolors = true
 opt.signcolumn = "yes"
