@@ -41,5 +41,4 @@ set colorcolumn=80
 set wrap
 set showcmd
 set showmode
-"set termguicolors
 colorscheme default
