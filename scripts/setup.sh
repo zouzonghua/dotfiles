@@ -5,8 +5,6 @@ set -euo pipefail
 shell_init_source='[ -f ~/.config/shell/init.sh ] && source ~/.config/shell/init.sh'
 block_start='# BEGIN ZOUZONGHUA DOTFILES'
 block_end='# END ZOUZONGHUA DOTFILES'
-legacy_block_start='# BEGIN DOTFILES'
-legacy_block_end='# END DOTFILES'
 
 expand_path() {
 	path="$1"
@@ -39,40 +37,6 @@ generate_allowed_signer() {
 	printf '%s %s\n' "$email" "$key_content"
 }
 
-validate_block_pair() {
-	file="$1"
-	start="$2"
-	end="$3"
-
-	start_count="$(grep -Fxc "$start" "$file" || true)"
-	end_count="$(grep -Fxc "$end" "$file" || true)"
-	if [[ "$start_count" -eq 0 && "$end_count" -eq 0 ]]; then
-		return 1
-	fi
-	if [[ "$start_count" -ne 1 || "$end_count" -ne 1 ]]; then
-		printf 'error: malformed dotfiles block in %s\n' "$file" >&2
-		return 2
-	fi
-
-	start_line="$(grep -Fn "$start" "$file" | cut -d: -f1)"
-	end_line="$(grep -Fn "$end" "$file" | cut -d: -f1)"
-	if [[ "$start_line" -ge "$end_line" ]]; then
-		printf 'error: malformed dotfiles block in %s\n' "$file" >&2
-		return 2
-	fi
-}
-
-block_content() {
-	file="$1"
-	start="$2"
-	end="$3"
-	awk -v start="$start" -v end="$end" '
-		$0 == start { capture = 1; next }
-		$0 == end   { exit }
-		capture     { print }
-	' "$file"
-}
-
 validate_block() {
 	file="$1"
 	if [[ -L "$file" && ! -e "$file" ]]; then
@@ -93,29 +57,23 @@ validate_block() {
 	fi
 	[[ -f "$file" ]] || return 0
 
-	new_present=0
-	legacy_present=0
-	if validate_block_pair "$file" "$block_start" "$block_end"; then
-		new_present=1
-	elif [[ "$?" -eq 2 ]]; then
-		return 1
+	start_count="$(grep -Fxc "$block_start" "$file" || true)"
+	end_count="$(grep -Fxc "$block_end" "$file" || true)"
+	if [[ "$start_count" -eq 0 && "$end_count" -eq 0 ]]; then
+		return 0
 	fi
-	if validate_block_pair "$file" "$legacy_block_start" "$legacy_block_end"; then
-		legacy_present=1
-	elif [[ "$?" -eq 2 ]]; then
+	if [[ "$start_count" -ne 1 || "$end_count" -ne 1 ]]; then
+		printf 'error: malformed dotfiles block in %s\n' "$file" >&2
 		return 1
 	fi
 
-	if [[ "$new_present" -eq 1 && "$legacy_present" -eq 1 ]]; then
-		printf 'error: multiple dotfiles block formats in %s\n' "$file" >&2
-		return 1
-	fi
-	if [[ "$new_present" -eq 1 && "$(block_content "$file" "$block_start" "$block_end")" != "$shell_init_source" ]]; then
+	block="$(awk -v start="$block_start" -v end="$block_end" '
+		$0 == start { capture = 1; next }
+		$0 == end   { capture = 0; exit }
+		capture     { print }
+	' "$file")"
+	if [[ "$block" != "$shell_init_source" ]]; then
 		printf 'error: refusing to manage modified dotfiles block in %s\n' "$file" >&2
-		return 1
-	fi
-	if [[ "$legacy_present" -eq 1 && "$(block_content "$file" "$legacy_block_start" "$legacy_block_end")" != "$shell_init_source" ]]; then
-		printf 'error: refusing to manage unrecognized legacy block in %s\n' "$file" >&2
 		return 1
 	fi
 }
@@ -124,31 +82,19 @@ ensure_block() {
 	file="$1"
 	content="$2"
 	touch "$file"
-
-	if [[ "$(head -n 1 "$file")" == "$block_start" ]]; then
-		return 0
-	fi
+	[[ "$(head -n 1 "$file")" == "$block_start" ]] && return 0
 
 	tmp_file="$(mktemp)"
 	printf '%s\n%s\n%s\n' "$block_start" "$content" "$block_end" > "$tmp_file"
 	if grep -Fqx "$block_start" "$file"; then
-		old_start="$block_start"
-		old_end="$block_end"
-	elif grep -Fqx "$legacy_block_start" "$file"; then
-		old_start="$legacy_block_start"
-		old_end="$legacy_block_end"
+		awk -v start="$block_start" -v end="$block_end" '
+			$0 == start { skip = 1; next }
+			$0 == end   { skip = 0; next }
+			!skip       { print }
+		' "$file" >> "$tmp_file"
 	else
 		cat "$file" >> "$tmp_file"
-		cat "$tmp_file" > "$file"
-		rm -f "$tmp_file"
-		return 0
 	fi
-
-	awk -v start="$old_start" -v end="$old_end" '
-		$0 == start { skip = 1; next }
-		$0 == end   { skip = 0; next }
-		!skip       { print }
-	' "$file" >> "$tmp_file"
 	cat "$tmp_file" > "$file"
 	rm -f "$tmp_file"
 }
