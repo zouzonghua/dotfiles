@@ -12,10 +12,14 @@ export default function (pi: ExtensionAPI) {
 				invalidate() {},
 				render(width: number): string[] {
 					const branch = footerData.getGitBranch();
-					const left = theme.fg("dim", `${basename(ctx.cwd)}${branch ? ` (${branch})` : ""}`);
+					const leftText = `${basename(ctx.cwd)}${branch ? ` (${branch})` : ""}`;
 					const right = theme.fg("dim", `${ctx.model?.id ?? "no-model"} · ${ctx.thinkingLevel}`);
-					const padding = " ".repeat(Math.max(1, width - visibleWidth(left) - visibleWidth(right)));
-					return [truncateToWidth(left + padding + right, width)];
+					const rightWidth = visibleWidth(right);
+					if (rightWidth >= width) return [truncateToWidth(right, width)];
+
+					const left = theme.fg("dim", truncateToWidth(leftText, width - rightWidth - 1, ""));
+					const padding = " ".repeat(width - visibleWidth(left) - rightWidth);
+					return [left + padding + right];
 				},
 			};
 		});

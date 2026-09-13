@@ -2,11 +2,9 @@ local map = vim.keymap.set
 
 local function close_current_buffer()
   local current_buffer = vim.api.nvim_get_current_buf()
-
-  vim.cmd("BufferLineCycleNext")
-
-  if vim.api.nvim_get_current_buf() == current_buffer then
-    vim.cmd("BufferLineCyclePrev")
+  if vim.bo[current_buffer].modified then
+    vim.notify("Save or discard changes before closing this buffer", vim.log.levels.WARN)
+    return
   end
 
   vim.cmd("bdelete " .. current_buffer)

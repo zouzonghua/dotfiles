@@ -1,3 +1,17 @@
+vim.api.nvim_create_autocmd("PackChanged", {
+  callback = function(event)
+    local data = event.data
+    if data.spec.name ~= "markdown-preview.nvim" or (data.kind ~= "install" and data.kind ~= "update") then
+      return
+    end
+
+    local result = vim.system({ "npx", "--yes", "yarn@1.22.22", "install", "--frozen-lockfile" }, { cwd = data.path .. "/app" }):wait()
+    if result.code ~= 0 then
+      error("Failed to install markdown-preview.nvim dependencies:\n" .. result.stderr)
+    end
+  end,
+})
+
 vim.pack.add({
   { src = "https://github.com/ellisonleao/gruvbox.nvim" },
   { src = "https://github.com/nvim-tree/nvim-web-devicons" },
