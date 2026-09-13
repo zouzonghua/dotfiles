@@ -6,7 +6,7 @@
 # - reduce obvious duplicates
 # - keep shell-specific behavior conservative
 
-if [ -n "$ZSH_VERSION" ]; then
+if [ -n "${ZSH_VERSION-}" ]; then
   # Keep enough history to be useful without changing zsh defaults too much.
   HISTSIZE=50000
   SAVEHIST=50000
@@ -21,7 +21,7 @@ if [ -n "$ZSH_VERSION" ]; then
   # Clean up whitespace in stored commands without aggressively rewriting history.
   setopt HIST_REDUCE_BLANKS
 
-elif [ -n "$BASH_VERSION" ]; then
+elif [ -n "${BASH_VERSION-}" ]; then
   # Match the zsh history size closely while keeping bash defaults intact.
   HISTSIZE=50000
   HISTFILESIZE=50000

@@ -13,6 +13,6 @@ else
 fi
 
 # Terminal specific
-if [[ "$TERM" == "xterm-kitty" ]] && command -v kitty >/dev/null 2>&1; then
+if [[ "${TERM-}" == "xterm-kitty" ]] && command -v kitty >/dev/null 2>&1; then
     alias ssh="kitty +kitten ssh"
 fi
