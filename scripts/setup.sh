@@ -216,8 +216,8 @@ should_setup() {
 }
 
 if [[ "$check_only" -eq 1 ]]; then
-	should_setup git "${packages[@]}" && setup_git_signing --check
-	if should_setup shell "${packages[@]}"; then
+	should_setup git && setup_git_signing --check
+	if should_setup shell; then
 		for rc in "${HOME}/.zshrc" "${HOME}/.bashrc"; do
 			validate_block "$rc"
 		done
@@ -225,7 +225,7 @@ if [[ "$check_only" -eq 1 ]]; then
 	exit 0
 fi
 
-should_setup git "${packages[@]}" && setup_git_signing
-should_setup ssh "${packages[@]}" && setup_ssh_permissions
-should_setup shell "${packages[@]}" && setup_shell_init
+should_setup git && setup_git_signing
+should_setup ssh && setup_ssh_permissions
+should_setup shell && setup_shell_init
 exit 0
