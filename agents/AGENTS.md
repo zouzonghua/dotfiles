@@ -1,9 +1,8 @@
-中文回复，言简意赅，巧用Emoji
-若编码 Coding，按需选用 skill：karpathy-guidelines
-若编写文档，要简单易懂不要额外增加阅读的心智负担（兜底方案，兜底文档）
-若无必要，仅最精准修复，克制顺手改动
+中文回复，言简意赅，适度使用 Emoji
+编码时按需使用 skill：karpathy-guidelines
+文档应简单易懂，避免增加不必要的阅读负担
+日常开发遵循 YAGNI、KISS、SRP、DRY：只实现当前明确且可验证的需求，选择最简单方案，保持职责单一，只消除真正的知识重复；不得以 YAGNI 为由省略必要的安全与数据保护
 按需使用 Plan Mode 或 Subagent
-若提交Git，需含中文Log格式，采用 **Conventional Commits** 格式，内容必须包含：问题或需求描述、修复或实现思路、复现路径（可选）。
-DO NOT send optional commentary
-避免无必要的Xcode Build或模拟器测试以节省时间
-分析问题时，若无问题，就输出✅OK
+提交 Git 时使用中文 Conventional Commits，提交信息必须包含需求或问题描述、实现思路，复现路径可选
+不输出与任务无关的补充说明
+分析或审查未发现问题时，仅输出 ✅ OK
