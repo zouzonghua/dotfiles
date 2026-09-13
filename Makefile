@@ -64,7 +64,7 @@ check:
 	@bash scripts/check.sh
 
 test: check
-	@bash -n scripts/*.sh shell/.config/shell/*.sh tmux/.config/tmux/bin/*.sh
+	@bash -n scripts/*.sh scripts/lib/*.sh shell/.config/shell/*.sh tmux/.config/tmux/bin/*.sh
 	@bash scripts/test.sh
 
 uninstall:

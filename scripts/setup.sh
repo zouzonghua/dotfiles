@@ -2,9 +2,8 @@
 
 set -euo pipefail
 
-shell_init_source='[ -f ~/.config/shell/init.sh ] && source ~/.config/shell/init.sh'
-block_start='# BEGIN ZOUZONGHUA DOTFILES'
-block_end='# END ZOUZONGHUA DOTFILES'
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${script_dir}/lib/shell-block.sh"
 
 expand_path() {
 	local path="$1"
@@ -36,54 +35,6 @@ generate_allowed_signer() {
 
 	key_content="$(cat "$public_key_file")"
 	printf '%s %s\n' "$email" "$key_content"
-}
-
-validate_block() {
-	local file="$1"
-	local start_count end_count start_line end_line block
-	if [[ -L "$file" && ! -e "$file" ]]; then
-		printf 'error: shell rc is a dangling link: %s\n' "$file" >&2
-		return 1
-	fi
-	if [[ -e "$file" && ! -f "$file" ]]; then
-		printf 'error: shell rc is not a regular file: %s\n' "$file" >&2
-		return 1
-	fi
-	if [[ -f "$file" && ! -w "$file" ]]; then
-		printf 'error: shell rc is not writable: %s\n' "$file" >&2
-		return 1
-	fi
-	if [[ ! -e "$file" && ! -w "$(dirname "$file")" ]]; then
-		printf 'error: shell rc parent is not writable: %s\n' "$(dirname "$file")" >&2
-		return 1
-	fi
-	[[ -f "$file" ]] || return 0
-
-	start_count="$(grep -Fxc "$block_start" "$file" || true)"
-	end_count="$(grep -Fxc "$block_end" "$file" || true)"
-	if [[ "$start_count" -eq 0 && "$end_count" -eq 0 ]]; then
-		return 0
-	fi
-	if [[ "$start_count" -ne 1 || "$end_count" -ne 1 ]]; then
-		printf 'error: malformed dotfiles block in %s\n' "$file" >&2
-		return 1
-	fi
-	start_line="$(grep -Fn "$block_start" "$file" | cut -d: -f1)"
-	end_line="$(grep -Fn "$block_end" "$file" | cut -d: -f1)"
-	if [[ "$start_line" -ge "$end_line" ]]; then
-		printf 'error: malformed dotfiles block in %s\n' "$file" >&2
-		return 1
-	fi
-
-	block="$(awk -v start="$block_start" -v end="$block_end" '
-		$0 == start { capture = 1; next }
-		$0 == end   { capture = 0; exit }
-		capture     { print }
-	' "$file")"
-	if [[ "$block" != "$shell_init_source" ]]; then
-		printf 'error: refusing to manage modified dotfiles block in %s\n' "$file" >&2
-		return 1
-	fi
 }
 
 ensure_block() {
@@ -190,7 +141,7 @@ setup_shell_init() {
 	[[ -f "${HOME}/.config/shell/init.sh" ]] || return 0
 
 	for rc in "${HOME}/.zshrc" "${HOME}/.bashrc"; do
-		validate_block "$rc"
+		validate_block "$rc" --create
 	done
 	for rc in "${HOME}/.zshrc" "${HOME}/.bashrc"; do
 		ensure_block "$rc" "$shell_init_source"
@@ -219,7 +170,7 @@ if [[ "$check_only" -eq 1 ]]; then
 	should_setup git && setup_git_signing --check
 	if should_setup shell; then
 		for rc in "${HOME}/.zshrc" "${HOME}/.bashrc"; do
-			validate_block "$rc"
+			validate_block "$rc" --create
 		done
 	fi
 	exit 0
