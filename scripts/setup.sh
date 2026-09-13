@@ -191,14 +191,34 @@ setup_shell_init() {
 	done
 }
 
+check_only=0
 if [[ "${1-}" == "--check" ]]; then
-	setup_git_signing --check
-	for rc in "${HOME}/.zshrc" "${HOME}/.bashrc"; do
-		validate_block "$rc"
+	check_only=1
+	shift
+fi
+
+packages=("$@")
+
+should_setup() {
+	target="$1"
+	[[ "${#packages[@]}" -eq 0 ]] && return 0
+	for package in "${packages[@]}"; do
+		[[ "$package" == "$target" ]] && return 0
 	done
+	return 1
+}
+
+if [[ "$check_only" -eq 1 ]]; then
+	should_setup git "${packages[@]}" && setup_git_signing --check
+	if should_setup shell "${packages[@]}"; then
+		for rc in "${HOME}/.zshrc" "${HOME}/.bashrc"; do
+			validate_block "$rc"
+		done
+	fi
 	exit 0
 fi
 
-setup_git_signing
-setup_ssh_permissions
-setup_shell_init
+should_setup git "${packages[@]}" && setup_git_signing
+should_setup ssh "${packages[@]}" && setup_ssh_permissions
+should_setup shell "${packages[@]}" && setup_shell_init
+exit 0

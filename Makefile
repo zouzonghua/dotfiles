@@ -51,10 +51,10 @@ desktop:
 dry-run: check
 	@bash scripts/preflight.sh $(PACKAGES)
 
-$(PACKAGES_CLI) $(PACKAGES_GUI) $(PACKAGES_DARWIN): check
+$(PACKAGES_CLI) $(PACKAGES_GUI) $(PACKAGES_DARWIN):
 	@bash scripts/preflight.sh $@
 	$(STOW) --restow $@
-	$(MAKE) setup
+	@bash scripts/setup.sh $@
 
 setup:
 	@bash scripts/setup.sh
@@ -62,7 +62,7 @@ setup:
 check:
 	@bash scripts/check.sh
 
-uninstall: check
+uninstall:
 	@bash scripts/uninstall.sh --check
 	$(STOW) -D $(PACKAGES_CLI) $(PACKAGES_GUI) $(PACKAGES_DARWIN)
 	@bash scripts/uninstall.sh

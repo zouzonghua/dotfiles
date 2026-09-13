@@ -14,7 +14,12 @@ command -v stow >/dev/null 2>&1 || {
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 repo_root="$(dirname "$script_dir")"
-bash "${script_dir}/setup.sh" --check
+for package in "$@"; do
+	if [[ "$package" == "git" ]]; then
+		bash "${script_dir}/check.sh" git
+	fi
+done
+bash "${script_dir}/setup.sh" --check "$@"
 
 for package in "$@"; do
 	if [[ "$package" == "git" ]]; then

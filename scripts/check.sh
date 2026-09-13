@@ -50,6 +50,16 @@ check_min_version() {
 
 check_required stow
 check_required bash
+
+if [[ "${1-}" == "git" ]]; then
+	check_required git
+	check_required awk
+	if command -v git >/dev/null 2>&1; then
+		check_min_version git "$(git --version | awk '{ print $3 }')" 2.37
+	fi
+	exit "$missing"
+fi
+
 check_required ssh
 check_required git
 check_required awk
