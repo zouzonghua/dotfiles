@@ -3,8 +3,10 @@
 set -euo pipefail
 
 shell_init_source='[ -f ~/.config/shell/init.sh ] && source ~/.config/shell/init.sh'
-block_start='# BEGIN DOTFILES'
-block_end='# END DOTFILES'
+block_start='# BEGIN ZOUZONGHUA DOTFILES'
+block_end='# END ZOUZONGHUA DOTFILES'
+legacy_block_start='# BEGIN DOTFILES'
+legacy_block_end='# END DOTFILES'
 
 expand_path() {
 	path="$1"
@@ -19,87 +21,216 @@ expand_path() {
 
 generate_allowed_signer() {
 	identity_file="$1"
-
-	[[ -f "$identity_file" ]] || return 0
-
-	# Use git config to parse the identity file robustly
 	email="$(git config -f "$identity_file" user.email || true)"
 	signingkey="$(git config -f "$identity_file" user.signingkey || true)"
 
-	[[ -n "$email" ]] || return 0
-	[[ -n "$signingkey" ]] || return 0
+	if [[ -z "$email" || -z "$signingkey" ]]; then
+		printf 'warning: incomplete Git identity: %s\n' "$identity_file" >&2
+		return 1
+	fi
 
 	public_key_file="$(expand_path "$signingkey")"
-	[[ -f "$public_key_file" ]] || return 0
+	if [[ ! -s "$public_key_file" ]]; then
+		printf 'warning: public signing key not found: %s\n' "$public_key_file" >&2
+		return 1
+	fi
 
 	key_content="$(cat "$public_key_file")"
-	[[ -n "$key_content" ]] || return 0
-
 	printf '%s %s\n' "$email" "$key_content"
+}
+
+validate_block_pair() {
+	file="$1"
+	start="$2"
+	end="$3"
+
+	start_count="$(grep -Fxc "$start" "$file" || true)"
+	end_count="$(grep -Fxc "$end" "$file" || true)"
+	if [[ "$start_count" -eq 0 && "$end_count" -eq 0 ]]; then
+		return 1
+	fi
+	if [[ "$start_count" -ne 1 || "$end_count" -ne 1 ]]; then
+		printf 'error: malformed dotfiles block in %s\n' "$file" >&2
+		return 2
+	fi
+
+	start_line="$(grep -Fn "$start" "$file" | cut -d: -f1)"
+	end_line="$(grep -Fn "$end" "$file" | cut -d: -f1)"
+	if [[ "$start_line" -ge "$end_line" ]]; then
+		printf 'error: malformed dotfiles block in %s\n' "$file" >&2
+		return 2
+	fi
+}
+
+validate_block() {
+	file="$1"
+	if [[ -L "$file" && ! -e "$file" ]]; then
+		printf 'error: shell rc is a dangling link: %s\n' "$file" >&2
+		return 1
+	fi
+	if [[ -e "$file" && ! -f "$file" ]]; then
+		printf 'error: shell rc is not a regular file: %s\n' "$file" >&2
+		return 1
+	fi
+	if [[ -f "$file" && ! -w "$file" ]]; then
+		printf 'error: shell rc is not writable: %s\n' "$file" >&2
+		return 1
+	fi
+	if [[ ! -e "$file" && ! -w "$(dirname "$file")" ]]; then
+		printf 'error: shell rc parent is not writable: %s\n' "$(dirname "$file")" >&2
+		return 1
+	fi
+	[[ -f "$file" ]] || return 0
+
+	new_present=0
+	legacy_present=0
+	if validate_block_pair "$file" "$block_start" "$block_end"; then
+		new_present=1
+	elif [[ "$?" -eq 2 ]]; then
+		return 1
+	fi
+	if validate_block_pair "$file" "$legacy_block_start" "$legacy_block_end"; then
+		legacy_present=1
+	elif [[ "$?" -eq 2 ]]; then
+		return 1
+	fi
+
+	if [[ "$new_present" -eq 1 && "$legacy_present" -eq 1 ]]; then
+		printf 'error: multiple dotfiles block formats in %s\n' "$file" >&2
+		return 1
+	fi
+	if [[ "$legacy_present" -eq 1 ]]; then
+		legacy_content="$(awk -v start="$legacy_block_start" -v end="$legacy_block_end" '
+			$0 == start { capture = 1; next }
+			$0 == end   { capture = 0; exit }
+			capture     { print }
+		' "$file")"
+		if [[ "$legacy_content" != "$shell_init_source" ]]; then
+			printf 'error: refusing to manage unrecognized legacy block in %s\n' "$file" >&2
+			return 1
+		fi
+	fi
 }
 
 ensure_block() {
 	file="$1"
 	content="$2"
-
 	touch "$file"
 
-	# Generate the updated block before writing back to preserve symlinks and permissions.
-	# Compatible with both BSD awk (macOS) and GNU awk (Linux).
-	if grep -Fqx "$block_start" "$file" && grep -Fqx "$block_end" "$file"; then
-		# Update existing block
-		tmp_file="$(mktemp)"
-		awk -v start="$block_start" -v end="$block_end" -v content="$content" '
-			$0 == start { print; print content; skip = 1; next }
-			$0 == end   { skip = 0; print; next }
-			!skip       { print }
-		' "$file" > "$tmp_file"
-		cat "$tmp_file" > "$file"
-		rm -f "$tmp_file"
+	if grep -Fqx "$block_start" "$file"; then
+		old_start="$block_start"
+		old_end="$block_end"
+	elif grep -Fqx "$legacy_block_start" "$file"; then
+		old_start="$legacy_block_start"
+		old_end="$legacy_block_end"
 	else
-		# Append new block
 		printf '\n%s\n%s\n%s\n' "$block_start" "$content" "$block_end" >> "$file"
+		return 0
 	fi
+
+	tmp_file="$(mktemp)"
+	awk -v old_start="$old_start" -v old_end="$old_end" -v new_start="$block_start" -v new_end="$block_end" -v content="$content" '
+		$0 == old_start { print new_start; print content; skip = 1; next }
+		$0 == old_end   { skip = 0; print new_end; next }
+		!skip           { print }
+	' "$file" > "$tmp_file"
+	cat "$tmp_file" > "$file"
+	rm -f "$tmp_file"
 }
 
 setup_git_signing() {
-	[[ -f "${HOME}/.config/git/personal.identity" || -f "${HOME}/.config/git/work.identity" ]] || return 0
-
+	check_only="${1-}"
+	identities=(
+		"${HOME}/.config/git/personal.identity"
+		"${HOME}/.config/git/work.identity"
+	)
 	tmp_file="$(mktemp)"
-	trap 'rm -f "$tmp_file"' EXIT
+	complete=1
+	found=0
 
-	{
-		generate_allowed_signer "${HOME}/.config/git/personal.identity"
-		generate_allowed_signer "${HOME}/.config/git/work.identity"
-	} | awk '!seen[$0]++' > "$tmp_file"
+	for identity_file in "${identities[@]}"; do
+		[[ -f "$identity_file" ]] || continue
+		found=1
+		if ! generate_allowed_signer "$identity_file" >> "$tmp_file"; then
+			complete=0
+		fi
+	done
 
-	# Skip overwrite when generation produced nothing — preserves prior valid file.
-	[[ -s "$tmp_file" ]] || return 0
+	if [[ "$found" -eq 0 ]]; then
+		rm -f "$tmp_file"
+		return 0
+	fi
 
+	if [[ "$complete" -eq 0 || ! -s "$tmp_file" ]]; then
+		printf 'error: allowed_signers could not be generated completely\n' >&2
+		rm -f "$tmp_file"
+		return 1
+	fi
+
+	awk '!seen[$0]++' "$tmp_file" > "${tmp_file}.unique"
+	mv "${tmp_file}.unique" "$tmp_file"
 	target="${HOME}/.config/git/allowed_signers"
-	[[ -f "$target" ]] && cp -p "$target" "${target}.bak"
-	mv "$tmp_file" "$target"
+	state_dir="${HOME}/.local/state/dotfiles"
+	state_file="${state_dir}/allowed_signers.generated"
+
+	if [[ -e "$target" || -L "$target" ]]; then
+		if cmp -s "$tmp_file" "$target"; then
+			if [[ "$check_only" != "--check" && -f "$state_file" ]]; then
+				install -m 600 "$tmp_file" "$state_file"
+			fi
+			rm -f "$tmp_file"
+			return 0
+		fi
+		if [[ ! -f "$state_file" ]] || ! cmp -s "$target" "$state_file"; then
+			printf 'error: refusing to overwrite existing %s\n' "$target" >&2
+			printf 'remove or reconcile it explicitly, then rerun setup\n' >&2
+			rm -f "$tmp_file"
+			return 1
+		fi
+	fi
+
+	if [[ "$check_only" == "--check" ]]; then
+		rm -f "$tmp_file"
+		return 0
+	fi
+
+	mkdir -p "$state_dir"
+	chmod 700 "$state_dir"
+	install -m 600 "$tmp_file" "$target"
+	install -m 600 "$tmp_file" "$state_file"
+	rm -f "$tmp_file"
 }
 
 setup_ssh_permissions() {
-	# Ensure .ssh directory exists with correct permissions
 	if [[ -d "${HOME}/.ssh" ]]; then
 		chmod 700 "${HOME}/.ssh"
 	fi
 
-	if [[ -f "${HOME}/.ssh/config" ]]; then
-		chmod 600 "${HOME}/.ssh/config"
-	fi
+	for config_file in "${HOME}/.ssh/config" "${HOME}/.ssh/config.local"; do
+		if [[ -f "$config_file" ]]; then
+			chmod 600 "$config_file"
+		fi
+	done
 }
 
 setup_shell_init() {
 	[[ -f "${HOME}/.config/shell/init.sh" ]] || return 0
 
-	# Create missing rc files and inject into both zsh and bash.
+	for rc in "${HOME}/.zshrc" "${HOME}/.bashrc"; do
+		validate_block "$rc"
+	done
 	for rc in "${HOME}/.zshrc" "${HOME}/.bashrc"; do
 		ensure_block "$rc" "$shell_init_source"
 	done
 }
+
+if [[ "${1-}" == "--check" ]]; then
+	setup_git_signing --check
+	for rc in "${HOME}/.zshrc" "${HOME}/.bashrc"; do
+		validate_block "$rc"
+	done
+	exit 0
+fi
 
 setup_git_signing
 setup_ssh_permissions

@@ -3,3 +3,21 @@
 ssh/id_*
 ssh/.ssh/id_*
 ssh/known_hosts
+
+# AI tool runtime state and credentials
+codex/.codex/auth.json
+codex/.codex/history.jsonl
+codex/.codex/session_index.jsonl
+codex/.codex/sessions/
+codex/.codex/shell_snapshots/
+codex/.codex/*.sqlite*
+gemini/.gemini/google_accounts.json
+gemini/.gemini/history/
+gemini/.gemini/oauth_creds.json
+gemini/.gemini/tmp/
+pi/.pi/agent/auth.json
+pi/.pi/agent/models-store.json
+pi/.pi/agent/runtime/
+pi/.pi/agent/sessions/
+pi/.pi/agent/trust.json
+pi/.pi/agent/web-search-cache/

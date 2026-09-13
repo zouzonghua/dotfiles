@@ -6,25 +6,26 @@ This file provides the primary project context and architectural guidance for al
 
 ```sh
 make              # show help (default goal)
-make install      # install all packages (auto-detects macOS → desktop profile)
+make install      # install selected profile; fail safely on conflicts
 make desktop      # install CLI + GUI packages (Linux explicit desktop)
 make <package>    # install a single package, e.g. make tmux
+make dry-run      # validate installation without changing HOME
 make setup        # re-run post-install: git signing, SSH permissions, shell rc injection
-make check        # verify required dependencies (stow, bash, ssh, git)
-make uninstall    # remove all stow symlinks and generated files
+make check        # verify required dependencies (stow, bash, ssh, git, awk)
+make uninstall    # remove Stow symlinks and safely clean generated files
 ```
 
 ## Architecture
 
 This repo uses **GNU Stow** to manage symlinks. Each top-level directory is a Stow module whose internal structure mirrors $HOME. For example, `tmux/.config/tmux/` → `~/.config/tmux/`.
 
-**Never edit files under $HOME directly** — always modify the source files inside the repo, then run `make <module>` or `make setup` to sync.
+**Never edit Stow-managed files under `$HOME` directly** — modify their source files in this repo. Symlinked changes take effect immediately; run `make <module>` only for first install or link reconciliation. The setup scripts intentionally manage shell rc blocks, SSH permissions, and generated Git signing data under `$HOME`.
 
 ### Module map
 
 | Module | Destination |
 |--------|-------------|
-| `git/` | `~/.config/git/` (config, identity files, allowed_signers) |
+| `git/` | `~/.config/git/` (config and identity files; `allowed_signers` is generated) |
 | `shell/` | `~/.config/shell/` (init.sh, aliases.sh, prompt.sh, history.sh) |
 | `ssh/` | `~/.ssh/config` |
 | `tmux/` | `~/.config/tmux/` |
@@ -36,13 +37,13 @@ This repo uses **GNU Stow** to manage symlinks. Each top-level directory is a St
 | `codex/` | `~/.codex/` |
 | `pi/` | `~/.pi/agent/` |
 
-**AI configurations**: `gemini/.gemini/GEMINI.md`, `codex/.codex/AGENTS.md`, and `pi/.pi/agent/AGENTS.md` are symlinks to `agents/AGENTS.md`. Modify AI rules in `agents/AGENTS.md` for SSOT.
+**AI configurations**: Gemini, Codex, and Pi instruction entries link to `agents/AGENTS.md`; their `karpathy-guidelines` Skill entries link to `agents/skills/karpathy-guidelines/SKILL.md`. Modify shared AI resources under `agents/` only.
 
 ### `scripts/setup.sh` — what it does
 
 - **Shell init injection**: Appends a `# BEGIN DOTFILES … # END DOTFILES` block in `~/.zshrc` and `~/.bashrc` that sources `~/.config/shell/init.sh`.
-- **Git signing**: Generates `~/.config/git/allowed_signers` from `personal.identity` and `work.identity`.
-- **SSH permissions**: Enforces `700` on `~/.ssh/` and `600` on config files.
+- **Git signing**: Generates `~/.config/git/allowed_signers` without overwriting unowned user content.
+- **SSH permissions**: Enforces `700` on `~/.ssh/` and `600` on `config`/`config.local`.
 
 ### Git identity switching
 

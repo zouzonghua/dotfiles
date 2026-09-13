@@ -20,7 +20,7 @@ endif
 
 STOW := stow --no-folding -t "$(HOME)"
 
-.PHONY: install desktop uninstall setup check $(PACKAGES_CLI) $(PACKAGES_GUI) $(PACKAGES_DARWIN)
+.PHONY: install desktop dry-run uninstall setup check $(PACKAGES_CLI) $(PACKAGES_GUI) $(PACKAGES_DARWIN)
 
 .DEFAULT_GOAL := help
 
@@ -28,8 +28,9 @@ help:
 	@echo "Usage: make [target]"
 	@echo ""
 	@echo "Targets:"
-	@echo "  install    Install all CLI packages and run setup"
+	@echo "  install    Install; fail safely on conflicts"
 	@echo "  desktop    Install all CLI + GUI packages"
+	@echo "  dry-run    Validate installation without changing HOME"
 	@echo "  setup      Run post-install configuration (Git, SSH, Shell)"
 	@echo "  check      Verify required dependencies"
 	@echo "  uninstall  Remove symlinks and cleanup configurations"
@@ -40,16 +41,19 @@ help:
 	@echo "  PROFILE=desktop (default on macOS)"
 
 install: check
-	@bash scripts/backup.sh $(PACKAGES)
-	$(STOW) $(PACKAGES)
+	@bash scripts/preflight.sh $(PACKAGES)
+	$(STOW) --restow $(PACKAGES)
 	$(MAKE) setup
 
 desktop:
 	$(MAKE) install PROFILE=desktop
 
-$(PACKAGES_CLI) $(PACKAGES_GUI) $(PACKAGES_DARWIN):
-	@bash scripts/backup.sh $@
-	$(STOW) $@
+dry-run: check
+	@bash scripts/preflight.sh $(PACKAGES)
+
+$(PACKAGES_CLI) $(PACKAGES_GUI) $(PACKAGES_DARWIN): check
+	@bash scripts/preflight.sh $@
+	$(STOW) --restow $@
 	$(MAKE) setup
 
 setup:
@@ -58,6 +62,7 @@ setup:
 check:
 	@bash scripts/check.sh
 
-uninstall:
+uninstall: check
+	@bash scripts/uninstall.sh --check
 	$(STOW) -D $(PACKAGES_CLI) $(PACKAGES_GUI) $(PACKAGES_DARWIN)
 	@bash scripts/uninstall.sh
