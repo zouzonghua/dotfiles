@@ -41,7 +41,7 @@ This repo uses **GNU Stow** to manage symlinks. Each top-level directory is a St
 
 ### `scripts/setup.sh` — what it does
 
-- **Shell init injection**: Appends a `# BEGIN DOTFILES … # END DOTFILES` block in `~/.zshrc` and `~/.bashrc` that sources `~/.config/shell/init.sh`.
+- **Shell init injection**: Prepends a validated `# BEGIN ZOUZONGHUA DOTFILES … # END ZOUZONGHUA DOTFILES` block to `~/.zshrc` and `~/.bashrc` that sources `~/.config/shell/init.sh`.
 - **Git signing**: Generates `~/.config/git/allowed_signers` without overwriting unowned user content.
 - **SSH permissions**: Enforces `700` on `~/.ssh/` and `600` on `config`/`config.local`.
 
