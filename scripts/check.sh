@@ -58,7 +58,12 @@ if command -v git >/dev/null 2>&1; then
 	check_min_version git "$(git --version | awk '{ print $3 }')" 2.37
 fi
 if command -v nvim >/dev/null 2>&1; then
-	check_min_version nvim "$(nvim --version | awk 'NR == 1 { sub(/^v/, "", $2); print $2 }')" 0.12
+	nvim_version="$(nvim --version | awk 'NR == 1 { sub(/^v/, "", $2); print $2 }')"
+	if awk -v current="$nvim_version" 'BEGIN { split(current, v, "."); exit !((v[1] + 0) > 0 || (v[2] + 0) >= 12) }'; then
+		printf '%-24s[%s]\n' "nvim >= 0.12" "OK"
+	else
+		printf '%-24s[%s]\n' "nvim >= 0.12" "WARN"
+	fi
 else
 	check_optional nvim
 fi

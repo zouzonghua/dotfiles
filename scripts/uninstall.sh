@@ -34,6 +34,17 @@ validate_block_pair() {
 	fi
 }
 
+block_content() {
+	file="$1"
+	start="$2"
+	end="$3"
+	awk -v start="$start" -v end="$end" '
+		$0 == start { capture = 1; next }
+		$0 == end   { exit }
+		capture     { print }
+	' "$file"
+}
+
 validate_block() {
 	file="$1"
 	if [[ -L "$file" && ! -e "$file" ]]; then
@@ -67,22 +78,28 @@ validate_block() {
 		printf 'error: multiple dotfiles block formats in %s\n' "$file" >&2
 		return 1
 	fi
-	if [[ "$legacy_present" -eq 1 ]]; then
-		legacy_content="$(awk -v start="$legacy_block_start" -v end="$legacy_block_end" '
-			$0 == start { capture = 1; next }
-			$0 == end   { capture = 0; exit }
-			capture     { print }
-		' "$file")"
-		if [[ "$legacy_content" != "$shell_init_source" ]]; then
-			printf 'error: refusing to remove unrecognized legacy block in %s\n' "$file" >&2
-			return 1
-		fi
+	if [[ "$new_present" -eq 1 && "$(block_content "$file" "$block_start" "$block_end")" != "$shell_init_source" ]]; then
+		printf 'error: refusing to remove modified dotfiles block in %s\n' "$file" >&2
+		return 1
+	fi
+	if [[ "$legacy_present" -eq 1 && "$(block_content "$file" "$legacy_block_start" "$legacy_block_end")" != "$shell_init_source" ]]; then
+		printf 'error: refusing to remove unrecognized legacy block in %s\n' "$file" >&2
+		return 1
 	fi
 }
 
 cleanup_block() {
 	file="$1"
 	[[ -f "$file" ]] || return 0
+
+	if [[ "$(head -n 1 "$file")" == "$block_start" ]]; then
+		block_bytes="$(printf '%s\n%s\n%s\n' "$block_start" "$shell_init_source" "$block_end" | wc -c | tr -d ' ')"
+		tmp_file="$(mktemp)"
+		dd if="$file" of="$tmp_file" bs=1 skip="$block_bytes" 2>/dev/null
+		cat "$tmp_file" > "$file"
+		rm -f "$tmp_file"
+		return 0
+	fi
 
 	if grep -Fqx "$block_start" "$file"; then
 		start="$block_start"
