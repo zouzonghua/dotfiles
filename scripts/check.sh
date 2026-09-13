@@ -5,7 +5,7 @@ set -euo pipefail
 missing=0
 
 check_required() {
-	command_name="$1"
+	local command_name="$1"
 
 	if command -v "$command_name" > /dev/null 2>&1; then
 		printf '%-24s[%s]\n' "$command_name" "OK"
@@ -17,7 +17,7 @@ check_required() {
 }
 
 check_optional() {
-	command_name="$1"
+	local command_name="$1"
 
 	if command -v "$command_name" > /dev/null 2>&1; then
 		printf '%-24s[%s]\n' "$command_name" "OK"
@@ -27,9 +27,10 @@ check_optional() {
 }
 
 check_min_version() {
-	label="$1"
-	current="$2"
-	required="$3"
+	local label="$1"
+	local current="$2"
+	local required="$3"
+	local failure_status="${4-FAIL}"
 
 	if awk -v current="$current" -v required="$required" 'BEGIN {
 		n = split(current, c, "."); split(required, r, ".")
@@ -43,8 +44,10 @@ check_min_version() {
 	}'; then
 		printf '%-24s[%s]\n' "$label >= $required" "OK"
 	else
-		printf '%-24s[%s]\n' "$label >= $required" "FAIL"
-		missing=1
+		printf '%-24s[%s]\n' "$label >= $required" "$failure_status"
+		if [[ "$failure_status" == "FAIL" ]]; then
+			missing=1
+		fi
 	fi
 }
 
@@ -69,11 +72,7 @@ if command -v git >/dev/null 2>&1; then
 fi
 if command -v nvim >/dev/null 2>&1; then
 	nvim_version="$(nvim --version | awk 'NR == 1 { sub(/^v/, "", $2); print $2 }')"
-	if awk -v current="$nvim_version" 'BEGIN { split(current, v, "."); exit !((v[1] + 0) > 0 || (v[2] + 0) >= 12) }'; then
-		printf '%-24s[%s]\n' "nvim >= 0.12" "OK"
-	else
-		printf '%-24s[%s]\n' "nvim >= 0.12" "WARN"
-	fi
+	check_min_version nvim "$nvim_version" 0.12 WARN
 else
 	check_optional nvim
 fi

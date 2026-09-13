@@ -25,6 +25,22 @@ expect_make_failure() {
 	fi
 }
 
+# Optional version failures must warn; required version failures must fail.
+fake_bin="${tmp_dir}/fake-bin"
+mkdir -p "$fake_bin"
+printf '%s\n' '#!/bin/sh' "printf 'NVIM v0.11.4\\n'" > "${fake_bin}/nvim"
+chmod +x "${fake_bin}/nvim"
+PATH="${fake_bin}:$PATH" bash "${repo_root}/scripts/check.sh" > "${tmp_dir}/nvim-check.out"
+grep -Fq 'nvim >= 0.12            [WARN]' "${tmp_dir}/nvim-check.out"
+
+printf '%s\n' '#!/bin/sh' "printf 'git version 2.36.0\\n'" > "${fake_bin}/git"
+chmod +x "${fake_bin}/git"
+if PATH="${fake_bin}:$PATH" bash "${repo_root}/scripts/check.sh" git > "${tmp_dir}/git-check.out"; then
+	printf 'error: unsupported Git version was accepted\n' >&2
+	exit 1
+fi
+grep -Fq 'git >= 2.37             [FAIL]' "${tmp_dir}/git-check.out"
+
 # Full install must be repeatable and uninstall must restore rc files exactly.
 full_home="${tmp_dir}/full-home"
 mkdir -p "${full_home}/.ssh"
