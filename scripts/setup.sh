@@ -7,7 +7,7 @@ block_start='# BEGIN ZOUZONGHUA DOTFILES'
 block_end='# END ZOUZONGHUA DOTFILES'
 
 expand_path() {
-	path="$1"
+	local path="$1"
 	if [[ "$path" == "~" ]]; then
 		printf '%s\n' "$HOME"
 	elif [[ "$path" == "~/"* ]]; then
@@ -18,7 +18,8 @@ expand_path() {
 }
 
 generate_allowed_signer() {
-	identity_file="$1"
+	local identity_file="$1"
+	local email signingkey public_key_file key_content
 	email="$(git config -f "$identity_file" user.email || true)"
 	signingkey="$(git config -f "$identity_file" user.signingkey || true)"
 
@@ -38,7 +39,8 @@ generate_allowed_signer() {
 }
 
 validate_block() {
-	file="$1"
+	local file="$1"
+	local start_count end_count start_line end_line block
 	if [[ -L "$file" && ! -e "$file" ]]; then
 		printf 'error: shell rc is a dangling link: %s\n' "$file" >&2
 		return 1
@@ -85,8 +87,9 @@ validate_block() {
 }
 
 ensure_block() {
-	file="$1"
-	content="$2"
+	local file="$1"
+	local content="$2"
+	local tmp_file
 	touch "$file"
 	[[ "$(head -n 1 "$file")" == "$block_start" ]] && return 0
 
@@ -106,14 +109,15 @@ ensure_block() {
 }
 
 setup_git_signing() {
-	check_only="${1-}"
-	identities=(
+	local check_only="${1-}"
+	local -a identities=(
 		"${HOME}/.config/git/personal.identity"
 		"${HOME}/.config/git/work.identity"
 	)
+	local tmp_file identity_file target state_dir state_file
+	local complete=1
+	local found=0
 	tmp_file="$(mktemp)"
-	complete=1
-	found=0
 
 	for identity_file in "${identities[@]}"; do
 		[[ -f "$identity_file" ]] || continue
@@ -169,6 +173,7 @@ setup_git_signing() {
 }
 
 setup_ssh_permissions() {
+	local config_file
 	if [[ -d "${HOME}/.ssh" ]]; then
 		chmod 700 "${HOME}/.ssh"
 	fi
@@ -181,6 +186,7 @@ setup_ssh_permissions() {
 }
 
 setup_shell_init() {
+	local rc
 	[[ -f "${HOME}/.config/shell/init.sh" ]] || return 0
 
 	for rc in "${HOME}/.zshrc" "${HOME}/.bashrc"; do
@@ -200,7 +206,8 @@ fi
 packages=("$@")
 
 should_setup() {
-	target="$1"
+	local target="$1"
+	local package
 	[[ "${#packages[@]}" -eq 0 ]] && return 0
 	for package in "${packages[@]}"; do
 		[[ "$package" == "$target" ]] && return 0
