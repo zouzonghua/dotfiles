@@ -5,6 +5,11 @@ vim.api.nvim_create_autocmd("PackChanged", {
       return
     end
 
+    if vim.fn.executable("npx") ~= 1 then
+      vim.notify("markdown-preview.nvim requires npx to install dependencies", vim.log.levels.WARN)
+      return
+    end
+
     local result = vim.system({ "npx", "--yes", "yarn@1.22.22", "install", "--frozen-lockfile" }, { cwd = data.path .. "/app" }):wait()
     if result.code ~= 0 then
       error("Failed to install markdown-preview.nvim dependencies:\n" .. result.stderr)
