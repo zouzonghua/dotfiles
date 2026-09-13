@@ -34,6 +34,16 @@ Personal configuration files managed with **GNU Stow**.
 
 Installation fails safely when a managed path conflicts. Resolve the reported path explicitly, then rerun the command.
 
+## Usage
+
+```sh
+make dry-run
+make install
+make tmux
+make test
+make uninstall
+```
+
 ## Documentation
 
-For detailed information on module mapping, advanced commands, and architecture, please refer to [AGENTS.md](./AGENTS.md).
+For module mapping and architecture details, refer to [AGENTS.md](./AGENTS.md).
