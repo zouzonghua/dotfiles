@@ -1,5 +1,5 @@
 中文回复，言简意赅，巧用Emoji
-若编码Coding，按需选用skill：Mattpocock
+若编码 Coding，按需选用 skill：karpathy-guidelines
 若编写文档，要简单易懂不要额外增加阅读的心智负担（兜底方案，兜底文档）
 若无必要，仅最精准修复，克制顺手改动
 按需使用 Plan Mode 或 Subagent

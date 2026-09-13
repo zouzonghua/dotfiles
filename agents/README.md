@@ -1,25 +1,21 @@
 # agents
 
-Single source of truth for shared AI agent instructions. The per-tool entry files
-(`gemini/.gemini/GEMINI.md`, `codex/.codex/AGENTS.md`,
-`pi/.pi/agent/AGENTS.md`) are relative symlinks to `AGENTS.md` here.
+Single source of truth for shared AI instructions and skills.
 
-To update behavior across all agents at once, edit `AGENTS.md` only.
+## Shared instructions
 
-This directory is **not** a stow module — it is the upstream source. The agent
-modules are the ones stowed into `$HOME`.
+The per-tool entry files are relative symlinks to `agents/AGENTS.md`:
 
-## Codex skills
+- `gemini/.gemini/GEMINI.md`
+- `codex/.codex/AGENTS.md`
+- `pi/.pi/agent/AGENTS.md`
 
-`karpathy-guidelines` is installed directly into `~/.codex/skills`, not managed
-by Stow.
+## Shared skills
 
-Install `karpathy-guidelines`:
+The Gemini, Codex, and Pi skill entries are relative symlinks to:
 
-```sh
-python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py \
-  --repo multica-ai/andrej-karpathy-skills \
-  --path skills/karpathy-guidelines
+```text
+agents/skills/karpathy-guidelines/SKILL.md
 ```
 
-Restart Codex or open a new thread after installing skills.
+Edit files under `agents/` only. The tool-specific modules are deployed with GNU Stow.
