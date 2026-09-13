@@ -34,6 +34,12 @@ validate_block() {
 		printf 'error: malformed dotfiles block in %s\n' "$file" >&2
 		return 1
 	fi
+	start_line="$(grep -Fn "$block_start" "$file" | cut -d: -f1)"
+	end_line="$(grep -Fn "$block_end" "$file" | cut -d: -f1)"
+	if [[ "$start_line" -ge "$end_line" ]]; then
+		printf 'error: malformed dotfiles block in %s\n' "$file" >&2
+		return 1
+	fi
 
 	block="$(awk -v start="$block_start" -v end="$block_end" '
 		$0 == start { capture = 1; next }
