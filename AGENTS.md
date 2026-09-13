@@ -12,6 +12,7 @@ make <package>    # install a single package, e.g. make tmux
 make dry-run      # validate installation without changing HOME
 make setup        # re-run post-install: git signing, SSH permissions, shell rc injection
 make check        # verify required dependencies (stow, bash, ssh, git, awk)
+make test         # run isolated installation and configuration tests
 make uninstall    # remove Stow symlinks and safely clean generated files
 ```
 

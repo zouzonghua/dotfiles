@@ -20,7 +20,7 @@ endif
 
 STOW := stow --no-folding -t "$(HOME)"
 
-.PHONY: install desktop dry-run uninstall setup check $(PACKAGES_CLI) $(PACKAGES_GUI) $(PACKAGES_DARWIN)
+.PHONY: install desktop dry-run uninstall setup check test $(PACKAGES_CLI) $(PACKAGES_GUI) $(PACKAGES_DARWIN)
 
 .DEFAULT_GOAL := help
 
@@ -33,6 +33,7 @@ help:
 	@echo "  dry-run    Validate installation without changing HOME"
 	@echo "  setup      Run post-install configuration (Git, SSH, Shell)"
 	@echo "  check      Verify required dependencies"
+	@echo "  test       Run isolated installation tests"
 	@echo "  uninstall  Remove symlinks and cleanup configurations"
 	@echo "  <package>  Install a specific package (e.g., make tmux)"
 	@echo ""
@@ -61,6 +62,10 @@ setup:
 
 check:
 	@bash scripts/check.sh
+
+test: check
+	@bash -n scripts/*.sh shell/.config/shell/*.sh tmux/.config/tmux/bin/*.sh
+	@bash scripts/test.sh
 
 uninstall:
 	@bash scripts/uninstall.sh --check
