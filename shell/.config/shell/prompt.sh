@@ -6,8 +6,8 @@
 # - git branch appended when inside a repository
 
 prompt_git_state() {
-  local status line branch oid
-  status=$(git status --porcelain=v2 --branch --no-ahead-behind 2>/dev/null) || return
+  local git_status line branch oid
+  git_status=$(git status --porcelain=v2 --branch --no-ahead-behind 2>/dev/null) || return
 
   PROMPT_GIT_BRANCH=''
   PROMPT_GIT_DIRTY=0
@@ -18,7 +18,7 @@ prompt_git_state() {
       "# "*) ;;
       *) PROMPT_GIT_DIRTY=1 ;;
     esac
-  done <<< "$status"
+  done <<< "$git_status"
 
   if [ "$PROMPT_GIT_BRANCH" = '(detached)' ]; then
     PROMPT_GIT_BRANCH=${oid:0:7}
