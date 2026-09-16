@@ -40,21 +40,37 @@ generate_allowed_signer() {
 ensure_block() {
 	local file="$1"
 	local content="$2"
-	local tmp_file
+	local tmp_file state_dir state_file last_byte
 	touch "$file"
-	[[ "$(head -n 1 "$file")" == "$block_start" ]] && return 0
+
+	if [[ "$(tail -n 3 "$file")" == "$(printf '%s\n%s\n%s' "$block_start" "$content" "$block_end")" ]]; then
+		return 0
+	fi
 
 	tmp_file="$(mktemp)"
-	printf '%s\n%s\n%s\n' "$block_start" "$content" "$block_end" > "$tmp_file"
 	if grep -Fqx "$block_start" "$file"; then
 		awk -v start="$block_start" -v end="$block_end" '
 			$0 == start { skip = 1; next }
 			$0 == end   { skip = 0; next }
 			!skip       { print }
-		' "$file" >> "$tmp_file"
+		' "$file" > "$tmp_file"
 	else
-		cat "$file" >> "$tmp_file"
+		cat "$file" > "$tmp_file"
 	fi
+
+	state_dir="${HOME}/.local/state/dotfiles"
+	state_file="${state_dir}/$(basename "$file").missing-final-newline"
+	if [[ -s "$tmp_file" ]]; then
+		last_byte="$(tail -c 1 "$tmp_file" | od -An -tx1 | tr -d ' ')"
+		if [[ "$last_byte" != "0a" ]]; then
+			mkdir -p "$state_dir"
+			touch "$state_file"
+			printf '\n' >> "$tmp_file"
+		else
+			rm -f "$state_file"
+		fi
+	fi
+	printf '%s\n%s\n%s\n' "$block_start" "$content" "$block_end" >> "$tmp_file"
 	cat "$tmp_file" > "$file"
 	rm -f "$tmp_file"
 }

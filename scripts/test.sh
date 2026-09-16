@@ -53,6 +53,8 @@ cp "${full_home}/.zshrc" "${tmp_dir}/zshrc.before"
 
 run_make "$full_home" PROFILE=server dry-run
 run_make "$full_home" PROFILE=server install
+[[ "$(tail -n 3 "${full_home}/.bashrc")" == "$(printf '%s\n%s\n%s' '# BEGIN ZOUZONGHUA DOTFILES' '[ -f ~/.config/shell/init.sh ] && source ~/.config/shell/init.sh' '# END ZOUZONGHUA DOTFILES')" ]]
+[[ "$(tail -n 3 "${full_home}/.zshrc")" == "$(printf '%s\n%s\n%s' '# BEGIN ZOUZONGHUA DOTFILES' '[ -f ~/.config/shell/init.sh ] && source ~/.config/shell/init.sh' '# END ZOUZONGHUA DOTFILES')" ]]
 allowed_signers="${full_home}/.config/git/allowed_signers"
 signer_state="${full_home}/.local/state/dotfiles/allowed_signers.generated"
 grep -Fq 'zouzonghua.cn@gmail.com' "$allowed_signers"

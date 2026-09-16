@@ -10,15 +10,17 @@ state_file="${state_dir}/allowed_signers.generated"
 
 cleanup_block() {
 	local file="$1"
-	local block_bytes tmp_file
+	local block_bytes tmp_file state_file last_byte
 	[[ -f "$file" ]] || return 0
 
+	state_file="${state_dir}/$(basename "$file").missing-final-newline"
 	if [[ "$(head -n 1 "$file")" == "$block_start" ]]; then
 		block_bytes="$(printf '%s\n%s\n%s\n' "$block_start" "$shell_init_source" "$block_end" | wc -c | tr -d ' ')"
 		tmp_file="$(mktemp)"
 		dd if="$file" of="$tmp_file" bs=1 skip="$block_bytes" 2>/dev/null
 		cat "$tmp_file" > "$file"
 		rm -f "$tmp_file"
+		rm -f "$state_file"
 		return 0
 	fi
 
@@ -32,6 +34,11 @@ cleanup_block() {
 	' "$file" > "$tmp_file"
 	cat "$tmp_file" > "$file"
 	rm -f "$tmp_file"
+	if [[ -f "$state_file" && -s "$file" ]]; then
+		last_byte="$(tail -c 1 "$file" | od -An -tx1 | tr -d ' ')"
+		[[ "$last_byte" == "0a" ]] && truncate -s -1 "$file"
+	fi
+	rm -f "$state_file"
 }
 
 cleanup_allowed_signers() {
@@ -58,5 +65,6 @@ fi
 cleanup_block "${HOME}/.zshrc"
 cleanup_block "${HOME}/.bashrc"
 cleanup_allowed_signers
+rmdir "$state_dir" 2>/dev/null || true
 
 printf 'uninstall cleanup complete\n'
