@@ -34,6 +34,13 @@ set noerrorbells
 set encoding=utf-8
 set hidden
 
+" persist undo history across Vim sessions
+if has('persistent_undo')
+    set undofile
+    set undodir=~/.vim/undo
+    call mkdir(expand(&undodir), 'p')
+endif
+
 " appearance
 set number
 set textwidth=80
