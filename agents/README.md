@@ -18,4 +18,6 @@ The Gemini, Codex, and Pi skill entries are relative symlinks to:
 agents/skills/karpathy-guidelines/SKILL.md
 ```
 
+Codex installs its entry under `~/.agents/skills/`, the current user-level skill discovery path.
+
 Edit files under `agents/` only. The tool-specific modules are deployed with GNU Stow.

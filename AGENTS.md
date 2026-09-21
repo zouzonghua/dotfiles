@@ -35,7 +35,7 @@ This repo uses **GNU Stow** to manage symlinks. Each top-level directory is a St
 | `vim/` | `~/.vimrc` |
 | `nvim/` | `~/.config/nvim/` |
 | `gemini/` | `~/.gemini/` |
-| `codex/` | `~/.codex/` |
+| `codex/` | `~/.codex/` and `~/.agents/skills/` |
 | `pi/` | `~/.pi/agent/` |
 
 **AI configurations**: Gemini, Codex, and Pi instruction entries link to `agents/AGENTS.md`; their `karpathy-guidelines` Skill entries link to `agents/skills/karpathy-guidelines/SKILL.md`. Modify shared AI resources under `agents/` only.

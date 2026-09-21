@@ -53,6 +53,9 @@ cp "${full_home}/.zshrc" "${tmp_dir}/zshrc.before"
 
 run_make "$full_home" PROFILE=server dry-run
 run_make "$full_home" PROFILE=server install
+[[ -L "${full_home}/.agents/skills/karpathy-guidelines/SKILL.md" ]]
+cmp -s "${full_home}/.agents/skills/karpathy-guidelines/SKILL.md" "${repo_root}/agents/skills/karpathy-guidelines/SKILL.md"
+[[ ! -e "${full_home}/.codex/skills/karpathy-guidelines/SKILL.md" ]]
 [[ "$(tail -n 3 "${full_home}/.bashrc")" == "$(printf '%s\n%s\n%s' '# BEGIN ZOUZONGHUA DOTFILES' '[ -f ~/.config/shell/init.sh ] && source ~/.config/shell/init.sh' '# END ZOUZONGHUA DOTFILES')" ]]
 [[ "$(tail -n 3 "${full_home}/.zshrc")" == "$(printf '%s\n%s\n%s' '# BEGIN ZOUZONGHUA DOTFILES' '[ -f ~/.config/shell/init.sh ] && source ~/.config/shell/init.sh' '# END ZOUZONGHUA DOTFILES')" ]]
 allowed_signers="${full_home}/.config/git/allowed_signers"
@@ -114,6 +117,19 @@ if HOME="$modified_home" bash "${repo_root}/scripts/uninstall.sh" --check >/dev/
 	exit 1
 fi
 cmp -s "${modified_home}/.bashrc" "${tmp_dir}/modified-bashrc.before"
+
+# Valid managed blocks outside the required tail position must fail safely.
+misplaced_home="${tmp_dir}/misplaced-home"
+mkdir -p "$misplaced_home"
+printf '%s\n%s\n%s\n%s\n' \
+	'# BEGIN ZOUZONGHUA DOTFILES' \
+	'[ -f ~/.config/shell/init.sh ] && source ~/.config/shell/init.sh' \
+	'# END ZOUZONGHUA DOTFILES' \
+	'export USER_CONTENT=1' > "${misplaced_home}/.zshrc"
+: > "${misplaced_home}/.bashrc"
+cp "${misplaced_home}/.zshrc" "${tmp_dir}/misplaced-zshrc.before"
+expect_make_failure "$misplaced_home" shell
+cmp -s "${misplaced_home}/.zshrc" "${tmp_dir}/misplaced-zshrc.before"
 
 # User-modified allowed_signers must survive uninstall.
 signing_home="${tmp_dir}/signing-home"

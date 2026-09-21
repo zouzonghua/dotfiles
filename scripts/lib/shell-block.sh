@@ -52,4 +52,8 @@ validate_block() {
 		printf 'error: refusing to modify managed dotfiles block in %s\n' "$file" >&2
 		return 1
 	fi
+	if [[ "$(tail -n 3 "$file")" != "$(printf '%s\n%s\n%s' "$block_start" "$shell_init_source" "$block_end")" ]]; then
+		printf 'error: managed dotfiles block must be at end of %s\n' "$file" >&2
+		return 1
+	fi
 }

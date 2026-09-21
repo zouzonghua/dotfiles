@@ -48,15 +48,7 @@ ensure_block() {
 	fi
 
 	tmp_file="$(mktemp)"
-	if grep -Fqx "$block_start" "$file"; then
-		awk -v start="$block_start" -v end="$block_end" '
-			$0 == start { skip = 1; next }
-			$0 == end   { skip = 0; next }
-			!skip       { print }
-		' "$file" > "$tmp_file"
-	else
-		cat "$file" > "$tmp_file"
-	fi
+	cat "$file" > "$tmp_file"
 
 	state_dir="${HOME}/.local/state/dotfiles"
 	state_file="${state_dir}/$(basename "$file").missing-final-newline"
