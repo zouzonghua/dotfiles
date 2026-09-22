@@ -23,7 +23,7 @@ require("nvim-tree").setup({
     git_ignored = false,
   },
   filesystem_watchers = {
-    enable = false,
+    enable = true,
   },
   update_focused_file = {
     enable = false,
