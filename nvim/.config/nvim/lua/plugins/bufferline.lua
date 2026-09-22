@@ -7,6 +7,7 @@ local function close_current_buffer()
     return
   end
 
+  vim.cmd("BufferLineCycleNext")
   vim.cmd("bdelete " .. current_buffer)
 end
 
