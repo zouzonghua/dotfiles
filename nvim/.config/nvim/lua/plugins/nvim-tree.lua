@@ -1,28 +1,12 @@
-local M = {}
 local api = require("nvim-tree.api")
-
-function M.toggle()
-  local tree_window = api.tree.winid()
-
-  if tree_window then
-    if vim.api.nvim_get_current_win() == tree_window then
-      api.tree.close_in_this_tab()
-    else
-      vim.api.nvim_set_current_win(tree_window)
-    end
-    return
-  end
-
-  api.tree.open()
-end
 
 local function on_attach(bufnr)
   api.map.on_attach.default(bufnr)
   vim.keymap.del("n", "<2-LeftMouse>", { buffer = bufnr })
-  vim.keymap.set("n", "<C-e>", M.toggle, {
+  vim.keymap.set("n", "<leader>e", api.tree.toggle, {
     buffer = bufnr,
     silent = true,
-    desc = "Focus or close file explorer",
+    desc = "Toggle file explorer",
   })
 end
 
@@ -67,6 +51,4 @@ for _, group in ipairs({
   })
 end
 
-vim.keymap.set("n", "<C-e>", M.toggle, { desc = "Focus or close file explorer" })
-
-return M
+vim.keymap.set("n", "<leader>e", api.tree.toggle, { desc = "Toggle file explorer" })

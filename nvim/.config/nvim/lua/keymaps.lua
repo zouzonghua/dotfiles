@@ -1,8 +1,9 @@
 local map = vim.keymap.set
 
+-- Search
 map("n", "<CR>", "<cmd>set hlsearch!<CR>", { desc = "Toggle search highlight" })
 
--- Emacs-style movement in command-line mode.
+-- Command-line editing
 map("c", "<C-a>", "<Home>")
 map("c", "<C-e>", "<End>")
 map("c", "<C-b>", "<Left>")

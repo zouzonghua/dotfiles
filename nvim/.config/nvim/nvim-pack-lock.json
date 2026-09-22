@@ -31,6 +31,10 @@
     "nvim-web-devicons": {
       "rev": "2ae6958df7ced50baac5035cec0c15799eedfbf7",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
+    },
+    "vim-code-dark": {
+      "rev": "4624dc223bf574aa9a731c2383c579847303c380",
+      "src": "https://github.com/tomasiser/vim-code-dark"
     }
   }
 }

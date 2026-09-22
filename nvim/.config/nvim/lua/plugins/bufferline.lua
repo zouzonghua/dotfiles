@@ -14,6 +14,7 @@ require("bufferline").setup({
   options = {
     mode = "buffers",
     numbers = "ordinal",
+    indicator = { style = "none" },
     separator_style = "thick",
     diagnostics = "nvim_lsp",
     buffer_close_icon = "×",
@@ -29,6 +30,8 @@ require("bufferline").setup({
         text = "",
         text_align = "center",
         highlight = "NvimTreeNormal",
+        separator = false,
+        padding = 0,
       },
     },
   },
@@ -45,6 +48,6 @@ require("bufferline").setup({
 -- Bufferline navigation.
 map("n", "<C-h>", "<cmd>BufferLineCyclePrev<CR>", { desc = "Previous buffer" })
 map("n", "<C-l>", "<cmd>BufferLineCycleNext<CR>", { desc = "Next buffer" })
-map("n", "<C-c>", close_current_buffer, { desc = "Close current buffer" })
+map("n", "<leader>x", close_current_buffer, { desc = "Close current buffer" })
 map("n", "<leader>hh", "<cmd>BufferLineCloseLeft<CR>", { desc = "Close buffers to the left" })
 map("n", "<leader>ll", "<cmd>BufferLineCloseRight<CR>", { desc = "Close buffers to the right" })
