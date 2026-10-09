@@ -55,6 +55,10 @@ run_make "$full_home" PROFILE=server dry-run
 run_make "$full_home" PROFILE=server install
 [[ -L "${full_home}/.agents/skills/karpathy-guidelines/SKILL.md" ]]
 cmp -s "${full_home}/.agents/skills/karpathy-guidelines/SKILL.md" "${repo_root}/agents/skills/karpathy-guidelines/SKILL.md"
+if [[ "$(uname -s)" == "Darwin" ]]; then
+	[[ -L "${full_home}/.config/karabiner/karabiner.json" ]]
+	cmp -s "${full_home}/.config/karabiner/karabiner.json" "${repo_root}/karabiner/.config/karabiner/karabiner.json"
+fi
 [[ ! -e "${full_home}/.codex/skills/karpathy-guidelines/SKILL.md" ]]
 [[ "$(tail -n 3 "${full_home}/.bashrc")" == "$(printf '%s\n%s\n%s' '# BEGIN ZOUZONGHUA DOTFILES' '[ -f ~/.config/shell/init.sh ] && source ~/.config/shell/init.sh' '# END ZOUZONGHUA DOTFILES')" ]]
 [[ "$(tail -n 3 "${full_home}/.zshrc")" == "$(printf '%s\n%s\n%s' '# BEGIN ZOUZONGHUA DOTFILES' '[ -f ~/.config/shell/init.sh ] && source ~/.config/shell/init.sh' '# END ZOUZONGHUA DOTFILES')" ]]

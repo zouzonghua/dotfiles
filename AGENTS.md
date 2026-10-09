@@ -32,6 +32,7 @@ This repo uses **GNU Stow** to manage symlinks. Each top-level directory is a St
 | `tmux/` | `~/.config/tmux/` |
 | `kitty/` | `~/.config/kitty/` (GUI/macOS) |
 | `aerospace/` | `~/.config/aerospace/` (macOS only) |
+| `karabiner/` | `~/.config/karabiner/karabiner.json` (macOS only) |
 | `vim/` | `~/.vimrc` |
 | `nvim/` | `~/.config/nvim/` |
 | `gemini/` | `~/.gemini/` |

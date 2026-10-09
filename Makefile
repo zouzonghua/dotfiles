@@ -7,7 +7,7 @@ endif
 
 PACKAGES_CLI := git shell ssh tmux vim nvim gemini codex pi
 PACKAGES_GUI := kitty
-PACKAGES_DARWIN := aerospace
+PACKAGES_DARWIN := aerospace karabiner
 PACKAGES := $(PACKAGES_CLI)
 
 ifeq ($(PROFILE),desktop)
