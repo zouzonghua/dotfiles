@@ -72,6 +72,14 @@ cmp -s "${full_home}/.zshrc" "${tmp_dir}/zshrc.before"
 [[ ! -e "$signer_state" ]]
 [[ -z "$(find "$full_home" -type l -print -quit)" ]]
 
+# Each Git identity is optional; an available identity is still generated.
+optional_home="${tmp_dir}/optional-signing-home"
+mkdir -p "${optional_home}/.ssh"
+printf 'ssh-ed25519 AAAATEST work-only\n' > "${optional_home}/.ssh/id_ed25519_work.pub"
+run_make "$optional_home" git
+grep -Fq 'zonghuazou@ddmarketinghub.com' "${optional_home}/.config/git/allowed_signers"
+! grep -Fq 'zouzonghua.cn@gmail.com' "${optional_home}/.config/git/allowed_signers"
+
 # Stow conflicts must fail without modifying user data or creating partial links.
 conflict_home="${tmp_dir}/conflict-home"
 mkdir -p "${conflict_home}/.config/tmux"

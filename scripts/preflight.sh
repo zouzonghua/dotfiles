@@ -13,7 +13,6 @@ command -v stow >/dev/null 2>&1 || {
 }
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-repo_root="$(dirname "$script_dir")"
 for package in "$@"; do
 	if [[ "$package" == "git" ]]; then
 		bash "${script_dir}/check.sh" git
@@ -22,19 +21,6 @@ done
 bash "${script_dir}/setup.sh" --check "$@"
 
 for package in "$@"; do
-	if [[ "$package" == "git" ]]; then
-		for identity_file in "${repo_root}/git/.config/git/personal.identity" "${repo_root}/git/.config/git/work.identity"; do
-			signing_key="$(git config -f "$identity_file" user.signingkey || true)"
-			if [[ "$signing_key" == "~/"* ]]; then
-				signing_key="${HOME}/${signing_key#"~/"}"
-			fi
-			if [[ -z "$signing_key" || ! -s "$signing_key" ]]; then
-				printf 'error: required signing key not found: %s\n' "${signing_key:-<unset>}" >&2
-				exit 1
-			fi
-		done
-	fi
-
 	if [[ "$package" == "git" ]] &&
 		[[ -e "${HOME}/.config/git/allowed_signers" || -L "${HOME}/.config/git/allowed_signers" ]] &&
 		[[ ! -f "${HOME}/.config/git/personal.identity" && ! -f "${HOME}/.config/git/work.identity" ]] &&

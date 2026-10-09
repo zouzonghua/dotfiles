@@ -74,27 +74,18 @@ setup_git_signing() {
 		"${HOME}/.config/git/work.identity"
 	)
 	local tmp_file identity_file target state_dir state_file
-	local complete=1
 	local found=0
 	tmp_file="$(mktemp)"
 
 	for identity_file in "${identities[@]}"; do
 		[[ -f "$identity_file" ]] || continue
 		found=1
-		if ! generate_allowed_signer "$identity_file" >> "$tmp_file"; then
-			complete=0
-		fi
+		generate_allowed_signer "$identity_file" >> "$tmp_file" || true
 	done
 
-	if [[ "$found" -eq 0 ]]; then
+	if [[ "$found" -eq 0 || ! -s "$tmp_file" ]]; then
 		rm -f "$tmp_file"
 		return 0
-	fi
-
-	if [[ "$complete" -eq 0 || ! -s "$tmp_file" ]]; then
-		printf 'error: allowed_signers could not be generated completely\n' >&2
-		rm -f "$tmp_file"
-		return 1
 	fi
 
 	awk '!seen[$0]++' "$tmp_file" > "${tmp_file}.unique"

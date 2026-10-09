@@ -8,7 +8,7 @@ Personal configuration files managed with **GNU Stow**.
 - Git 2.37+
 - Neovim 0.12+ (optional)
 - Node.js and `npx` for Markdown Preview (optional)
-- Personal/work SSH key pairs matching `git/.config/git/*.identity`
+- Personal/work SSH key pairs matching `git/.config/git/*.identity`（可按需配置）
 
 ## Bootstrap
 
