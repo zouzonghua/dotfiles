@@ -47,4 +47,5 @@ make uninstall
 
 ## Documentation
 
-For module mapping and architecture details, refer to [AGENTS.md](./AGENTS.md).
+- For module mapping and architecture details, refer to [AGENTS.md](./AGENTS.md).
+- For Neovim shortcuts and usage, refer to [nvim/README.md](./nvim/README.md).
