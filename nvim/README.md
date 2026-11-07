@@ -79,7 +79,7 @@ Leader 键配置为逗号 `,`（`vim.g.mapleader = ","`）。
 
 - **自动安装**：首次启动 Neovim 会自动通过 `vim.pack` 安装插件。
 - **语言服务（Mason）**：通过 `mason.nvim` 自动管理语言服务。在普通模式运行 `:Mason` 可打开图形界面管理、安装或更新 Language Server。
-  - 默认预装：`ts_ls`（JavaScript / TypeScript）、`cssls`（CSS / SCSS / Less）、`jdtls`（Java，需本地 JDK 21+）、`lua_ls`（Lua）。
+  - 默认预装：`ts_ls`（JavaScript / TypeScript）、`cssls`（CSS / SCSS / Less）、`lua_ls`（Lua）。
 - **依赖检查**：可在 Neovim 中运行 `:checkhealth` 检查依赖状态。
 - **全文搜索（Telescope）**：依赖 `ripgrep`：macOS 可运行 `brew install ripgrep`，Linux（Debian/Ubuntu）可运行 `sudo apt install ripgrep`。
 - **Markdown 预览**：依赖 Node.js 与 `npx`。
