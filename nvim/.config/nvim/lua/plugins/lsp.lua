@@ -15,9 +15,7 @@ mason.setup({
 local servers = {
   ts_ls = {},
   cssls = {},
-  jdtls = {
-    cmd = { "jdtls" },
-  },
+  jdtls = {},
   lua_ls = {
     settings = {
       Lua = {
