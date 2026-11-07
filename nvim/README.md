@@ -13,6 +13,8 @@ Leader 键配置为逗号 `,`（`vim.g.mapleader = ","`）。
 | `,hh` | 关闭左侧所有 Buffer | BufferLine |
 | `,ll` | 关闭右侧所有 Buffer | BufferLine |
 | `,p` | 开关 Markdown 预览 | 仅在 Markdown 文件生效 |
+| `,rn` | 符号重命名 | LSP 重命名变量/函数等 |
+| `,ca` | 快速代码修复 | LSP Code Action |
 | `,gd` | 打开 Git Diff 视图 | DiffviewOpen |
 | `,gh` | 打开 Git 文件历史 | DiffviewFileHistory |
 
@@ -26,12 +28,17 @@ Leader 键配置为逗号 `,`（`vim.g.mapleader = ","`）。
 | `Ctrl-h` | 切换到上一个 Buffer | BufferLine |
 | `Ctrl-l` | 切换到下一个 Buffer | BufferLine |
 
-### 代码跳转与导航
+### 代码跳转与导航（LSP）
 
 | 快捷键 | 功能 | 说明 |
 |---|---|---|
-| `gd` | 跳转到局部定义 | 在当前函数/作用域内查找声明 |
-| `gD` | 跳转到全局定义 | 跳转到当前文件中首次定义处 |
+| `gd` | 跳转到函数/符号定义 | LSP 精准跨文件直达源码定义 |
+| `gD` | 跳转到符号声明 | LSP 声明跳转 |
+| `K` | 查看悬浮签名/文档 | 类似鼠标悬停提示 |
+| `gi` | 跳转到实现 | LSP 接口/类实现跳转 |
+| `gr` | 查找所有引用 | 结合 Telescope 模糊检索全部引用 |
+| `[d` | 上一个诊断错误 | 跳转到上一个语法错误/警告 |
+| `]d` | 下一个诊断错误 | 跳转到下一个语法错误/警告 |
 | `Ctrl-o` | 返回上一处 | 跳转后返回上一处光标位置 |
 | `Ctrl-i` | 前进到下一处 | 跳转历史前进 |
 
@@ -71,6 +78,8 @@ Leader 键配置为逗号 `,`（`vim.g.mapleader = ","`）。
 ## 外部依赖与初始化
 
 - **自动安装**：首次启动 Neovim 会自动通过 `vim.pack` 安装插件。
+- **语言服务（Mason）**：通过 `mason.nvim` 自动管理语言服务。在普通模式运行 `:Mason` 可打开图形界面管理、安装或更新 Language Server。
+  - 默认预装：`ts_ls`（JavaScript / TypeScript）、`cssls`（CSS / SCSS / Less）、`lua_ls`（Lua）。
 - **依赖检查**：可在 Neovim 中运行 `:checkhealth` 检查依赖状态。
 - **全文搜索（Telescope）**：依赖 `ripgrep`：macOS 可运行 `brew install ripgrep`，Linux（Debian/Ubuntu）可运行 `sudo apt install ripgrep`。
 - **Markdown 预览**：依赖 Node.js 与 `npx`。

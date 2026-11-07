@@ -33,4 +33,9 @@ vim.pack.add({
   -- Git
   { src = "https://github.com/lewis6991/gitsigns.nvim" },
   { src = "https://github.com/sindrets/diffview.nvim" },
+
+  -- LSP
+  { src = "https://github.com/williamboman/mason.nvim" },
+  { src = "https://github.com/williamboman/mason-lspconfig.nvim" },
+  { src = "https://github.com/neovim/nvim-lspconfig" },
 }, { confirm = false })
