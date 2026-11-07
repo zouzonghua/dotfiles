@@ -3,7 +3,6 @@ vim.g.loaded_netrwPlugin = 1
 
 require("options")
 require("plugins")
-require("ime")
 
 require("plugins.colorscheme")
 require("plugins.gitsigns")

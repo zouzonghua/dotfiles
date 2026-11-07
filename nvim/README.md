@@ -23,7 +23,6 @@ Leader 键配置为逗号 `,`（`vim.g.mapleader = ","`）。
 | `<CR>`（回车） | 切换搜索高亮开关 | 切换 `hlsearch` |
 | `Ctrl-h` | 切换到上一个 Buffer | BufferLine |
 | `Ctrl-l` | 切换到下一个 Buffer | BufferLine |
-| `<Esc>` | 重置输入法为英文 | 仅 macOS（依赖 `macism`） |
 
 ## 专用视图快捷键
 
@@ -64,4 +63,3 @@ Leader 键配置为逗号 `,`（`vim.g.mapleader = ","`）。
 - **依赖检查**：可在 Neovim 中运行 `:checkhealth` 检查依赖状态。
 - **全文搜索（Telescope）**：依赖 `ripgrep`，macOS 可运行 `brew install ripgrep`。
 - **Markdown 预览**：依赖 Node.js 与 `npx`。
-- **输入法自动切换**：macOS 下可选安装 `macism`（`brew install macism`）。
