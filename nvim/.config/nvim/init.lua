@@ -12,5 +12,6 @@ require("plugins.diffview")
 require("plugins.bufferline")
 require("plugins.lualine")
 require("plugins.nvim-tree")
+require("plugins.telescope")
 
 require("keymaps")
